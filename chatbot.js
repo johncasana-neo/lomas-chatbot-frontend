@@ -205,15 +205,61 @@
         }),
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const data = await res.json();
-      const reply = data.reply || data.message || data.content || data.response || '';
-      if (!reply) throw new Error('empty reply');
-      typing.remove();
-      appendMsg('bot', reply);
-      history.push({ role: 'assistant', content: reply });
+
+      const contentType = res.headers.get('content-type') || '';
+
+      if (contentType.includes('text/event-stream') || contentType.includes('text/plain')) {
+        // ── SSE / streaming response ──────────────────────────────
+        typing.remove();
+        const botEl = appendMsg('bot', '');
+        const bubEl = botEl.querySelector('.cb-mbub');
+        let fullReply = '';
+
+        const reader = res.body.getReader();
+        const decoder = new TextDecoder();
+        let buffer = '';
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          buffer += decoder.decode(value, { stream: true });
+
+          // Process complete lines
+          const lines = buffer.split('\n');
+          buffer = lines.pop(); // keep incomplete last line
+
+          for (const line of lines) {
+            if (!line.startsWith('data:')) continue;
+            const raw = line.slice(5).trim();
+            if (raw === '[DONE]') break;
+            try {
+              const chunk = JSON.parse(raw);
+              const token = chunk.text ?? chunk.content ?? chunk.token ?? chunk.delta ?? '';
+              fullReply += token;
+              bubEl.textContent = fullReply;
+              $msgs.scrollTop = $msgs.scrollHeight;
+            } catch { /* partial chunk, skip */ }
+          }
+        }
+
+        if (!fullReply) throw new Error('empty stream reply');
+        history.push({ role: 'assistant', content: fullReply });
+
+      } else {
+        // ── JSON response ─────────────────────────────────────────
+        const data = await res.json();
+        const reply = data.reply || data.message || data.content || data.response || '';
+        if (!reply) throw new Error('empty reply');
+        typing.remove();
+        appendMsg('bot', reply);
+        history.push({ role: 'assistant', content: reply });
+      }
+
     } catch (err) {
       console.error('[Chatbot]', err);
-      typing.remove();
+      // Remove typing indicator if still present
+      const typingEl = $msgs.querySelector('.cb-m.bot:last-child .cb-dots');
+      if (typingEl) typingEl.closest('.cb-m').remove();
       appendMsg('bot', 'Hubo un problema de conexión. Puedes llamarnos al +51 984 350 983 o escribirnos a hola@lomasdeancon.pe.');
       history.pop();
     }
