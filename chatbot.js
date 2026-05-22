@@ -1,11 +1,11 @@
-/* chatbot.js — Asistente virtual Loma · Lomas de Ancón */
-/* Backend: Cloud Run */
+/* chatbot.js — Asistente virtual Loma · Lomas de Ancón
+   Envía a /chat: { message, session_id, nombre, email, history }
+*/
 (function () {
   'use strict';
 
-  const BACKEND_URL = 'https://las-lomas-chatbot-backend-1456509096.us-central1.run.app';
-
-  const SYSTEM = `Eres Loma, el asistente virtual de Lomas de Ancón (Área de Conservación Regional), ubicado en Ancón, Lima, Perú. Ayudas a visitantes con información sobre tours, actividades (senderismo, sandboard, kayak, avistamiento de flora y fauna nocturna, Gecko Run), voluntariado y pasantías, cómo llegar desde Lima, tarifas, y la historia y conservación del ecosistema de lomas costeras y dunas. Siempre responde en español, de forma cálida, entusiasta y breve (máximo 3-4 oraciones). Para reservas o precios exactos sugiere llamar al +51 984 350 983 o escribir a hola@lomasdeancon.pe.`;
+  /* ── Config ──────────────────────────────────────────────── */
+  const API_URL = (window.CHATBOT_API_URL || 'https://las-lomas-chatbot-backend-1456509096.us-central1.run.app') + '/chat';
 
   const CHIPS = [
     ['Tours y actividades',  '¿Qué tours y actividades están disponibles?'],
@@ -16,16 +16,22 @@
     ['Negocios locales',     '¿Qué negocios locales y artesanías hay?'],
   ];
 
-  let history   = [];
-  let isOpen    = false;
-  let atWelcome = true;
-  let busy      = false;
+  /* ── State ───────────────────────────────────────────────── */
+  let chatHistory = [];  // renamed to avoid collision with window.history
+  let isOpen     = false;
+  let busy       = false;
+  let registered = false;   // true after nombre+email submitted
+  let userData   = { nombre: '', email: '' };
+  let sessionId  = generateSessionId();
 
-  // Unique session ID per page load
-  const SESSION_ID = 'sess-' + Math.random().toString(36).slice(2, 10);
+  function generateSessionId() {
+    return 'cb-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8);
+  }
 
-  /* ── STYLES ─────────────────────────────────────────────────── */
+  /* ── Styles ──────────────────────────────────────────────── */
   const CSS = `
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Fraunces:wght@700;800&display=swap');
+
 #cb{position:fixed;bottom:24px;right:24px;z-index:9999;font-family:"Manrope",system-ui,sans-serif}
 
 /* Button */
@@ -62,6 +68,22 @@
 .cb-xbtn:hover{background:rgba(255,255,255,.2)}
 .cb-xbtn .material-symbols-rounded{font-size:18px}
 
+/* ── Registration panel ── */
+#cb-reg{padding:28px 22px 22px;background:#f5f0e8;display:flex;flex-direction:column;align-items:center;text-align:center}
+.cb-reg-icon{width:64px;height:64px;border-radius:50%;background:linear-gradient(145deg,#3a7034,#2d5a27);display:flex;align-items:center;justify-content:center;margin-bottom:14px;box-shadow:0 6px 20px rgba(45,90,39,.3),0 0 0 5px rgba(45,90,39,.08);color:#c49a3c}
+.cb-reg-icon .material-symbols-rounded{font-size:30px;font-variation-settings:'FILL' 1,'wght' 500,'GRAD' 0,'opsz' 48}
+.cb-reg-title{font-family:"Fraunces",Georgia,serif;font-weight:800;font-size:20px;color:#3d2b1a;margin:0 0 6px}
+.cb-reg-sub{font-size:13px;color:#7a5028;line-height:1.55;margin:0 0 20px;max-width:28ch}
+.cb-reg-form{width:100%;display:flex;flex-direction:column;gap:10px}
+.cb-reg-input{width:100%;border:1.5px solid rgba(61,43,26,.18);border-radius:10px;padding:10px 14px;font-size:13.5px;color:#3d2b1a;font-family:"Manrope",system-ui,sans-serif;background:#fff;outline:none;transition:border-color .2s,box-shadow .2s;box-sizing:border-box}
+.cb-reg-input:focus{border-color:#3a7034;box-shadow:0 0 0 3px rgba(58,112,52,.15)}
+.cb-reg-input::placeholder{color:#a08060}
+.cb-reg-btn{width:100%;padding:11px;border-radius:10px;background:linear-gradient(135deg,#3a7034,#2d5a27);border:none;color:#c49a3c;font-family:"Manrope",system-ui,sans-serif;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;transition:opacity .2s,transform .15s;box-shadow:0 4px 14px rgba(45,90,39,.3);margin-top:2px}
+.cb-reg-btn:hover{opacity:.9;transform:translateY(-1px)}
+.cb-reg-btn .material-symbols-rounded{font-size:16px}
+.cb-reg-err{font-size:12px;color:#c0392b;background:#fdf0f0;border:1px solid rgba(192,57,43,.2);border-radius:8px;padding:8px 12px;display:none}
+.cb-reg-err.show{display:block}
+
 /* Welcome */
 #cb-welcome{padding:30px 22px 18px;display:flex;flex-direction:column;align-items:center;text-align:center;background:#f5f0e8}
 .cb-wava{width:72px;height:72px;border-radius:50%;background:linear-gradient(145deg,#3a7034,#2d5a27);display:flex;align-items:center;justify-content:center;margin-bottom:16px;box-shadow:0 8px 24px rgba(45,90,39,.32),0 0 0 6px rgba(45,90,39,.08);color:#c49a3c}
@@ -73,7 +95,7 @@
 .cb-chip:hover{background:rgba(196,154,60,.14);border-color:#c49a3c}
 
 /* Messages */
-#cb-msgs{padding:14px;overflow-y:auto;max-height:420px;flex-direction:column;gap:10px;background:#f5f0e8;scroll-behavior:smooth;display:none}
+#cb-msgs{padding:14px;overflow-y:auto;max-height:380px;flex-direction:column;gap:10px;background:#f5f0e8;scroll-behavior:smooth;display:none}
 .cb-m{display:flex;gap:8px;align-items:flex-end;animation:cbMsgIn .2s ease}
 @keyframes cbMsgIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 .cb-m.bot{align-self:flex-start;max-width:88%}
@@ -99,11 +121,12 @@
 .cb-snd .material-symbols-rounded{font-size:17px;font-variation-settings:'FILL' 1,'wght' 600,'GRAD' 0,'opsz' 24}
 `;
 
-  /* ── DOM ─────────────────────────────────────────────────────── */
+  /* ── Inject styles ───────────────────────────────────────── */
   const styleEl = document.createElement('style');
   styleEl.textContent = CSS;
   document.head.appendChild(styleEl);
 
+  /* ── Build DOM ───────────────────────────────────────────── */
   const root = document.createElement('div');
   root.id = 'cb';
   root.innerHTML = `
@@ -124,14 +147,35 @@
           <span class="material-symbols-rounded">close</span>
         </button>
       </div>
-      <div id="cb-welcome">
+
+      <!-- Registration panel -->
+      <div id="cb-reg">
+        <div class="cb-reg-icon"><span class="material-symbols-rounded">waving_hand</span></div>
+        <div class="cb-reg-title">¡Hola! Soy Loma 🌿</div>
+        <div class="cb-reg-sub">Para ayudarte mejor, necesito tu nombre y correo.</div>
+        <div class="cb-reg-form">
+          <input id="cb-reg-nombre" class="cb-reg-input" type="text" placeholder="Tu nombre" maxlength="80" autocomplete="name" />
+          <input id="cb-reg-email" class="cb-reg-input" type="email" placeholder="tu@correo.com" maxlength="120" autocomplete="email" />
+          <div id="cb-reg-err" class="cb-reg-err">Por favor ingresa un nombre y correo válidos.</div>
+          <button id="cb-reg-btn" class="cb-reg-btn">
+            <span class="material-symbols-rounded">arrow_forward</span>Comenzar chat
+          </button>
+        </div>
+      </div>
+
+      <!-- Welcome / chips (shown after registration) -->
+      <div id="cb-welcome" style="display:none">
         <div class="cb-wava"><span class="material-symbols-rounded">landscape</span></div>
-        <div class="cb-wtitle">¡Hola! Soy Loma</div>
+        <div class="cb-wtitle" id="cb-wtitle">¡Hola!</div>
         <div class="cb-wsub">Tu guía en las lomas, dunas y bahía de Ancón. ¿En qué puedo ayudarte hoy?</div>
         <div class="cb-chips" id="cb-chips"></div>
       </div>
+
+      <!-- Messages -->
       <div id="cb-msgs"></div>
-      <div class="cb-ibar">
+
+      <!-- Input bar (hidden until registered) -->
+      <div class="cb-ibar" id="cb-ibar" style="display:none">
         <input id="cb-inp" class="cb-inp" type="text" placeholder="Escribe tu mensaje..." autocomplete="off" />
         <button id="cb-snd" class="cb-snd" aria-label="Enviar">
           <span class="material-symbols-rounded">send</span>
@@ -140,128 +184,139 @@
     </div>`;
   document.body.appendChild(root);
 
-  /* ── Chips ───────────────────────────────────────────────────── */
-  const chipsEl = document.getElementById('cb-chips');
+  /* ── Refs ────────────────────────────────────────────────── */
+  const $btn        = document.getElementById('cb-btn');
+  const $win        = document.getElementById('cb-win');
+  const $xbtn       = document.getElementById('cb-xbtn');
+  const $reg        = document.getElementById('cb-reg');
+  const $regNombre  = document.getElementById('cb-reg-nombre');
+  const $regEmail   = document.getElementById('cb-reg-email');
+  const $regErr     = document.getElementById('cb-reg-err');
+  const $regBtn     = document.getElementById('cb-reg-btn');
+  const $welc       = document.getElementById('cb-welcome');
+  const $wtitle     = document.getElementById('cb-wtitle');
+  const $chips      = document.getElementById('cb-chips');
+  const $msgs       = document.getElementById('cb-msgs');
+  const $ibar       = document.getElementById('cb-ibar');
+  const $inp        = document.getElementById('cb-inp');
+  const $snd        = document.getElementById('cb-snd');
+
+  /* ── Build chips ─────────────────────────────────────────── */
   CHIPS.forEach(([label, q]) => {
     const b = document.createElement('button');
     b.className = 'cb-chip';
     b.textContent = label;
     b.addEventListener('click', () => sendMsg(q));
-    chipsEl.appendChild(b);
+    $chips.appendChild(b);
   });
 
-  /* ── Refs ────────────────────────────────────────────────────── */
-  const $btn  = document.getElementById('cb-btn');
-  const $win  = document.getElementById('cb-win');
-  const $welc = document.getElementById('cb-welcome');
-  const $msgs = document.getElementById('cb-msgs');
-  const $inp  = document.getElementById('cb-inp');
-  const $snd  = document.getElementById('cb-snd');
-  const $xbtn = document.getElementById('cb-xbtn');
-
-  /* ── Toggle ──────────────────────────────────────────────────── */
+  /* ── Toggle ──────────────────────────────────────────────── */
   function toggle() {
     isOpen = !isOpen;
     $btn.classList.toggle('open', isOpen);
-    if (isOpen) { $win.removeAttribute('hidden'); setTimeout(() => $inp.focus(), 120); }
-    else { $win.setAttribute('hidden', ''); }
+    if (isOpen) {
+      $win.removeAttribute('hidden');
+      setTimeout(() => {
+        if (!registered) $regNombre.focus();
+        else $inp.focus();
+      }, 120);
+    } else {
+      $win.setAttribute('hidden', '');
+    }
   }
   $btn.addEventListener('click', toggle);
   $xbtn.addEventListener('click', toggle);
 
-  /* ── Send ────────────────────────────────────────────────────── */
+  /* ── Registration ────────────────────────────────────────── */
+  function validateEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+
+  function submitRegistration() {
+    const nombre = $regNombre.value.trim();
+    const email  = $regEmail.value.trim();
+
+    if (!nombre || !validateEmail(email)) {
+      $regErr.classList.add('show');
+      return;
+    }
+
+    $regErr.classList.remove('show');
+    userData = { nombre, email };
+    registered = true;
+
+    // Transition: hide reg panel, show chat UI
+    $reg.style.display = 'none';
+    $wtitle.textContent = `¡Hola, ${nombre.split(' ')[0]}!`;
+    $welc.style.display = 'flex';
+    $welc.style.flexDirection = 'column';
+    $welc.style.alignItems = 'center';
+    $welc.style.textAlign = 'center';
+    $ibar.style.display = 'flex';
+    setTimeout(() => $inp.focus(), 80);
+  }
+
+  $regBtn.addEventListener('click', submitRegistration);
+  [$regNombre, $regEmail].forEach(el => {
+    el.addEventListener('keydown', e => {
+      if (e.key === 'Enter') { e.preventDefault(); submitRegistration(); }
+    });
+  });
+
+  /* ── Send message ────────────────────────────────────────── */
   async function sendMsg(override) {
+    if (!registered) return;
     const text = (typeof override === 'string' ? override : $inp.value).trim();
     if (!text || busy) return;
     $inp.value = '';
 
-    if (atWelcome) {
-      atWelcome = false;
+    // Hide welcome panel on first message
+    if ($welc.style.display !== 'none') {
       $welc.style.display = 'none';
       $msgs.style.display = 'flex';
+      $msgs.style.flexDirection = 'column';
+      $msgs.style.gap = '10px';
     }
 
     appendMsg('usr', text);
 
-    // First message carries system context
-    const content = history.length === 0 ? `[Contexto: ${SYSTEM}]\n\n${text}` : text;
-    history.push({ role: 'user', content });
+    // Snapshot history BEFORE adding current message.
+    // On the first call this is always [] — never null or undefined.
+    const historySnapshot = chatHistory.slice();
 
     busy = true;
     $snd.disabled = true;
     const typing = appendTyping();
 
     try {
-      // Build history without the current (last) user message
-      const historyToSend = history.slice(0, -1);
-
-      const res = await fetch(`${BACKEND_URL}/chat`, {
+      const res = await fetch(API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           message:    text,
-          session_id: SESSION_ID,
-          history:    historyToSend,
-        }),
+          session_id: sessionId,
+          nombre:     userData.nombre,
+          email:      userData.email,
+          history:    historySnapshot   // [] on first msg, prior turns after that
+        })
       });
+
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      const reply = data.response || data.reply || data.message || 'Lo siento, no pude procesar tu mensaje.';
 
-      const contentType = res.headers.get('content-type') || '';
+      typing.remove();
+      appendMsg('bot', reply);
 
-      if (contentType.includes('text/event-stream') || contentType.includes('text/plain')) {
-        // ── SSE / streaming response ──────────────────────────────
-        typing.remove();
-        const botEl = appendMsg('bot', '');
-        const bubEl = botEl.querySelector('.cb-mbub');
-        let fullReply = '';
-
-        const reader = res.body.getReader();
-        const decoder = new TextDecoder();
-        let buffer = '';
-
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-          buffer += decoder.decode(value, { stream: true });
-
-          // Process complete lines
-          const lines = buffer.split('\n');
-          buffer = lines.pop(); // keep incomplete last line
-
-          for (const line of lines) {
-            if (!line.startsWith('data:')) continue;
-            const raw = line.slice(5).trim();
-            if (raw === '[DONE]') break;
-            try {
-              const chunk = JSON.parse(raw);
-              const token = chunk.text ?? chunk.content ?? chunk.token ?? chunk.delta ?? '';
-              fullReply += token;
-              bubEl.innerHTML = renderMarkdown(fullReply);
-              $msgs.scrollTop = $msgs.scrollHeight;
-            } catch { /* partial chunk, skip */ }
-          }
-        }
-
-        if (!fullReply) throw new Error('empty stream reply');
-        history.push({ role: 'assistant', content: fullReply });
-
-      } else {
-        // ── JSON response ─────────────────────────────────────────
-        const data = await res.json();
-        const reply = data.reply || data.message || data.content || data.response || '';
-        if (!reply) throw new Error('empty reply');
-        typing.remove();
-        appendMsg('bot', reply);
-        history.push({ role: 'assistant', content: reply });
-      }
+      // Persist both turns only after a successful response
+      chatHistory.push({ role: 'user',      content: text  });
+      chatHistory.push({ role: 'assistant', content: reply });
 
     } catch (err) {
-      console.error('[Chatbot]', err);
-      // Remove typing indicator if still present
-      const typingEl = $msgs.querySelector('.cb-m.bot:last-child .cb-dots');
-      if (typingEl) typingEl.closest('.cb-m').remove();
+      console.error('[Chatbot] Error:', err);
+      typing.remove();
       appendMsg('bot', 'Hubo un problema de conexión. Puedes llamarnos al +51 984 350 983 o escribirnos a hola@lomasdeancon.pe.');
-      history.pop();
+      // chatHistory not modified on error — stays clean
     }
 
     busy = false;
@@ -269,12 +324,13 @@
     $msgs.scrollTop = $msgs.scrollHeight;
   }
 
+  /* ── Helpers ─────────────────────────────────────────────── */
   function appendMsg(role, text) {
     const d = document.createElement('div');
     d.className = 'cb-m ' + role;
     const ava = role === 'bot'
       ? `<div class="cb-mava"><span class="material-symbols-rounded">landscape</span></div>` : '';
-    d.innerHTML = ava + `<div class="cb-mbub">${role === 'bot' ? renderMarkdown(text) : esc(text)}</div>`;
+    d.innerHTML = ava + `<div class="cb-mbub">${esc(text)}</div>`;
     $msgs.appendChild(d);
     $msgs.scrollTop = $msgs.scrollHeight;
     return d;
@@ -290,44 +346,10 @@
   }
 
   function esc(s) {
-    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>');
   }
 
-  function renderMarkdown(s) {
-    // 1. Escape HTML entities first
-    let h = s
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;');
-
-    // 2. Links: [text](url)
-    h = h.replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g,
-      '<a href="$2" target="_blank" rel="noopener noreferrer" style="color:#2d5a27;font-weight:600;text-decoration:underline">$1</a>');
-
-    // 3. Auto-link bare URLs
-    h = h.replace(/(?<!href=")(https?:\/\/[^\s<"]+)/g,
-      '<a href="$1" target="_blank" rel="noopener noreferrer" style="color:#2d5a27;font-weight:600;text-decoration:underline">$1</a>');
-
-    // 4. Bold: **text**
-    h = h.replace(/\*\*([^*\n]+)\*\*/g, '<strong>$1</strong>');
-    h = h.replace(/__([^_\n]+)__/g, '<strong>$1</strong>');
-
-    // 5. Bullet list items BEFORE italic (lines starting with * item or - item)
-    //    Must come before italic so "* text" isn't eaten as *text*
-    h = h.replace(/^[*\-] (.+)$/gm, '<li>$1</li>');
-    h = h.replace(/(<li>[\s\S]*?<\/li>)(\n<li>[\s\S]*?<\/li>)*/g, match =>
-      '<ul style="margin:.3em 0 .3em 1.1em;padding:0;list-style:disc">' + match + '</ul>');
-
-    // 6. Italic: *text* (only single asterisk now, after bullets are handled)
-    h = h.replace(/(?<!\*)\*(?!\*)([^*\n]+)(?<!\*)\*(?!\*)/g, '<em>$1</em>');
-    h = h.replace(/(?<!_)_(?!_)([^_\n]+)(?<!_)_(?!_)/g, '<em>$1</em>');
-
-    // 7. Line breaks (but not inside lists)
-    h = h.replace(/(?!<\/li>|<li>)\n/g, '<br>');
-
-    return h;
-  }
-
+  /* ── Input events ────────────────────────────────────────── */
   $inp.addEventListener('keydown', e => {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMsg(); }
   });
