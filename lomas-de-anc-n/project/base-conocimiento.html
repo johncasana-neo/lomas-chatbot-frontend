@@ -1,0 +1,681 @@
+<!doctype html>
+<html lang="es-PE">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Base de Conocimiento — Lomas de Ancón</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;0,9..144,800;0,9..144,900;1,9..144,400&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Rounded" rel="stylesheet"/>
+<link rel="stylesheet" href="styles.css">
+<style>
+/* ── Hero ── */
+.kb-hero{position:relative;overflow:hidden;min-height:300px;display:flex;align-items:center;justify-content:center;text-align:center;color:#fff;padding-top:80px}
+.kb-hero .photo{position:absolute;inset:0;z-index:0}
+.kb-hero::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(20,12,5,.52),rgba(20,12,5,.82))}
+.kb-hero-inner{position:relative;z-index:2;padding:80px 24px 56px}
+.kb-hero h1{font-family:var(--serif);font-weight:800;font-style:italic;font-size:clamp(38px,7vw,80px);line-height:.95;letter-spacing:-.02em;font-variation-settings:"opsz" 144}
+.kb-hero .sub{font-family:var(--serif);font-style:italic;font-size:clamp(15px,2vw,19px);color:rgba(246,239,225,.75);margin-top:14px;max-width:52ch;margin-left:auto;margin-right:auto}
+
+/* ── Agent status bar ── */
+.agent-bar{background:var(--olive-deeper,#1a3215);border-bottom:1px solid rgba(255,255,255,.07);padding:14px 0}
+.agent-bar .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.agent-status{display:flex;align-items:center;gap:10px}
+.agent-dot{width:9px;height:9px;border-radius:50%;background:#25D366;box-shadow:0 0 0 4px rgba(37,211,102,.18);flex:0 0 9px;animation:pulse-dot 2.2s ease-in-out infinite}
+@keyframes pulse-dot{0%,100%{box-shadow:0 0 0 4px rgba(37,211,102,.18)}50%{box-shadow:0 0 0 8px rgba(37,211,102,.08)}}
+.agent-status-label{font-size:13px;font-weight:600;color:#fff;letter-spacing:.04em}
+.agent-meta{display:flex;gap:24px;flex-wrap:wrap}
+.agent-meta-item{display:flex;align-items:center;gap:7px;font-size:12.5px;color:rgba(255,255,255,.65)}
+.agent-meta-item .material-symbols-rounded{font-size:16px;color:var(--sand-soft,#d9b878)}
+
+/* ── Main grid ── */
+.kb-section{background:var(--cream-soft);padding:clamp(52px,8vw,96px) 0}
+.kb-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
+@media(max-width:860px){.kb-grid{grid-template-columns:1fr}}
+
+/* ── Panel card ── */
+.kb-panel{background:#fff;border-radius:22px;border:1px solid var(--rule);box-shadow:var(--shadow-card);overflow:hidden}
+.kb-panel-head{padding:22px 26px 18px;border-bottom:1px solid var(--rule);display:flex;align-items:center;justify-content:space-between;gap:12px}
+.kb-panel-title{display:flex;align-items:center;gap:12px}
+.kb-panel-icon{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;flex:0 0 40px}
+.kb-panel-icon.pdf{background:rgba(180,30,30,.1);color:#b41e1e}
+.kb-panel-icon.url{background:rgba(45,90,39,.1);color:var(--olive-deep)}
+.kb-panel-icon .material-symbols-rounded{font-size:22px}
+.kb-panel-label{font-weight:700;font-size:15.5px;color:var(--earth-deep)}
+.kb-panel-label small{display:block;font-weight:500;font-size:12px;color:var(--earth-warm);margin-top:1px}
+.kb-count-badge{background:var(--cream);border:1px solid var(--rule);border-radius:999px;padding:5px 13px;font-size:12px;font-weight:700;color:var(--earth-deep);font-family:var(--mono);letter-spacing:.06em}
+
+/* ── Drop zone ── */
+.kb-panel-body{padding:22px 26px}
+.drop-zone{border:2px dashed var(--rule);border-radius:16px;padding:36px 24px;text-align:center;cursor:pointer;transition:border-color .2s,background .2s;position:relative;overflow:hidden}
+.drop-zone:hover,.drop-zone.drag-over{border-color:var(--olive-deep);background:rgba(45,90,39,.04)}
+.drop-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.drop-icon{width:52px;height:52px;border-radius:50%;background:rgba(180,30,30,.08);border:1.5px solid rgba(180,30,30,.18);display:grid;place-items:center;margin:0 auto 14px;color:#b41e1e}
+.drop-icon .material-symbols-rounded{font-size:26px}
+.drop-title{font-weight:700;font-size:14.5px;color:var(--earth-deep);margin-bottom:5px}
+.drop-sub{font-size:12.5px;color:var(--ink-soft);line-height:1.5}
+.drop-sub strong{color:var(--olive-deep)}
+
+/* ── URL input row ── */
+.url-input-row{display:flex;gap:10px}
+.url-input-row input{flex:1;padding:12px 16px;border:1.5px solid var(--rule);border-radius:12px;font-size:14px;font-family:var(--sans);color:var(--ink);background:var(--cream-soft);outline:none;transition:border-color .2s,box-shadow .2s}
+.url-input-row input::placeholder{color:#b8a990}
+.url-input-row input:focus{border-color:var(--olive-deep);box-shadow:0 0 0 3px rgba(45,90,39,.1);background:#fff}
+.btn-add-url{display:inline-flex;align-items:center;gap:7px;padding:12px 18px;border-radius:12px;background:var(--olive-deep);color:#fff;font-weight:700;font-size:13px;border:none;cursor:pointer;white-space:nowrap;transition:background .18s,transform .18s}
+.btn-add-url:hover{background:var(--olive-darker);transform:translateY(-1px)}
+.btn-add-url .material-symbols-rounded{font-size:18px}
+.url-hint{margin-top:9px;font-size:12px;color:var(--earth-warm);display:flex;align-items:center;gap:6px}
+.url-hint .material-symbols-rounded{font-size:14px;color:var(--sand)}
+
+/* ── Item list ── */
+.item-list{display:flex;flex-direction:column;gap:0;margin-top:18px}
+.item-list-head{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);padding:0 0 10px;border-bottom:1px solid var(--rule)}
+.kb-item{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid var(--rule);animation:slide-in .28s ease}
+@keyframes slide-in{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.kb-item:last-child{border-bottom:none}
+.item-thumb{width:36px;height:36px;border-radius:9px;display:grid;place-items:center;flex:0 0 36px;font-size:11px;font-weight:700;font-family:var(--mono);letter-spacing:.04em}
+.item-thumb.pdf-thumb{background:rgba(180,30,30,.09);color:#b41e1e;border:1px solid rgba(180,30,30,.14)}
+.item-thumb.url-thumb{background:rgba(45,90,39,.09);color:var(--olive-deep);border:1px solid rgba(45,90,39,.14)}
+.item-thumb .material-symbols-rounded{font-size:18px}
+.item-info{flex:1;min-width:0}
+.item-name{font-size:13.5px;font-weight:600;color:var(--earth-deep);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.item-meta{font-size:11.5px;color:var(--earth-warm);margin-top:2px;display:flex;align-items:center;gap:8px}
+.item-status{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:3px 8px;border-radius:999px}
+.item-status.ready{background:rgba(37,211,102,.1);color:#1a7a40}
+.item-status.processing{background:rgba(212,118,59,.1);color:var(--accent-deep)}
+.item-status.error{background:rgba(180,30,30,.1);color:#b41e1e}
+.item-size{font-family:var(--mono);font-size:10.5px;color:var(--ink-soft)}
+.item-del{width:30px;height:30px;border-radius:8px;border:1px solid var(--rule);display:grid;place-items:center;color:var(--ink-soft);transition:background .18s,color .18s,border-color .18s;cursor:pointer;flex:0 0 30px;background:none}
+.item-del:hover{background:rgba(180,30,30,.08);border-color:rgba(180,30,30,.2);color:#b41e1e}
+.item-del .material-symbols-rounded{font-size:16px}
+
+/* ── Empty state ── */
+.empty-state{text-align:center;padding:28px 16px;color:var(--ink-soft);font-size:13.5px}
+.empty-state .material-symbols-rounded{font-size:36px;color:var(--rule);display:block;margin-bottom:8px}
+
+/* ── Stats strip ── */
+.kb-stats{background:linear-gradient(180deg,#2d4520,#1f3015);padding:clamp(52px,7vw,80px) 0;color:#fff}
+.kb-stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+@media(max-width:640px){.kb-stats-grid{grid-template-columns:1fr}}
+.kb-stat{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:28px 24px;text-align:center;transition:background .2s,transform .2s}
+.kb-stat:hover{background:rgba(255,255,255,.09);transform:translateY(-3px)}
+.kb-stat-num{font-family:var(--serif);font-weight:800;font-size:clamp(40px,5vw,58px);line-height:1;color:#fff;letter-spacing:-.02em;font-variation-settings:"opsz" 96}
+.kb-stat-num span{color:var(--accent-soft,#e8945a)}
+.kb-stat-lbl{margin-top:8px;font-size:13px;font-weight:600;color:rgba(255,255,255,.7);letter-spacing:.06em;text-transform:uppercase}
+
+/* ── Sync button ── */
+.sync-bar{padding:22px 26px;border-top:1px solid var(--rule);background:var(--cream-soft);display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.sync-note{font-size:12.5px;color:var(--ink-soft);display:flex;align-items:center;gap:6px}
+.sync-note .material-symbols-rounded{font-size:16px;color:var(--sand)}
+.btn-sync{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border-radius:999px;background:var(--olive-deep);color:#fff;font-weight:700;font-size:13px;border:none;cursor:pointer;transition:background .18s,transform .18s,box-shadow .18s;box-shadow:0 4px 18px rgba(45,90,39,.28);letter-spacing:.06em}
+.btn-sync:hover{background:var(--olive-darker);transform:translateY(-1px);box-shadow:0 8px 28px rgba(45,90,39,.38)}
+.btn-sync .material-symbols-rounded{font-size:18px}
+.btn-sync.syncing .spin{animation:spin .9s linear infinite;display:inline-block}
+@keyframes spin{to{transform:rotate(360deg)}}
+.sync-ok{display:none;align-items:center;gap:7px;font-size:13px;font-weight:600;color:var(--olive-deep);background:rgba(45,90,39,.1);border:1px solid rgba(45,90,39,.2);border-radius:999px;padding:9px 16px}
+.sync-ok .material-symbols-rounded{font-size:16px}
+
+/* ── Tip box ── */
+.tip-box{background:rgba(196,154,60,.08);border:1px solid rgba(196,154,60,.25);border-radius:14px;padding:16px 18px;display:flex;gap:12px;margin-top:20px}
+.tip-box .material-symbols-rounded{font-size:20px;color:var(--sand);flex:0 0 20px;margin-top:1px}
+.tip-box p{font-size:13px;color:var(--ink-soft);line-height:1.55}
+.tip-box strong{color:var(--earth-deep)}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="wrap">
+    <a href="index.html" class="brand">
+      <span class="brand-mark">
+        <span class="mark-inner"><span class="peak"></span><span class="bird">⌃</span></span>
+      </span>
+      <span class="brand-name">Lomas de Ancón<small>ACR · MINCETUR</small></span>
+    </a>
+    <div class="nav-actions">
+      <div class="nav-links">
+        <a href="index.html">Inicio</a>
+        <a href="nosotros.html">Nosotros</a>
+        <a href="actividades.html">Actividades</a>
+        <a href="voluntariado.html">Voluntariado</a>
+        <a href="negocios-locales.html">Negocios Locales</a>
+        <a href="blog.html">Blog</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contacto.html">Contacto</a>
+      </div>
+      <a href="carrito.html" class="icon-btn cart-btn" aria-label="Carrito">
+        <span class="material-symbols-rounded">shopping_bag</span>
+        <span class="badge" id="cartBadge">0</span>
+      </a>
+      <a href="donaciones.html" class="btn-donate">
+        <span class="material-symbols-rounded icon-fill">volunteer_activism</span>
+        <span>Donar</span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="kb-hero">
+  <div class="photo photo--rock" style="position:absolute;inset:0;z-index:0">
+    <div class="dune-cap" style="height:35%"></div>
+    <span class="grain"></span>
+  </div>
+  <div class="kb-hero-inner">
+    <div class="breadcrumb" style="margin-bottom:18px">
+      <a href="index.html">Inicio</a><span class="sep">›</span><span>Base de Conocimiento</span>
+    </div>
+    <h1>Base de <em>Conocimiento</em></h1>
+    <p class="sub">Alimenta al agente con documentos PDF y páginas web para que responda con información precisa y actualizada.</p>
+  </div>
+</div>
+
+<!-- AGENT STATUS BAR -->
+<div class="agent-bar" style="background:#1a2e14">
+  <div class="wrap">
+    <div class="agent-status">
+      <span class="agent-dot"></span>
+      <span class="agent-status-label">Agente activo</span>
+    </div>
+    <div class="agent-meta">
+      <span class="agent-meta-item">
+        <span class="material-symbols-rounded">description</span>
+        <span id="barDocs">0 documentos</span>
+      </span>
+      <span class="agent-meta-item">
+        <span class="material-symbols-rounded">link</span>
+        <span id="barUrls">0 URLs</span>
+      </span>
+      <span class="agent-meta-item">
+        <span class="material-symbols-rounded">schedule</span>
+        <span id="barLastSync">Sin sincronizar</span>
+      </span>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN SECTION -->
+<section class="kb-section">
+  <div class="wrap">
+
+    <!-- Section header -->
+    <div class="section-head reveal" style="margin-bottom:36px">
+      <div class="eyebrow" style="color:var(--olive-deep)">Gestión de fuentes</div>
+      <h2>Agrega información al agente</h2>
+      <p>Sube archivos PDF o incluye URLs de páginas web. El agente usará estos recursos para responder preguntas con datos reales sobre Lomas de Ancón.</p>
+    </div>
+
+    <!-- Two-column panel grid -->
+    <div class="kb-grid">
+
+      <!-- ── PDF PANEL ── -->
+      <div class="kb-panel reveal">
+        <div class="kb-panel-head">
+          <div class="kb-panel-title">
+            <div class="kb-panel-icon pdf">
+              <span class="material-symbols-rounded icon-fill">picture_as_pdf</span>
+            </div>
+            <div>
+              <div class="kb-panel-label">Documentos PDF<small>Arrastra o selecciona archivos</small></div>
+            </div>
+          </div>
+          <span class="kb-count-badge" id="pdfCount">0 PDFs</span>
+        </div>
+
+        <div class="kb-panel-body">
+          <!-- Drop zone -->
+          <div class="drop-zone" id="dropZone">
+            <input type="file" accept=".pdf" multiple id="pdfInput" aria-label="Subir PDFs"/>
+            <div class="drop-icon">
+              <span class="material-symbols-rounded icon-fill">upload_file</span>
+            </div>
+            <div class="drop-title">Arrastra tus PDFs aquí</div>
+            <div class="drop-sub">o <strong>haz clic para seleccionar</strong> desde tu equipo<br>Máx. 50 MB por archivo · Solo formato PDF</div>
+          </div>
+
+          <!-- PDF list -->
+          <div class="item-list" id="pdfList">
+            <div class="empty-state" id="pdfEmpty">
+              <span class="material-symbols-rounded">folder_open</span>
+              Aún no hay documentos cargados
+            </div>
+          </div>
+
+          <div class="tip-box">
+            <span class="material-symbols-rounded">lightbulb</span>
+            <p><strong>Tip:</strong> Sube guías de actividades, reglamentos, materiales educativos o cualquier documento oficial que el agente deba conocer.</p>
+          </div>
+        </div>
+
+        <div class="sync-bar">
+          <span class="sync-note"><span class="material-symbols-rounded">info</span>Los archivos se guardan localmente en tu sesión</span>
+          <div style="display:flex;align-items:center;gap:10px">
+            <div class="sync-ok" id="pdfSyncOk"><span class="material-symbols-rounded">check_circle</span>¡Sincronizado!</div>
+            <button class="btn-sync" id="btnSyncPdf" onclick="syncPdfs()">
+              <span class="material-symbols-rounded">cloud_sync</span>Sincronizar PDFs
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── URL PANEL ── -->
+      <div class="kb-panel reveal">
+        <div class="kb-panel-head">
+          <div class="kb-panel-title">
+            <div class="kb-panel-icon url">
+              <span class="material-symbols-rounded">language</span>
+            </div>
+            <div>
+              <div class="kb-panel-label">Páginas web<small>Ingresa URLs para indexar</small></div>
+            </div>
+          </div>
+          <span class="kb-count-badge" id="urlCount">0 URLs</span>
+        </div>
+
+        <div class="kb-panel-body">
+          <!-- URL input -->
+          <div class="url-input-row">
+            <input type="url" id="urlInput" placeholder="https://ejemplo.com/pagina" autocomplete="off"/>
+            <button class="btn-add-url" onclick="addUrl()">
+              <span class="material-symbols-rounded">add_link</span>Agregar
+            </button>
+          </div>
+          <div class="url-hint">
+            <span class="material-symbols-rounded">info</span>
+            Ingresa la URL completa incluyendo <strong>https://</strong>
+          </div>
+
+          <!-- URL list -->
+          <div class="item-list" id="urlList">
+            <div class="empty-state" id="urlEmpty">
+              <span class="material-symbols-rounded">travel_explore</span>
+              Aún no hay URLs registradas
+            </div>
+          </div>
+
+          <div class="tip-box">
+            <span class="material-symbols-rounded">lightbulb</span>
+            <p><strong>Tip:</strong> Agrega páginas de MINCETUR, portales de turismo del Perú, artículos científicos sobre las lomas costeras u otras fuentes relevantes.</p>
+          </div>
+        </div>
+
+        <div class="sync-bar">
+          <span class="sync-note"><span class="material-symbols-rounded">info</span>Presiona Enter o el botón para agregar una URL</span>
+          <div style="display:flex;align-items:center;gap:10px">
+            <div class="sync-ok" id="urlSyncOk"><span class="material-symbols-rounded">check_circle</span>¡Sincronizado!</div>
+            <button class="btn-sync" id="btnSyncUrl" onclick="syncUrls()">
+              <span class="material-symbols-rounded">cloud_sync</span>Sincronizar URLs
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /kb-grid -->
+  </div>
+</section>
+
+<!-- STATS SECTION -->
+<section class="kb-stats">
+  <div class="wrap" style="text-align:center">
+    <div class="eyebrow reveal" style="color:var(--accent-soft);margin-bottom:18px">Estado de la base de conocimiento</div>
+    <div class="kb-stats-grid">
+      <div class="kb-stat reveal">
+        <div class="kb-stat-num"><span id="statPdfs">0</span></div>
+        <div class="kb-stat-lbl">Documentos PDF</div>
+      </div>
+      <div class="kb-stat reveal">
+        <div class="kb-stat-num"><span id="statUrls">0</span></div>
+        <div class="kb-stat-lbl">Páginas web</div>
+      </div>
+      <div class="kb-stat reveal">
+        <div class="kb-stat-num"><span id="statTotal">0</span></div>
+        <div class="kb-stat-lbl">Fuentes totales</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="bg">
+    <div class="photo photo--lomas" style="position:absolute;inset:0">
+      <div class="dune-cap" style="height:50%"></div>
+      <span class="grain"></span>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="col">
+        <h4>Contacto</h4>
+        <ul class="foot-links">
+          <li><a href="contacto.html"><span class="foot-icon"><span class="material-symbols-rounded">place</span></span>Ancón, Lima – Perú</a></li>
+          <li><a href="tel:+51984350983"><span class="foot-icon"><span class="material-symbols-rounded">call</span></span>+51 984 350 983</a></li>
+          <li><a href="mailto:hola@lomasdeancon.pe"><span class="foot-icon"><span class="material-symbols-rounded">mail</span></span>hola@lomasdeancon.pe</a></li>
+          <li><a href="https://wa.me/51984350983"><span class="foot-icon"><svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 2C6.486 2 2 6.486 2 12c0 1.817.498 3.515 1.357 4.977L2 22l5.103-1.337A9.946 9.946 0 0 0 12 22c5.514 0 10-4.486 10-10S17.514 2 12 2zm4.438 13.132c-.238-.119-1.404-.691-1.621-.77-.217-.08-.374-.119-.531.12-.157.238-.61.77-.748.927-.138.157-.275.178-.513.06-.238-.12-1.004-.369-1.913-1.177-.707-.629-1.183-1.406-1.321-1.644-.138-.238-.015-.366.104-.485.106-.105.238-.275.357-.413.12-.138.157-.238.238-.396.08-.157.04-.297-.02-.416-.06-.119-.531-1.277-.727-1.748-.192-.459-.387-.397-.531-.404-.138-.007-.296-.009-.455-.009-.157 0-.414.06-.631.297-.217.238-.828.809-.828 1.974 0 1.165.848 2.291.966 2.449.119.157 1.669 2.549 4.046 3.576.567.244 1.009.39 1.353.499.569.181 1.087.155 1.496.094.456-.068 1.404-.574 1.602-1.128.198-.554.198-1.029.138-1.128-.059-.1-.217-.158-.455-.277z"/></svg></span>WhatsApp</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <h4>Síguenos</h4>
+        <ul class="foot-links">
+          <li><a href="#"><span class="foot-icon"><svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></span>Facebook</a></li>
+          <li><a href="#"><span class="foot-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></span>Instagram</a></li>
+          <li><a href="#"><span class="foot-icon"><svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.4a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#f5f0e8"/></svg></span>YouTube</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <h4>Navegación</h4>
+        <ul class="foot-links">
+          <li><a href="actividades.html"><span class="foot-icon"><span class="material-symbols-rounded">directions_run</span></span>Actividades</a></li>
+          <li><a href="voluntariado.html"><span class="foot-icon"><span class="material-symbols-rounded">back_hand</span></span>Voluntariado</a></li>
+          <li><a href="donaciones.html"><span class="foot-icon"><span class="material-symbols-rounded icon-fill">volunteer_activism</span></span>Donaciones</a></li>
+          <li><a href="faq.html"><span class="foot-icon"><span class="material-symbols-rounded">help</span></span>FAQ</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2025 Lomas de Ancón — Naturaleza y Turismo Perú SAC</span>
+      <span>Área de Conservación Regional</span>
+    </div>
+  </div>
+</footer>
+
+<script src="chatbot.js"></script>
+<script>
+// ── State ──────────────────────────────────────────────────
+let pdfItems = [];
+let urlItems = [];
+
+const STORAGE_KEY_PDF = 'kb_pdfs';
+const STORAGE_KEY_URL = 'kb_urls';
+const STORAGE_KEY_SYNC = 'kb_last_sync';
+
+// ── Init ───────────────────────────────────────────────────
+(function init() {
+  try {
+    const savedPdfs = localStorage.getItem(STORAGE_KEY_PDF);
+    const savedUrls = localStorage.getItem(STORAGE_KEY_URL);
+    if (savedPdfs) pdfItems = JSON.parse(savedPdfs);
+    if (savedUrls) urlItems = JSON.parse(savedUrls);
+  } catch(e) {}
+  renderPdfList();
+  renderUrlList();
+  updateStats();
+  updateBar();
+
+  // Reveal on scroll
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Nav scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  }, { passive: true });
+
+  // URL input enter key
+  document.getElementById('urlInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter') addUrl();
+  });
+})();
+
+// ── PDF handling ───────────────────────────────────────────
+const dropZone = document.getElementById('dropZone');
+const pdfInput = document.getElementById('pdfInput');
+
+dropZone.addEventListener('dragover', e => {
+  e.preventDefault();
+  dropZone.classList.add('drag-over');
+});
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+dropZone.addEventListener('drop', e => {
+  e.preventDefault();
+  dropZone.classList.remove('drag-over');
+  const files = Array.from(e.dataTransfer.files).filter(f => f.type === 'application/pdf');
+  files.forEach(addPdfFile);
+});
+pdfInput.addEventListener('change', e => {
+  Array.from(e.target.files).forEach(addPdfFile);
+  pdfInput.value = '';
+});
+
+function addPdfFile(file) {
+  const id = Date.now() + Math.random().toString(36).slice(2);
+  const item = {
+    id,
+    name: file.name,
+    size: formatBytes(file.size),
+    added: new Date().toLocaleDateString('es-PE', { day:'2-digit', month:'short', year:'numeric' }),
+    status: 'processing'
+  };
+  pdfItems.unshift(item);
+  savePdfs();
+  renderPdfList();
+  updateStats();
+  updateBar();
+  // Simulate processing
+  setTimeout(() => {
+    const idx = pdfItems.findIndex(p => p.id === id);
+    if (idx !== -1) {
+      pdfItems[idx].status = 'ready';
+      savePdfs();
+      renderPdfList();
+    }
+  }, 2200);
+}
+
+function removePdf(id) {
+  pdfItems = pdfItems.filter(p => p.id !== id);
+  savePdfs();
+  renderPdfList();
+  updateStats();
+  updateBar();
+}
+
+function renderPdfList() {
+  const list = document.getElementById('pdfList');
+  const empty = document.getElementById('pdfEmpty');
+  const badge = document.getElementById('pdfCount');
+  badge.textContent = pdfItems.length + (pdfItems.length === 1 ? ' PDF' : ' PDFs');
+
+  if (pdfItems.length === 0) {
+    list.innerHTML = '';
+    list.appendChild(empty || makeEmpty('folder_open', 'Aún no hay documentos cargados', 'pdfEmpty'));
+    return;
+  }
+
+  list.innerHTML = '<div class="item-list-head">Archivos cargados</div>';
+  pdfItems.forEach(item => {
+    const el = document.createElement('div');
+    el.className = 'kb-item';
+    el.dataset.id = item.id;
+    el.innerHTML = `
+      <div class="item-thumb pdf-thumb">
+        <span class="material-symbols-rounded icon-fill">picture_as_pdf</span>
+      </div>
+      <div class="item-info">
+        <div class="item-name" title="${escHtml(item.name)}">${escHtml(item.name)}</div>
+        <div class="item-meta">
+          <span class="item-status ${item.status}">
+            ${item.status === 'ready' ? '● Listo' : item.status === 'processing' ? '⏳ Procesando…' : '✕ Error'}
+          </span>
+          <span class="item-size">${item.size} · ${item.added}</span>
+        </div>
+      </div>
+      <button class="item-del" onclick="removePdf('${item.id}')" aria-label="Eliminar">
+        <span class="material-symbols-rounded">delete</span>
+      </button>
+    `;
+    list.appendChild(el);
+  });
+}
+
+function savePdfs() {
+  try { localStorage.setItem(STORAGE_KEY_PDF, JSON.stringify(pdfItems)); } catch(e) {}
+}
+
+// ── URL handling ───────────────────────────────────────────
+function addUrl() {
+  const input = document.getElementById('urlInput');
+  let val = input.value.trim();
+  if (!val) return;
+  if (!/^https?:\/\//i.test(val)) val = 'https://' + val;
+
+  try { new URL(val); } catch(e) {
+    input.style.borderColor = '#b41e1e';
+    input.style.boxShadow = '0 0 0 3px rgba(180,30,30,.1)';
+    setTimeout(() => { input.style.borderColor = ''; input.style.boxShadow = ''; }, 1600);
+    return;
+  }
+
+  if (urlItems.some(u => u.url === val)) {
+    input.value = '';
+    return;
+  }
+
+  const id = Date.now() + Math.random().toString(36).slice(2);
+  let displayHost = '';
+  try { displayHost = new URL(val).hostname.replace(/^www\./, ''); } catch(e) { displayHost = val; }
+
+  const item = {
+    id,
+    url: val,
+    host: displayHost,
+    added: new Date().toLocaleDateString('es-PE', { day:'2-digit', month:'short', year:'numeric' }),
+    status: 'processing'
+  };
+  urlItems.unshift(item);
+  saveUrls();
+  renderUrlList();
+  updateStats();
+  updateBar();
+  input.value = '';
+
+  setTimeout(() => {
+    const idx = urlItems.findIndex(u => u.id === id);
+    if (idx !== -1) {
+      urlItems[idx].status = 'ready';
+      saveUrls();
+      renderUrlList();
+    }
+  }, 1800);
+}
+
+function removeUrl(id) {
+  urlItems = urlItems.filter(u => u.id !== id);
+  saveUrls();
+  renderUrlList();
+  updateStats();
+  updateBar();
+}
+
+function renderUrlList() {
+  const list = document.getElementById('urlList');
+  const badge = document.getElementById('urlCount');
+  badge.textContent = urlItems.length + (urlItems.length === 1 ? ' URL' : ' URLs');
+
+  if (urlItems.length === 0) {
+    list.innerHTML = '<div class="empty-state" id="urlEmpty"><span class="material-symbols-rounded">travel_explore</span>Aún no hay URLs registradas</div>';
+    return;
+  }
+
+  list.innerHTML = '<div class="item-list-head">Páginas registradas</div>';
+  urlItems.forEach(item => {
+    const el = document.createElement('div');
+    el.className = 'kb-item';
+    el.innerHTML = `
+      <div class="item-thumb url-thumb">
+        <span class="material-symbols-rounded">language</span>
+      </div>
+      <div class="item-info">
+        <div class="item-name" title="${escHtml(item.url)}">${escHtml(item.url)}</div>
+        <div class="item-meta">
+          <span class="item-status ${item.status}">
+            ${item.status === 'ready' ? '● Indexada' : item.status === 'processing' ? '⏳ Indexando…' : '✕ Error'}
+          </span>
+          <span class="item-size">${item.host} · ${item.added}</span>
+        </div>
+      </div>
+      <button class="item-del" onclick="removeUrl('${item.id}')" aria-label="Eliminar">
+        <span class="material-symbols-rounded">delete</span>
+      </button>
+    `;
+    list.appendChild(el);
+  });
+}
+
+function saveUrls() {
+  try { localStorage.setItem(STORAGE_KEY_URL, JSON.stringify(urlItems)); } catch(e) {}
+}
+
+// ── Sync ───────────────────────────────────────────────────
+function syncPdfs() {
+  const btn = document.getElementById('btnSyncPdf');
+  btn.classList.add('syncing');
+  btn.innerHTML = '<span class="material-symbols-rounded spin">sync</span>Sincronizando…';
+  btn.disabled = true;
+  setTimeout(() => {
+    btn.classList.remove('syncing');
+    btn.disabled = false;
+    btn.innerHTML = '<span class="material-symbols-rounded">cloud_sync</span>Sincronizar PDFs';
+    const ok = document.getElementById('pdfSyncOk');
+    ok.style.display = 'flex';
+    saveLastSync();
+    updateBar();
+    setTimeout(() => { ok.style.display = 'none'; }, 3000);
+  }, 1400);
+}
+
+function syncUrls() {
+  const btn = document.getElementById('btnSyncUrl');
+  btn.classList.add('syncing');
+  btn.innerHTML = '<span class="material-symbols-rounded spin">sync</span>Sincronizando…';
+  btn.disabled = true;
+  setTimeout(() => {
+    btn.classList.remove('syncing');
+    btn.disabled = false;
+    btn.innerHTML = '<span class="material-symbols-rounded">cloud_sync</span>Sincronizar URLs';
+    const ok = document.getElementById('urlSyncOk');
+    ok.style.display = 'flex';
+    saveLastSync();
+    updateBar();
+    setTimeout(() => { ok.style.display = 'none'; }, 3000);
+  }, 1200);
+}
+
+function saveLastSync() {
+  const now = new Date().toLocaleTimeString('es-PE', { hour:'2-digit', minute:'2-digit' });
+  try { localStorage.setItem(STORAGE_KEY_SYNC, now); } catch(e) {}
+}
+
+// ── Helpers ────────────────────────────────────────────────
+function updateStats() {
+  document.getElementById('statPdfs').textContent = pdfItems.length;
+  document.getElementById('statUrls').textContent = urlItems.length;
+  document.getElementById('statTotal').textContent = pdfItems.length + urlItems.length;
+}
+
+function updateBar() {
+  document.getElementById('barDocs').textContent = pdfItems.length + (pdfItems.length === 1 ? ' documento' : ' documentos');
+  document.getElementById('barUrls').textContent = urlItems.length + (urlItems.length === 1 ? ' URL' : ' URLs');
+  try {
+    const t = localStorage.getItem(STORAGE_KEY_SYNC);
+    document.getElementById('barLastSync').textContent = t ? 'Última sync: ' + t : 'Sin sincronizar';
+  } catch(e) {}
+}
+
+function formatBytes(bytes) {
+  if (bytes < 1024) return bytes + ' B';
+  if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+  return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+</script>
+</body>
+</html>

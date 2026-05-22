@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="es-PE">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Carrito — Lomas de Ancón</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;0,9..144,800;0,9..144,900;1,9..144,400&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Rounded" rel="stylesheet"/>
+<link rel="stylesheet" href="styles.css">
+<style>
+.cart-layout{display:grid;grid-template-columns:1fr 360px;gap:32px;align-items:start}
+@media(max-width:900px){.cart-layout{grid-template-columns:1fr}}
+.cart-items{display:flex;flex-direction:column;gap:16px}
+.cart-item{display:grid;grid-template-columns:64px 1fr auto auto;gap:16px;align-items:center;background:#fff;border-radius:16px;padding:20px;border:1px solid var(--rule);box-shadow:var(--shadow-card)}
+@media(max-width:560px){.cart-item{grid-template-columns:1fr auto;grid-template-rows:auto auto}}
+.cart-item-ico{width:64px;height:64px;border-radius:12px;overflow:hidden;position:relative;flex:0 0 64px}
+.cart-item-name{font-weight:600;font-size:15px;color:var(--earth-deep);margin-bottom:4px}
+.cart-item-unit{font-size:12.5px;color:var(--earth-warm)}
+.cart-item-price{font-family:var(--serif);font-weight:700;font-size:22px;color:var(--olive-deep);white-space:nowrap;font-variation-settings:"opsz" 36}
+.qty-ctrl{display:flex;align-items:center;border:1.5px solid var(--rule);border-radius:999px;overflow:hidden}
+.qty-ctrl button{width:36px;height:36px;background:#fff;border:none;cursor:pointer;font-size:18px;color:var(--earth-deep);transition:background .2s}
+.qty-ctrl button:hover{background:var(--cream)}
+.qty-ctrl span{min-width:36px;text-align:center;font-weight:700;font-size:15px}
+.cart-empty{text-align:center;padding:80px 24px;color:var(--ink-soft)}
+.cart-summary{background:#fff;border-radius:18px;padding:28px;border:1px solid var(--rule);box-shadow:var(--shadow-card);position:sticky;top:90px}
+.cart-summary h3{font-family:var(--serif);font-weight:700;font-size:22px;color:var(--earth-deep);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--rule);font-variation-settings:"opsz" 36}
+.summary-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;font-size:14.5px;color:var(--ink-soft)}
+.summary-row.total{border-top:1px solid var(--rule);margin-top:8px;padding-top:16px;font-weight:700;font-size:18px;color:var(--earth-deep)}
+.summary-row.total .val{font-family:var(--serif);font-weight:800;color:var(--olive-deep);font-variation-settings:"opsz" 36}
+.remove-btn{background:none;border:none;cursor:pointer;color:var(--earth-warm);display:grid;place-items:center;width:32px;height:32px;border-radius:50%;transition:background .2s,color .2s}
+.remove-btn:hover{background:var(--cream);color:var(--accent)}
+</style>
+</head>
+<body><nav class="nav" id="nav"><div class="wrap"><a href="index.html" class="brand"><span class="brand-mark"><span class="mark-inner"><span class="peak"></span><span class="bird">⌃</span></span></span><span class="brand-name">Lomas de Ancón<small>ACR · MINCETUR</small></span></a><div class="nav-actions"><div class="nav-links"><a href="index.html">Inicio</a><a href="nosotros.html">Nosotros</a><a href="actividades.html">Actividades</a><a href="voluntariado.html">Voluntariado</a><a href="negocios-locales.html">Negocios Locales</a><a href="blog.html">Blog</a><a href="faq.html">FAQ</a><a href="contacto.html">Contacto</a></div><a href="carrito.html" class="icon-btn cart-btn" aria-label="Carrito"><span class="material-symbols-rounded">shopping_bag</span><span class="badge" id="cartBadge">0</span></a><a href="donaciones.html" class="btn-donate"><span class="material-symbols-rounded icon-fill">volunteer_activism</span><span>Donar</span></a></div></div></nav>
+<div class="page-hero" style="min-height:240px"><div class="photo photo--dune" style="position:absolute;inset:0"><div class="dune-cap"></div><span class="grain"></span></div><div class="page-hero-inner" style="padding:60px 24px 40px"><div class="breadcrumb"><a href="index.html">Inicio</a><span class="sep">›</span><span>Carrito</span></div><h1 style="font-size:clamp(32px,5vw,56px)">Tu carrito</h1></div></div>
+<section class="section" style="background:var(--cream-soft)"><div class="wrap"><div id="cartContent"></div></div></section>
+<footer class="footer"><div class="bg"><div class="photo photo--lomas" style="position:absolute;inset:0"><div class="dune-cap" style="height:50%"></div><span class="grain"></span></div></div><div class="wrap"><div class="foot-grid"><div class="col"><h4>Contacto</h4><ul class="foot-links"><li><a href="contacto.html"><span class="foot-icon"><span class="material-symbols-rounded">place</span></span>Ancón, Lima – Perú</a></li><li><a href="tel:+51984350983"><span class="foot-icon"><span class="material-symbols-rounded">call</span></span>+51 984 350 983</a></li><li><a href="mailto:hola@lomasdeancon.pe"><span class="foot-icon"><span class="material-symbols-rounded">mail</span></span>hola@lomasdeancon.pe</a></li><li><a href="https://wa.me/51984350983"><span class="foot-icon"><svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 2C6.486 2 2 6.486 2 12c0 1.817.498 3.515 1.357 4.977L2 22l5.103-1.337A9.946 9.946 0 0 0 12 22c5.514 0 10-4.486 10-10S17.514 2 12 2zm4.438 13.132c-.238-.119-1.404-.691-1.621-.77-.217-.08-.374-.119-.531.12-.157.238-.61.77-.748.927-.138.157-.275.178-.513.06-.238-.12-1.004-.369-1.913-1.177-.707-.629-1.183-1.406-1.321-1.644-.138-.238-.015-.366.104-.485.106-.105.238-.275.357-.413.12-.138.157-.238.238-.396.08-.157.04-.297-.02-.416-.06-.119-.531-1.277-.727-1.748-.192-.459-.387-.397-.531-.404-.138-.007-.296-.009-.455-.009-.157 0-.414.06-.631.297-.217.238-.828.809-.828 1.974 0 1.165.848 2.291.966 2.449.119.157 1.669 2.549 4.046 3.576.567.244 1.009.39 1.353.499.569.181 1.087.155 1.496.094.456-.068 1.404-.574 1.602-1.128.198-.554.198-1.029.138-1.128-.059-.1-.217-.158-.455-.277z"/></svg></span>WhatsApp</a></li></ul></div><div class="col"><h4>Síguenos</h4><ul class="foot-links"><li><a href="#"><span class="foot-icon"><svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></span>Facebook</a></li><li><a href="#"><span class="foot-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></span>Instagram</a></li><li><a href="#"><span class="foot-icon"><svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.24 8.24 0 0 0 4.83 1.56V6.79a4.85 4.85 0 0 1-1.06-.1z"/></svg></span>TikTok</a></li><li><a href="#"><span class="foot-icon"><svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.96 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.96 1.95C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75,15.02 15.5,12 9.75,8.98" fill="white"/></svg></span>YouTube</a></li></ul></div><div class="col"><h4>Legal</h4><ul class="foot-links"><li><a href="#"><span class="foot-icon"><span class="material-symbols-rounded">description</span></span>Términos y condiciones</a></li><li><a href="#"><span class="foot-icon"><span class="material-symbols-rounded">lock</span></span>Política de privacidad</a></li></ul><a href="#" class="reclamaciones"><span class="foot-icon"><span class="material-symbols-rounded">forum</span></span><strong>Libro de Reclamaciones</strong></a></div></div><div class="foot-bottom"><span>© 2026 Lomas de Ancón · Todos los derechos reservados.</span><span class="mono">Hecho con 💚 para la comunidad de Ancón</span></div></div></footer>
+<script>
+(function(){
+  var nav=document.getElementById('nav');
+  if(nav)window.addEventListener('scroll',function(){nav.classList.toggle('scrolled',window.scrollY>30)},{passive:true});
+  var b=document.getElementById('cartBadge');
+  var PHOTOS=['photo--dune','photo--water','photo--lomas','photo--night','photo--dusk','photo--trail','photo--rock'];
+  function getCart(){return JSON.parse(localStorage.getItem('lda_cart')||'[]')}
+  function saveCart(c){localStorage.setItem('lda_cart',JSON.stringify(c));}
+  function render(){
+    var cart=getCart();
+    var total=cart.reduce(function(s,i){return s+i.qty},0);
+    if(b)b.textContent=total||0;
+    var el=document.getElementById('cartContent');
+    if(cart.length===0){
+      el.innerHTML='<div class="cart-empty"><span class="material-symbols-rounded" style="font-size:64px;color:var(--rule);display:block;margin-bottom:20px">shopping_bag</span><h3 style="font-family:var(--serif);font-weight:700;font-size:26px;color:var(--earth-deep);margin-bottom:12px">Tu carrito esta vacio</h3><p style="margin-bottom:28px">Explora nuestras actividades y reserva tu experiencia.</p><a href="actividades.html" class="btn-cta lg"><span class="material-symbols-rounded">explore</span>Ver actividades</a></div>';
+      return;
+    }
+    var subtotal=cart.reduce(function(s,i){return s+i.price*i.qty},0);
+    var itemsHTML=cart.map(function(item,idx){
+      var ph=PHOTOS[idx%PHOTOS.length];
+      return '<div class="cart-item">'+
+        '<div class="cart-item-ico" style="position:relative"><div class="photo '+ph+'" style="position:absolute;inset:0"><span class="grain"></span></div></div>'+
+        '<div><div class="cart-item-name">'+item.name+'</div><div class="cart-item-unit">S/ '+item.price+' x '+item.unit+'</div></div>'+
+        '<div class="qty-ctrl"><button onclick="changeQty('+idx+',-1)">&#8722;</button><span>'+item.qty+'</span><button onclick="changeQty('+idx+',1)">+</button></div>'+
+        '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px"><div class="cart-item-price">S/ '+(item.price*item.qty).toFixed(2)+'</div><button class="remove-btn" onclick="removeItem('+idx+')" aria-label="Eliminar"><span class="material-symbols-rounded">delete</span></button></div>'+
+        '</div>';
+    }).join('');
+    var summaryRows=cart.map(function(i){return '<div class="summary-row"><span>'+i.name+'</span><span>S/ '+(i.price*i.qty).toFixed(2)+'</span></div>';}).join('');
+    var summaryHTML='<div class="cart-summary"><h3>Resumen del pedido</h3>'+summaryRows+'<div class="summary-row total"><span>Total</span><span class="val">S/ '+subtotal.toFixed(2)+'</span></div><div style="margin-top:20px;display:flex;flex-direction:column;gap:12px"><button class="btn-wa-big" onclick="checkout()"><span class="material-symbols-rounded">chat</span>Confirmar por WhatsApp</button><a href="actividades.html" class="btn-outline" style="text-align:center;justify-content:center">Agregar mas actividades</a></div><p style="margin-top:16px;font-size:12.5px;color:var(--earth-warm);text-align:center">Coordinamos fecha y pago por WhatsApp</p></div>';
+    el.innerHTML='<div class="cart-layout"><div class="cart-items">'+itemsHTML+'</div>'+summaryHTML+'</div>';
+  }
+  window.changeQty=function(idx,delta){var c=getCart();c[idx].qty=Math.max(1,c[idx].qty+delta);saveCart(c);render();}
+  window.removeItem=function(idx){var c=getCart();c.splice(idx,1);saveCart(c);render();}
+  window.checkout=function(){
+    var c=getCart();
+    var lines=c.map(function(i){return '- '+i.name+' x '+i.qty+' = S/ '+(i.price*i.qty).toFixed(2);}).join('\n');
+    var total=c.reduce(function(s,i){return s+i.price*i.qty},0);
+    var msg='Hola! Quiero reservar en Lomas de Ancon:\n\n'+lines+'\n\nTotal: S/ '+total.toFixed(2)+'\n\nCuando podemos coordinar?';
+    window.open('https://wa.me/51984350983?text='+encodeURIComponent(msg),'_blank');
+  }
+  render();
+})();
+</script>
+<script src="chatbot.js"></script>
+</body></html>

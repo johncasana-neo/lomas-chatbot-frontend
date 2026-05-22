@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="es-PE">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Actividades — Lomas de Ancón</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;0,9..144,800;0,9..144,900;1,9..144,400&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Rounded" rel="stylesheet"/>
+<link rel="stylesheet" href="styles.css">
+<style>
+.acts-layout{display:grid;grid-template-columns:1fr 320px;gap:40px;align-items:start}
+@media(max-width:1000px){.acts-layout{grid-template-columns:1fr}}
+.acts-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:680px){.acts-grid-2{grid-template-columns:1fr}}
+.sidebar-widget{background:#fff;border-radius:18px;padding:24px;border:1px solid var(--rule);box-shadow:var(--shadow-card);margin-bottom:20px}
+.sidebar-widget h4{font-weight:700;font-size:15px;color:var(--earth-deep);margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--rule)}
+.google-rating{text-align:center;padding:8px 0}
+.google-rating .stars{font-size:28px;letter-spacing:4px;color:#f4b400;margin:8px 0}
+.google-rating .score{font-family:var(--serif);font-size:48px;font-weight:800;color:var(--olive-deep);line-height:1}
+.google-rating .count{font-size:13px;color:var(--earth-warm);margin-top:4px}
+.ally-mini{display:flex;flex-direction:column;gap:10px}
+.ally-mini-item{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--ink-soft)}
+.ally-mini-item .dot{width:32px;height:32px;border-radius:8px;background:var(--olive-deep);color:#fff;display:grid;place-items:center;font-size:12px;font-weight:700;flex:0 0 32px}
+</style>
+</head>
+<body><nav class="nav" id="nav"><div class="wrap"><a href="index.html" class="brand"><span class="brand-mark"><span class="mark-inner"><span class="peak"></span><span class="bird">⌃</span></span></span><span class="brand-name">Lomas de Ancón<small>ACR · MINCETUR</small></span></a><div class="nav-actions"><div class="nav-links"><a href="index.html">Inicio</a><a href="nosotros.html">Nosotros</a><a href="actividades.html" class="active">Actividades</a><a href="voluntariado.html">Voluntariado</a><a href="negocios-locales.html">Negocios Locales</a><a href="blog.html">Blog</a><a href="faq.html">FAQ</a><a href="contacto.html">Contacto</a></div><a href="carrito.html" class="icon-btn cart-btn" aria-label="Carrito"><span class="material-symbols-rounded">shopping_bag</span><span class="badge" id="cartBadge">0</span></a><a href="donaciones.html" class="btn-donate"><span class="material-symbols-rounded icon-fill">volunteer_activism</span><span>Donar</span></a></div></div></nav>
+<div class="page-hero"><div class="photo photo--rock" style="position:absolute;inset:0"><span class="silhouette" style="left:58%;bottom:40%;width:5px;height:14px"></span><span class="grain"></span></div><div class="page-hero-inner"><div class="breadcrumb"><a href="index.html">Inicio</a><span class="sep">›</span><span>Actividades</span></div><h1>Actividades en la Bahía,<br>Desierto y Lomas de Ancón</h1><p class="sub">7 experiencias con guías locales · Cada reserva financia a la comunidad</p></div></div>
+
+<section class="section" style="background:var(--cream-soft)">
+  <div class="wrap">
+    <p style="max-width:68ch;margin:0 auto 48px;text-align:center;color:var(--ink-soft);font-size:16px">Desde sandboard en las dunas hasta kayak en la bahía — cada actividad es guiada por especialistas locales y forma parte de un modelo de turismo con propósito social.</p>
+    <div class="acts-layout">
+      <div>
+        <div class="acts-grid-2">
+          <div class="act-card reveal" data-id="escalada-rapel" data-name="Clase de Escalada y Rápel" data-price="60" data-unit="persona">
+            <div class="photo photo--rock" aria-hidden="true"><div class="dune-cap" style="height:30%"></div><span class="grain"></span><span class="photo-tag">Escalada</span></div>
+            <span class="arrow"><span class="material-symbols-rounded">arrow_outward</span></span>
+            <div class="body">
+              <div class="num">01 — Escalada</div>
+              <h3>Clase de Escalada y Rápel</h3>
+              <div class="meta"><span class="material-symbols-rounded" style="font-size:14px">schedule</span>5:00–7:00 pm · mín. 3 personas</div>
+              <div class="act-footer">
+                <div class="price">S/ 60<small>/ persona</small></div>
+                <button class="btn-reservar" onclick="addToCart('escalada-rapel','Clase de Escalada y Rápel',60,'persona')">+ Reservar</button>
+              </div>
+            </div>
+          </div><div class="act-card reveal" data-id="sandboard-escalada" data-name="Clases de Sandboard y Escalada" data-price="100" data-unit="paquete">
+            <div class="photo photo--dune" aria-hidden="true"><div class="dune-cap" style="height:30%"></div><span class="grain"></span><span class="photo-tag">Clases</span></div>
+            <span class="arrow"><span class="material-symbols-rounded">arrow_outward</span></span>
+            <div class="body">
+              <div class="num">02 — Clases</div>
+              <h3>Clases de Sandboard y Escalada</h3>
+              <div class="meta"><span class="material-symbols-rounded" style="font-size:14px">schedule</span>Niños (4 sesiones) · Adultos (3 sesiones)</div>
+              <div class="act-footer">
+                <div class="price">S/ 100<small>/ paquete</small></div>
+                <button class="btn-reservar" onclick="addToCart('sandboard-escalada','Clases de Sandboard y Escalada',100,'paquete')">+ Reservar</button>
+              </div>
+            </div>
+          </div><div class="act-card reveal" data-id="hiking" data-name="Hiking en Lomas de Ancón" data-price="55" data-unit="persona">
+            <div class="photo photo--lomas" aria-hidden="true"><div class="dune-cap" style="height:30%"></div><span class="grain"></span><span class="photo-tag">Hiking</span></div>
+            <span class="arrow"><span class="material-symbols-rounded">arrow_outward</span></span>
+            <div class="body">
+              <div class="num">03 — Hiking</div>
+              <h3>Hiking en Lomas de Ancón</h3>
+              <div class="meta"><span class="material-symbols-rounded" style="font-size:14px">schedule</span>Diurno o luna llena · mín. 3 personas</div>
+              <div class="act-footer">
+                <div class="price">S/ 55<small>/ persona</small></div>
+                <button class="btn-reservar" onclick="addToCart('hiking','Hiking en Lomas de Ancón',55,'persona')">+ Reservar</button>
+              </div>
+            </div>
+          </div><div class="act-card reveal" data-id="kayak" data-name="Kayak y Paddle en la Bahía de Ancón" data-price="90" data-unit="embarcación">
+            <div class="photo photo--water" aria-hidden="true"><div class="dune-cap" style="height:30%"></div><span class="grain"></span><span class="photo-tag">Acuático</span></div>
+            <span class="arrow"><span class="material-symbols-rounded">arrow_outward</span></span>
+            <div class="body">
+              <div class="num">04 — Acuático</div>
+              <h3>Kayak y Paddle en la Bahía de Ancón</h3>
+              <div class="meta"><span class="material-symbols-rounded" style="font-size:14px">schedule</span>2 h · 9am, 11am, 2pm o 6pm</div>
+              <div class="act-footer">
+                <div class="price">S/ 90<small>/ embarcación</small></div>
+                <button class="btn-reservar" onclick="addToCart('kayak','Kayak y Paddle en la Bahía de Ancón',90,'embarcación')">+ Reservar</button>
+              </div>
+            </div>
+          </div><div class="act-card reveal" data-id="sandboard" data-name="Sandboard en las Lomas de Ancón" data-price="72" data-unit="persona">
+            <div class="photo photo--dusk" aria-hidden="true"><div class="dune-cap" style="height:30%"></div><span class="grain"></span><span class="photo-tag">Sandboard</span></div>
+            <span class="arrow"><span class="material-symbols-rounded">arrow_outward</span></span>
+            <div class="body">
+              <div class="num">05 — Sandboard</div>
+              <h3>Sandboard en las Lomas de Ancón</h3>
+              <div class="meta"><span class="material-symbols-rounded" style="font-size:14px">schedule</span>3 h · 8:00 am o 3:00 pm · desde 8 años</div>
+              <div class="act-footer">
+                <div class="price">S/ 72<small>/ persona</small></div>
+                <button class="btn-reservar" onclick="addToCart('sandboard','Sandboard en las Lomas de Ancón',72,'persona')">+ Reservar</button>
+              </div>
+            </div>
+          </div><div class="act-card reveal" data-id="trekking" data-name="Trekking en Lomas de Ancón" data-price="75" data-unit="persona">
+            <div class="photo photo--night" aria-hidden="true"><div class="dune-cap" style="height:30%"></div><span class="grain"></span><span class="photo-tag">Trekking</span></div>
+            <span class="arrow"><span class="material-symbols-rounded">arrow_outward</span></span>
+            <div class="body">
+              <div class="num">06 — Trekking</div>
+              <h3>Trekking en Lomas de Ancón</h3>
+              <div class="meta"><span class="material-symbols-rounded" style="font-size:14px">schedule</span>4:00 pm → 11:00 am · noche completa</div>
+              <div class="act-footer">
+                <div class="price">S/ 75<small>/ persona</small></div>
+                <button class="btn-reservar" onclick="addToCart('trekking','Trekking en Lomas de Ancón',75,'persona')">+ Reservar</button>
+              </div>
+            </div>
+          </div><div class="act-card reveal" data-id="trineo" data-name="Trineo en las Dunas de Lomas de Ancón" data-price="55" data-unit="persona">
+            <div class="photo photo--dune" aria-hidden="true"><div class="dune-cap" style="height:30%"></div><span class="grain"></span><span class="photo-tag">Trineo</span></div>
+            <span class="arrow"><span class="material-symbols-rounded">arrow_outward</span></span>
+            <div class="body">
+              <div class="num">07 — Trineo</div>
+              <h3>Trineo en las Dunas de Lomas de Ancón</h3>
+              <div class="meta"><span class="material-symbols-rounded" style="font-size:14px">schedule</span>3 h · 8:00 am o 3:00 pm · desde 5 años</div>
+              <div class="act-footer">
+                <div class="price">S/ 55<small>/ persona</small></div>
+                <button class="btn-reservar" onclick="addToCart('trineo','Trineo en las Dunas de Lomas de Ancón',55,'persona')">+ Reservar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <aside>
+        <div class="sidebar-widget reveal">
+          <h4>Reseñas Google</h4>
+          <div class="google-rating">
+            <div class="google-logo" style="justify-content:center;font-size:16px;margin-bottom:4px"><span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span></div>
+            <div class="score">4.8</div>
+            <div class="stars">★★★★★</div>
+            <div class="count">A base de 10+ reseñas</div>
+          </div>
+        </div>
+        <div class="sidebar-widget reveal">
+          <h4>Aliados institucionales</h4>
+          <div class="ally-mini">
+            <div class="ally-mini-item"><span class="dot">M</span>MINCETUR</div><div class="ally-mini-item"><span class="dot">S</span>SERNANP</div><div class="ally-mini-item"><span class="dot">A</span>Mun. Ancón</div><div class="ally-mini-item"><span class="dot">G</span>GORE Lima</div><div class="ally-mini-item"><span class="dot">P</span>PromPerú</div>
+          </div>
+        </div>
+        <div class="sidebar-widget reveal" style="background:var(--olive-deep);color:#fff;border-color:transparent">
+          <h4 style="color:var(--sand-soft);border-bottom-color:rgba(255,255,255,.15)">¿Tienes dudas?</h4>
+          <p style="font-size:14px;color:rgba(255,255,255,.82);margin-bottom:16px">Escríbenos por WhatsApp para asesorarte sobre qué actividad es mejor para ti.</p>
+          <a href="https://wa.me/51984350983?text=Hola%2C%20quiero%20saber%20más%20sobre%20las%20actividades" class="btn-wa-big"><span class="material-symbols-rounded">chat</span>Consultar actividades</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+<footer class="footer"><div class="bg"><div class="photo photo--lomas" style="position:absolute;inset:0"><div class="dune-cap" style="height:50%"></div><span class="grain"></span></div></div><div class="wrap"><div class="foot-grid"><div class="col"><h4>Contacto</h4><ul class="foot-links"><li><a href="contacto.html"><span class="foot-icon"><span class="material-symbols-rounded">place</span></span>Ancón, Lima – Perú</a></li><li><a href="tel:+51984350983"><span class="foot-icon"><span class="material-symbols-rounded">call</span></span>+51 984 350 983</a></li><li><a href="mailto:hola@lomasdeancon.pe"><span class="foot-icon"><span class="material-symbols-rounded">mail</span></span>hola@lomasdeancon.pe</a></li><li><a href="https://wa.me/51984350983"><span class="foot-icon"><svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 2C6.486 2 2 6.486 2 12c0 1.817.498 3.515 1.357 4.977L2 22l5.103-1.337A9.946 9.946 0 0 0 12 22c5.514 0 10-4.486 10-10S17.514 2 12 2zm4.438 13.132c-.238-.119-1.404-.691-1.621-.77-.217-.08-.374-.119-.531.12-.157.238-.61.77-.748.927-.138.157-.275.178-.513.06-.238-.12-1.004-.369-1.913-1.177-.707-.629-1.183-1.406-1.321-1.644-.138-.238-.015-.366.104-.485.106-.105.238-.275.357-.413.12-.138.157-.238.238-.396.08-.157.04-.297-.02-.416-.06-.119-.531-1.277-.727-1.748-.192-.459-.387-.397-.531-.404-.138-.007-.296-.009-.455-.009-.157 0-.414.06-.631.297-.217.238-.828.809-.828 1.974 0 1.165.848 2.291.966 2.449.119.157 1.669 2.549 4.046 3.576.567.244 1.009.39 1.353.499.569.181 1.087.155 1.496.094.456-.068 1.404-.574 1.602-1.128.198-.554.198-1.029.138-1.128-.059-.1-.217-.158-.455-.277z"/></svg></span>WhatsApp</a></li></ul></div><div class="col"><h4>Síguenos</h4><ul class="foot-links"><li><a href="#"><span class="foot-icon"><svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></span>Facebook</a></li><li><a href="#"><span class="foot-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></span>Instagram</a></li><li><a href="#"><span class="foot-icon"><svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.24 8.24 0 0 0 4.83 1.56V6.79a4.85 4.85 0 0 1-1.06-.1z"/></svg></span>TikTok</a></li><li><a href="#"><span class="foot-icon"><svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.96 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.96 1.95C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75,15.02 15.5,12 9.75,8.98" fill="white"/></svg></span>YouTube</a></li></ul></div><div class="col"><h4>Legal</h4><ul class="foot-links"><li><a href="#"><span class="foot-icon"><span class="material-symbols-rounded">description</span></span>Términos y condiciones</a></li><li><a href="#"><span class="foot-icon"><span class="material-symbols-rounded">lock</span></span>Política de privacidad</a></li></ul><a href="#" class="reclamaciones"><span class="foot-icon"><span class="material-symbols-rounded">forum</span></span><strong>Libro de Reclamaciones</strong></a></div></div><div class="foot-bottom"><span>© 2026 Lomas de Ancón · Todos los derechos reservados.</span><span class="mono">Hecho con 💚 para la comunidad de Ancón</span></div></div></footer>
+<script>
+function addToCart(id,name,price,unit){
+  let cart=JSON.parse(localStorage.getItem('lda_cart')||'[]');
+  const idx=cart.findIndex(i=>i.id===id);
+  if(idx>-1){cart[idx].qty++;}else{cart.push({id,name,price,unit,qty:1});}
+  localStorage.setItem('lda_cart',JSON.stringify(cart));
+  const b=document.getElementById('cartBadge');
+  if(b)b.textContent=cart.reduce((s,i)=>s+i.qty,0);
+  const btn=event.target;btn.textContent='✓ Agregado';btn.style.background='#2d5a27';
+  setTimeout(()=>{btn.textContent='+ Reservar';btn.style.background='';},1800);
+}
+</script>
+<script>(function(){const nav=document.getElementById('nav');if(nav)window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>30),{passive:true});const io=new IntersectionObserver(e=>e.forEach(el=>{if(el.isIntersecting){el.target.classList.add('in');io.unobserve(el.target)}}),{threshold:.14});document.querySelectorAll('.reveal').forEach(el=>io.observe(el));const easeOut=t=>1-Math.pow(1-t,3);const ioC=new IntersectionObserver(e=>e.forEach(el=>{if(!el.isIntersecting||el.target.dataset.done)return;el.target.dataset.done='1';const target=+el.target.dataset.target,dur=1400,t0=performance.now();(function step(now){const p=Math.min(1,(now-t0)/dur);el.target.textContent=Math.round(target*easeOut(p));if(p<1)requestAnimationFrame(step);})(t0);}),{threshold:.4});document.querySelectorAll('.counter').forEach(el=>ioC.observe(el));const cart=JSON.parse(localStorage.getItem('lda_cart')||'[]');const b=document.getElementById('cartBadge');if(b)b.textContent=cart.reduce((s,i)=>s+i.qty,0)||0;})();</script>
+<script src="chatbot.js"></script>
+</body></html>

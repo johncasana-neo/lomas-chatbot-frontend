@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="es-PE">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Donaciones — Lomas de Ancón</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;0,9..144,800;0,9..144,900;1,9..144,400&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Rounded" rel="stylesheet"/>
+<link rel="stylesheet" href="styles.css">
+<style>
+.donate-hero{position:relative;overflow:hidden;min-height:340px;display:flex;align-items:center;justify-content:center;text-align:center;color:#fff;padding-top:80px}
+.donate-hero .photo{position:absolute;inset:0;z-index:0}
+.donate-hero::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(20,12,5,.5),rgba(20,12,5,.78))}
+.donate-hero-inner{position:relative;z-index:2;padding:90px 24px}
+.donate-hero h1{font-family:var(--serif);font-weight:800;font-style:italic;font-size:clamp(42px,8vw,88px);line-height:.95;letter-spacing:-.02em;font-variation-settings:"opsz" 144}
+.transform-grid{display:grid;grid-template-columns:1fr 1fr}
+@media(max-width:800px){.transform-grid{grid-template-columns:1fr}}
+.transform-text{padding:clamp(56px,8vw,100px) clamp(32px,5vw,72px)}
+.transform-text h2{font-family:var(--serif);font-weight:700;font-size:clamp(28px,3.6vw,42px);line-height:1.1;color:#7bcf6a;margin-bottom:20px}
+.transform-text p{color:rgba(255,255,255,.82);font-size:16px;line-height:1.65;max-width:46ch}
+.transform-img{position:relative;min-height:380px;overflow:hidden}
+.transform-img .photo{position:absolute;inset:0}
+.donate-plans{background:linear-gradient(180deg,#2d4520,#1f3015);color:#fff;padding:clamp(72px,10vw,120px) 0}
+.benefits{display:flex;flex-wrap:wrap;justify-content:center;gap:14px 32px;margin:0 auto 48px;max-width:900px;list-style:none}
+.benefits li{display:flex;align-items:center;gap:10px;color:rgba(255,255,255,.82);font-size:14.5px}
+.benefits li .check{width:22px;height:22px;border-radius:50%;background:var(--sand);color:var(--olive-darker);display:grid;place-items:center}
+.benefits li .check .material-symbols-rounded{font-size:14px}
+.big-heart{width:84px;height:84px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);margin:0 auto 22px;display:grid;place-items:center;color:var(--accent);box-shadow:0 0 0 12px rgba(255,255,255,.05)}
+.big-heart .material-symbols-rounded{font-size:42px}
+.volunteer-link{display:inline-flex;align-items:center;gap:8px;margin-top:28px;color:var(--accent);font-weight:700;font-size:14px;padding:10px 18px;border-radius:999px;background:rgba(212,118,59,.12);border:1px solid rgba(212,118,59,.35);transition:background .2s,transform .2s}
+.volunteer-link:hover{background:rgba(212,118,59,.22);transform:translateY(-1px)}
+</style>
+</head>
+<body><nav class="nav" id="nav"><div class="wrap"><a href="index.html" class="brand"><span class="brand-mark"><span class="mark-inner"><span class="peak"></span><span class="bird">⌃</span></span></span><span class="brand-name">Lomas de Ancón<small>ACR · MINCETUR</small></span></a><div class="nav-actions"><div class="nav-links"><a href="index.html">Inicio</a><a href="nosotros.html">Nosotros</a><a href="actividades.html">Actividades</a><a href="voluntariado.html">Voluntariado</a><a href="negocios-locales.html">Negocios Locales</a><a href="blog.html">Blog</a><a href="faq.html">FAQ</a><a href="contacto.html">Contacto</a></div><a href="carrito.html" class="icon-btn cart-btn" aria-label="Carrito"><span class="material-symbols-rounded">shopping_bag</span><span class="badge" id="cartBadge">0</span></a><a href="donaciones.html" class="btn-donate"><span class="material-symbols-rounded icon-fill">volunteer_activism</span><span>Donar</span></a></div></div></nav>
+<div class="donate-hero"><div class="photo photo--dune"><div class="dune-cap" style="height:40%"></div><span class="grain"></span><span class="photo-tag">Ninos practicando sandboard · comunidad de Ancon</span></div><div class="donate-hero-inner"><div class="breadcrumb" style="margin-bottom:20px"><a href="index.html">Inicio</a><span class="sep">›</span><span>Donaciones</span></div><h1>Donaciones <em>con Amor</em></h1></div></div>
+<div style="background:var(--earth-deep)"><div class="transform-grid">
+  <div class="transform-text reveal"><h2>Dona y transforma vidas</h2><p>Con cada aporte financiamos el acceso de ninos y jovenes de Ancon a actividades deportivas, educacion ambiental y experiencias transformadoras en las dunas, lomas y bahia. Tu donacion genera desarrollo social real, conciencia ambiental y orgullo de territorio en la comunidad local.</p></div>
+  <div class="transform-img"><div class="photo photo--lomas" style="position:absolute;inset:0;filter:hue-rotate(5deg) brightness(.85)"><span class="grain"></span><span class="photo-tag">Ninos de la comunidad · programa Lomas de Ancon</span></div></div>
+</div></div>
+<section class="donate-plans"><div class="wrap" style="text-align:center">
+  <div class="big-heart reveal"><span class="material-symbols-rounded icon-fill">favorite</span></div>
+  <div class="eyebrow reveal" style="color:var(--accent-soft)">Haz la diferencia</div>
+  <h2 class="reveal" style="font-family:var(--serif);font-weight:700;font-size:clamp(34px,4.4vw,56px);line-height:1.05;max-width:18ch;margin:16px auto 22px;text-wrap:balance">Tu donacion protege Lomas de Ancon para siempre.</h2>
+  <ul class="benefits reveal">
+    <li><span class="check"><span class="material-symbols-rounded">check</span></span>Educacion ambiental para ninos y jovenes</li>
+    <li><span class="check"><span class="material-symbols-rounded">check</span></span>Conservacion de las lomas costeras del Peru</li>
+    <li><span class="check"><span class="material-symbols-rounded">check</span></span>Empleo y turismo sostenible para la comunidad</li>
+  </ul>
+  <a href="voluntariado.html" class="volunteer-link reveal"><span class="material-symbols-rounded">back_hand</span>Quiero ser voluntario<span class="material-symbols-rounded" style="font-size:16px">arrow_forward</span></a>
+  <div class="plans" style="margin-top:48px">
+    <article class="plan"><div class="ico">🌱</div><div class="amt">S/ 20<small>/mes</small></div><p class="desc">Financia materiales educativos para ninos del programa Sandboard Escolar.</p><a class="btn-wa" href="https://wa.me/51984350983?text=Quiero%20donar%20S%2F%2020%20al%20mes"><span class="material-symbols-rounded">chat</span>Donar por WhatsApp</a></article>
+    <article class="plan popular"><span class="tag-pop">Popular</span><div class="ico">🌳</div><div class="amt">S/ 50<small>/mes</small></div><p class="desc">Apoya directamente a una familia local de guias y artesanos.</p><a class="btn-wa" href="https://wa.me/51984350983?text=Quiero%20donar%20S%2F%2050%20al%20mes"><span class="material-symbols-rounded">chat</span>Donar por WhatsApp</a></article>
+    <article class="plan"><div class="ico">🏔️</div><div class="amt">S/ 100<small>/mes</small></div><p class="desc">Patrocina un campamento completo de reforestacion con tara y atrapanieblas.</p><a class="btn-wa" href="https://wa.me/51984350983?text=Quiero%20donar%20S%2F%20100%20al%20mes"><span class="material-symbols-rounded">chat</span>Donar por WhatsApp</a></article>
+    <article class="plan"><div class="ico">✨</div><div class="amt">Libre</div><p class="desc">Elige cuanto quieres aportar — todo monto suma al territorio.</p><a class="btn-wa" href="https://wa.me/51984350983?text=Quiero%20donar%20un%20monto%20libre"><span class="material-symbols-rounded">chat</span>Donar por WhatsApp</a></article>
+  </div>
+  <p style="margin-top:32px;color:rgba(255,255,255,.6);font-size:13.5px">Gestionado por WhatsApp · 100% va a la comunidad</p>
+</div></section>
+<section class="section" style="background:var(--cream-soft);text-align:center"><div class="wrap">
+  <div class="section-head reveal"><div class="eyebrow" style="color:var(--olive-deep)">Cuentas habilitadas para donaciones</div><h2>Transferencias directas</h2></div>
+  <div class="pay-cards">
+    <div class="pay-card reveal"><div class="bank-icon" style="background:#6c2eb9">Y/P</div><h4>Yape / Plin</h4><div class="bank-sub">Transferencia instantanea</div><div class="bank-row"><div class="bank-field"><strong>Nombre</strong>Annie Rojas</div><div class="bank-field"><strong>Numero</strong>+51 993 277 942</div></div></div>
+    <div class="pay-card reveal"><div class="bank-icon" style="background:#004a97">BBVA</div><h4>BBVA</h4><div class="bank-sub">Naturaleza y Turismo Peru SAC</div><div class="bank-row"><div class="bank-field"><strong>Cuenta en soles</strong>0011-0819-0200459770</div><div class="bank-field"><strong>CCI</strong>011-819-000200459770-90</div></div></div>
+    <div class="pay-card reveal"><div class="bank-icon" style="background:#d52b1e">BCP</div><h4>BCP</h4><div class="bank-sub">Annie Rojas</div><div class="bank-row"><div class="bank-field"><strong>Cuenta en soles</strong>194-93648287-0-28</div><div class="bank-field"><strong>Cuenta interbancaria</strong>002-194-003648287028-89</div></div></div>
+  </div>
+</div></section>
+<section class="section conectate-section" style="background:var(--cream)"><div class="wrap">
+  <div class="conectate-grid reveal">
+    <div class="conectate-left">
+      <div class="eyebrow" style="color:var(--olive-deep)">¿Tienes dudas?</div>
+      <h2>Conéctate<br>con nosotros</h2>
+      <p>Síguenos en nuestras redes sociales o escríbenos a través del formulario de contacto. Tu mensaje puede ser el primer paso para una gran transformación.</p>
+      <div class="conectate-social">
+        <span style="font-size:13px;font-weight:600;color:var(--ink-soft);letter-spacing:.06em;text-transform:uppercase">Síguenos:</span>
+        <div class="social-row">
+          <a href="#" class="soc-btn" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+          <a href="#" class="soc-btn" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+          <a href="#" class="soc-btn" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.4a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#f5f0e8"/></svg></a>
+        </div>
+      </div>
+    </div>
+    <form class="conectate-form" onsubmit="handleContactForm(event)">
+      <div class="form-row">
+        <div class="form-group"><label for="cf-nombre">Nombre</label><input id="cf-nombre" type="text" placeholder="Tu nombre" required /></div>
+        <div class="form-group"><label for="cf-apellido">Apellido</label><input id="cf-apellido" type="text" placeholder="Tu apellido" required /></div>
+      </div>
+      <div class="form-group"><label for="cf-asunto">Asunto</label><input id="cf-asunto" type="text" placeholder="¿En qué te podemos ayudar?" /></div>
+      <div class="form-group"><label for="cf-email">Email</label><input id="cf-email" type="email" placeholder="tu@correo.com" required /></div>
+      <div class="form-group"><label for="cf-mensaje">Mensaje</label><textarea id="cf-mensaje" rows="5" placeholder="Escribe tu mensaje aquí..." required></textarea></div>
+      <button type="submit" class="cf-submit"><span class="material-symbols-rounded">send</span>Enviar mensaje</button>
+      <div id="cf-ok" class="cf-ok" hidden><span class="material-symbols-rounded">check_circle</span>¡Mensaje enviado! Te responderemos pronto.</div>
+    </form>
+  </div>
+</div></section>
+<style>
+.conectate-section{border-top:1px solid var(--rule)}
+.conectate-grid{display:grid;grid-template-columns:1fr 1.35fr;gap:72px;align-items:start}
+@media(max-width:820px){.conectate-grid{grid-template-columns:1fr;gap:40px}}
+.conectate-left h2{font-family:var(--serif);font-weight:800;font-size:clamp(32px,4vw,50px);line-height:1.05;color:var(--earth-deep);margin:12px 0 18px;font-variation-settings:"opsz" 96}
+.conectate-left p{color:var(--ink-soft);font-size:15.5px;line-height:1.65;max-width:38ch;margin-bottom:28px}
+.conectate-social{display:flex;flex-direction:column;gap:12px}
+.social-row{display:flex;gap:10px;margin-top:4px}
+.soc-btn{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--rule);background:var(--cream-soft);color:var(--earth-warm);display:flex;align-items:center;justify-content:center;transition:background .18s,border-color .18s,color .18s}
+.soc-btn:hover{background:var(--olive-deep);border-color:var(--olive-deep);color:#fff}
+.conectate-form{display:flex;flex-direction:column;gap:16px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:560px){.form-row{grid-template-columns:1fr}}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-group label{font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-soft)}
+.form-group input,.form-group textarea{border:1.5px solid var(--rule);border-radius:10px;padding:11px 15px;font-size:14.5px;font-family:"Manrope",system-ui,sans-serif;color:var(--earth-deep);background:#fff;outline:none;transition:border-color .18s,box-shadow .18s;resize:none}
+.form-group input::placeholder,.form-group textarea::placeholder{color:#b8a990}
+.form-group input:focus,.form-group textarea:focus{border-color:var(--olive-deep);box-shadow:0 0 0 3px rgba(74,110,60,.12)}
+.cf-submit{margin-top:4px;display:flex;align-items:center;justify-content:center;gap:8px;padding:14px 28px;border-radius:999px;background:var(--olive-deep);color:#fff;border:none;cursor:pointer;font-family:"Manrope",system-ui,sans-serif;font-size:15px;font-weight:700;transition:background .18s,transform .18s,box-shadow .18s;box-shadow:0 4px 18px rgba(58,112,52,.28)}
+.cf-submit:hover{background:var(--olive-darker);transform:translateY(-1px);box-shadow:0 8px 28px rgba(58,112,52,.38)}
+.cf-submit .material-symbols-rounded{font-size:18px}
+.cf-ok{display:flex;align-items:center;gap:8px;color:var(--olive-deep);font-weight:600;font-size:14px;background:rgba(74,110,60,.1);border:1px solid rgba(74,110,60,.25);border-radius:10px;padding:12px 16px}
+.cf-ok .material-symbols-rounded{font-size:20px;color:var(--olive-deep)}
+</style>
+<script>
+function handleContactForm(e){
+  e.preventDefault();
+  const btn = e.target.querySelector('.cf-submit');
+  btn.disabled = true;
+  btn.textContent = 'Enviando…';
+  setTimeout(()=>{
+    e.target.reset();
+    btn.style.display = 'none';
+    document.getElementById('cf-ok').hidden = false;
+    setTimeout(()=>{
+      document.getElementById('cf-ok').hidden = true;
+      btn.disabled = false;
+      btn.innerHTML = '<span class="material-symbols-rounded">send</span>Enviar mensaje';
+      btn.style.display = '';
+    }, 4000);
+  }, 900);
+}
+</script>
+<footer class="footer"><div class="bg"><div class="photo photo--lomas" style="position:absolute;inset:0"><div class="dune-cap" style="height:50%"></div><span class="grain"></span></div></div><div class="wrap"><div class="foot-grid"><div class="col"><h4>Contacto</h4><ul class="foot-links"><li><a href="contacto.html"><span class="foot-icon"><span class="material-symbols-rounded">place</span></span>Ancón, Lima – Perú</a></li><li><a href="tel:+51984350983"><span class="foot-icon"><span class="material-symbols-rounded">call</span></span>+51 984 350 983</a></li><li><a href="mailto:hola@lomasdeancon.pe"><span class="foot-icon"><span class="material-symbols-rounded">mail</span></span>hola@lomasdeancon.pe</a></li><li><a href="https://wa.me/51984350983"><span class="foot-icon"><svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 2C6.486 2 2 6.486 2 12c0 1.817.498 3.515 1.357 4.977L2 22l5.103-1.337A9.946 9.946 0 0 0 12 22c5.514 0 10-4.486 10-10S17.514 2 12 2zm4.438 13.132c-.238-.119-1.404-.691-1.621-.77-.217-.08-.374-.119-.531.12-.157.238-.61.77-.748.927-.138.157-.275.178-.513.06-.238-.12-1.004-.369-1.913-1.177-.707-.629-1.183-1.406-1.321-1.644-.138-.238-.015-.366.104-.485.106-.105.238-.275.357-.413.12-.138.157-.238.238-.396.08-.157.04-.297-.02-.416-.06-.119-.531-1.277-.727-1.748-.192-.459-.387-.397-.531-.404-.138-.007-.296-.009-.455-.009-.157 0-.414.06-.631.297-.217.238-.828.809-.828 1.974 0 1.165.848 2.291.966 2.449.119.157 1.669 2.549 4.046 3.576.567.244 1.009.39 1.353.499.569.181 1.087.155 1.496.094.456-.068 1.404-.574 1.602-1.128.198-.554.198-1.029.138-1.128-.059-.1-.217-.158-.455-.277z"/></svg></span>WhatsApp</a></li></ul></div><div class="col"><h4>Síguenos</h4><ul class="foot-links"><li><a href="#"><span class="foot-icon"><svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></span>Facebook</a></li><li><a href="#"><span class="foot-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></span>Instagram</a></li><li><a href="#"><span class="foot-icon"><svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.24 8.24 0 0 0 4.83 1.56V6.79a4.85 4.85 0 0 1-1.06-.1z"/></svg></span>TikTok</a></li><li><a href="#"><span class="foot-icon"><svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.96 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.96 1.95C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75,15.02 15.5,12 9.75,8.98" fill="white"/></svg></span>YouTube</a></li></ul></div><div class="col"><h4>Legal</h4><ul class="foot-links"><li><a href="#"><span class="foot-icon"><span class="material-symbols-rounded">description</span></span>Términos y condiciones</a></li><li><a href="#"><span class="foot-icon"><span class="material-symbols-rounded">lock</span></span>Política de privacidad</a></li></ul><a href="#" class="reclamaciones"><span class="foot-icon"><span class="material-symbols-rounded">forum</span></span><strong>Libro de Reclamaciones</strong></a></div></div><div class="foot-bottom"><span>© 2026 Lomas de Ancón · Todos los derechos reservados.</span><span class="mono">Hecho con 💚 para la comunidad de Ancón</span></div></div></footer><script>(function(){const nav=document.getElementById('nav');if(nav)window.addEventListener('scroll',function(){nav.classList.toggle('scrolled',window.scrollY>30)},{passive:true});var io=new IntersectionObserver(function(e){e.forEach(function(el){if(el.isIntersecting){el.target.classList.add('in');io.unobserve(el.target)}})},{threshold:.14});document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});var cart=JSON.parse(localStorage.getItem('lda_cart')||'[]');var b=document.getElementById('cartBadge');if(b)b.textContent=cart.reduce(function(s,i){return s+i.qty},0)||0;})();</script>
+<script src="chatbot.js"></script>
+</body></html>

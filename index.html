@@ -1,0 +1,1023 @@
+<!doctype html>
+<html lang="es-PE">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="description" content="Lomas de Ancón — Aventura y naturaleza con propósito en la bahía norte de Lima. Sandboard, kayak, hiking y voluntariado en el ACR Lomas de Ancón."/>
+<title>Lomas de Ancón — ACR · MINCETUR</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;0,9..144,800;0,9..144,900;1,9..144,400&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Rounded" rel="stylesheet"/>
+<link rel="stylesheet" href="styles.css">
+<style>
+/* ── SPA routing ── */
+.page-section{display:none}.page-section.page-active{display:block}
+
+/* ── INICIO ── */
+.hero{position:relative;min-height:100vh;color:#fff;display:flex;align-items:flex-end;padding:120px 0 56px;overflow:hidden}
+.hero-bg{position:absolute;inset:0;z-index:0}
+.hero-bg .photo{position:absolute;inset:0}
+.hero-bg::after{content:"";position:absolute;inset:0;z-index:4;background:linear-gradient(180deg,rgba(20,12,5,.4) 0%,rgba(20,12,5,.12) 35%,rgba(20,12,5,.55) 70%,rgba(20,12,5,.9)),linear-gradient(90deg,rgba(20,12,5,.6),rgba(20,12,5,.1) 55%,transparent)}
+.hero-inner{position:relative;z-index:5;width:100%}
+.hero-grid{display:grid;grid-template-columns:1.3fr .9fr;gap:64px;align-items:end}
+@media(max-width:980px){.hero-grid{grid-template-columns:1fr;gap:36px}}
+.hero h1{font-family:var(--serif);font-weight:800;font-size:clamp(54px,8.4vw,124px);line-height:.92;letter-spacing:-.02em;margin-bottom:14px;text-wrap:balance}
+.hero h1 em{font-style:italic;font-weight:500;color:var(--sand-light)}
+.hero .lede{font-family:var(--serif);font-style:italic;font-size:clamp(20px,2.2vw,26px);color:#f0e6c8;max-width:560px;margin-bottom:32px}
+.hero-callout{display:flex;gap:18px;align-items:flex-start;background:rgba(20,12,5,.42);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:20px 22px;max-width:520px;margin-bottom:28px}
+.hero-callout .ico{width:46px;height:46px;flex:0 0 46px;border-radius:12px;background:linear-gradient(160deg,#4a6741,#2d4520);display:grid;place-items:center;color:#fff}
+.hero-callout p{font-size:14.5px;line-height:1.55;color:#f6efe1}
+.hero-callout p b{color:var(--accent);font-weight:800}
+.pill-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:999px;border:1px solid rgba(255,255,255,.32);color:#fff;font-weight:500;font-size:12px;letter-spacing:.16em;text-transform:uppercase;background:rgba(255,255,255,.04);transition:background .2s,border-color .2s;cursor:pointer}
+.pill:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.55)}
+.pill .material-symbols-rounded{font-size:18px}
+.hero-meta{margin-top:24px;display:flex;gap:18px;align-items:center;color:rgba(246,239,225,.62)}
+.hero-meta .dot{width:3px;height:3px;border-radius:50%;background:rgba(246,239,225,.5)}
+.hero-side{display:flex;flex-direction:column;gap:14px;align-items:flex-start}
+.hero-side .badge-card{background:rgba(20,12,5,.42);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:16px 18px;display:flex;gap:14px;align-items:center;width:100%;max-width:340px}
+.hero-side .badge-card .num{font-family:var(--serif);font-weight:800;font-size:36px;line-height:1;color:var(--sand);font-variation-settings:"opsz" 96}
+.hero-side .badge-card .lbl{font-size:12px;color:#f6efe1}
+.hero-side .badge-card .lbl small{display:block;color:rgba(246,239,225,.6);font-size:11px;margin-top:2px}
+.bay{background:var(--cream);padding:clamp(72px,10vw,140px) 0}
+.bay-grid{display:grid;grid-template-columns:1fr;gap:48px;max-width:780px;margin:0 auto}
+.bay h2{font-family:var(--serif);font-weight:700;font-size:clamp(34px,4.4vw,56px);line-height:1.05;letter-spacing:-.01em;color:var(--earth-deep);margin:18px 0 28px;text-wrap:balance}
+.bay p{color:var(--ink-soft);font-size:16px;margin-bottom:18px;max-width:56ch}
+.pull{margin-top:28px;padding:24px 26px;border-left:3px solid var(--olive);background:#fff;border-radius:0 14px 14px 0;font-family:var(--serif);font-style:italic;font-size:19px;line-height:1.4;color:var(--earth-deep);box-shadow:var(--shadow-card);max-width:56ch}
+.pull b{font-style:normal;font-weight:700;color:var(--olive-deep)}
+.purpose{background:var(--earth-deep);color:#fff;padding:clamp(80px,11vw,140px) 0;position:relative;overflow:hidden;text-align:center}
+.purpose::before{content:"";position:absolute;inset:0;background:radial-gradient(50% 50% at 20% 10%,rgba(212,118,59,.16),transparent 60%),radial-gradient(60% 60% at 90% 100%,rgba(74,103,65,.22),transparent 60%);pointer-events:none}
+.purpose-icon{width:88px;height:88px;border-radius:50%;background:linear-gradient(160deg,var(--accent),var(--accent-deep));margin:0 auto 28px;display:grid;place-items:center;color:#fff;box-shadow:0 20px 50px -16px rgba(212,118,59,.55)}
+.purpose-icon .material-symbols-rounded{font-size:42px}
+.purpose .eyebrow{color:var(--accent-soft);margin-bottom:18px;display:inline-flex;gap:10px;align-items:center}
+.purpose .eyebrow::before,.purpose .eyebrow::after{content:"";width:24px;height:1px;background:var(--accent)}
+.purpose h2{font-family:var(--serif);font-weight:700;font-size:clamp(28px,3.6vw,42px);line-height:1.2;margin:0 auto 32px;max-width:24ch;text-wrap:balance}
+.purpose h2 b{color:var(--accent)}
+.purpose .caption{margin-top:18px;color:rgba(255,255,255,.55);font-size:12.5px;letter-spacing:.06em}
+.team{background:var(--cream-soft);padding:clamp(72px,10vw,130px) 0}
+.team-head{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:40px}
+.team h2{font-family:var(--serif);font-weight:700;font-size:clamp(32px,4.2vw,52px);line-height:1.08;letter-spacing:-.01em;color:var(--earth-deep)}
+.team-head .ctrls{display:flex;gap:8px}
+.acts-head{display:grid;grid-template-columns:1.2fr 1fr;gap:48px;align-items:end;margin-bottom:48px}
+@media(max-width:880px){.acts-head{grid-template-columns:1fr}}
+.acts h2{font-family:var(--serif);font-weight:700;font-size:clamp(32px,4.2vw,52px);line-height:1.08;letter-spacing:-.01em;color:var(--earth-deep);text-wrap:balance}
+.acts-head p{color:var(--ink-soft);font-size:16px;max-width:48ch}
+.acts-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+@media(max-width:720px){.acts-grid{grid-template-columns:1fr}}
+.blog-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:64px;align-items:center}
+@media(max-width:880px){.blog-grid{grid-template-columns:1fr;gap:40px}}
+.blog-thumb{background:#1f3f1b}
+.blog-thumb-bg{position:absolute;inset:0;background:radial-gradient(80% 60% at 100% 0%,rgba(212,118,59,.35),transparent 60%),radial-gradient(60% 80% at 0% 100%,rgba(74,103,65,.6),transparent 60%),linear-gradient(160deg,#2d5a27,#1f3f1b)}
+.blog-thumb-bg::after{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.05) 1px,transparent 1px);background-size:4px 4px;opacity:.6}
+.blog-thumb-text{position:absolute;inset:0;padding:30px 32px;color:#fff;display:flex;flex-direction:column;justify-content:flex-end}
+.blog-thumb-text h4{font-family:var(--serif);font-weight:800;font-size:42px;line-height:.95;letter-spacing:-.01em;color:#fff;font-style:italic;font-variation-settings:"opsz" 96}
+.blog-thumb-text .sub{font-family:var(--serif);font-style:italic;color:rgba(255,255,255,.75);font-size:15px;margin-top:10px}
+.blog-side .eyebrow{color:var(--olive-deep);margin-bottom:12px}
+.blog-side h2{font-family:var(--serif);font-weight:700;font-size:clamp(28px,3.6vw,44px);line-height:1.1;letter-spacing:-.01em;color:var(--earth-deep);margin-bottom:14px}
+.blog-side .sub{font-family:var(--serif);font-style:italic;color:var(--earth-warm);margin-bottom:18px;font-size:18px}
+.blog-side p{color:var(--ink-soft);margin-bottom:24px;max-width:48ch}
+.allies{background:var(--cream);padding:clamp(56px,7vw,96px) 0;text-align:center}
+.allies h3{font-family:var(--serif);font-weight:700;font-size:clamp(24px,2.8vw,34px);color:var(--earth-deep);margin-bottom:14px}
+.allies .sub{color:var(--earth-warm);margin-bottom:36px;font-size:14.5px}
+.ally-row{display:flex;flex-wrap:wrap;justify-content:center;gap:24px 40px;align-items:center;max-width:1000px;margin:0 auto;opacity:.85}
+.ally{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-weight:600;font-size:18px;color:var(--earth-mid);padding:14px 22px;border-radius:14px;background:#fff;border:1px solid var(--rule);min-height:64px;min-width:160px;justify-content:center}
+.ally .dot{width:28px;height:28px;border-radius:6px;background:var(--olive-deep);color:#fff;display:grid;place-items:center;font-size:13px;font-weight:700;font-family:var(--sans);flex:0 0 28px}
+.reviews-head{display:flex;align-items:center;justify-content:center;gap:24px;flex-wrap:wrap;margin-bottom:48px}
+
+/* ── NOSOTROS ── */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
+@media(max-width:880px){.two-col{grid-template-columns:1fr}}
+.big-h2{font-family:var(--serif);font-weight:700;font-size:clamp(28px,3.8vw,46px);line-height:1.1;letter-spacing:-.01em;color:var(--earth-deep);margin-bottom:22px;text-wrap:balance}
+.body-p{color:var(--ink-soft);font-size:16px;line-height:1.65;margin-bottom:18px;max-width:58ch}
+.values-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:24px}
+@media(max-width:560px){.values-grid{grid-template-columns:1fr}}
+.value-card{background:#fff;border-radius:16px;padding:24px;border:1px solid var(--rule);box-shadow:var(--shadow-card)}
+.value-card .ico{width:44px;height:44px;border-radius:12px;background:linear-gradient(160deg,#f4e7c8,#d9b878);color:var(--olive-deep);display:grid;place-items:center;margin-bottom:14px}
+.value-card h4{font-weight:700;font-size:15px;color:var(--earth-deep);margin-bottom:6px}
+.value-card p{font-size:13.5px;color:var(--ink-soft);line-height:1.55}
+
+/* ── ACTIVIDADES ── */
+.acts-layout{display:grid;grid-template-columns:1fr 320px;gap:40px;align-items:start}
+@media(max-width:1000px){.acts-layout{grid-template-columns:1fr}}
+.acts-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:680px){.acts-grid-2{grid-template-columns:1fr}}
+.sidebar-widget{background:#fff;border-radius:18px;padding:24px;border:1px solid var(--rule);box-shadow:var(--shadow-card);margin-bottom:20px}
+.sidebar-widget h4{font-weight:700;font-size:15px;color:var(--earth-deep);margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--rule)}
+.google-rating{text-align:center;padding:8px 0}
+.google-rating .stars{font-size:28px;letter-spacing:4px;color:#f4b400;margin:8px 0}
+.google-rating .score{font-family:var(--serif);font-size:48px;font-weight:800;color:var(--olive-deep);line-height:1}
+.google-rating .count{font-size:13px;color:var(--earth-warm);margin-top:4px}
+.ally-mini{display:flex;flex-direction:column;gap:10px}
+.ally-mini-item{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--ink-soft)}
+.ally-mini-item .dot{width:32px;height:32px;border-radius:8px;background:var(--olive-deep);color:#fff;display:grid;place-items:center;font-size:12px;font-weight:700;flex:0 0 32px}
+
+/* ── DONACIONES ── */
+.donate-hero{position:relative;overflow:hidden;min-height:340px;display:flex;align-items:center;justify-content:center;text-align:center;color:#fff;padding-top:80px}
+.donate-hero .photo{position:absolute;inset:0;z-index:0}
+.donate-hero::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(20,12,5,.5),rgba(20,12,5,.78))}
+.donate-hero-inner{position:relative;z-index:2;padding:90px 24px}
+.donate-hero h1{font-family:var(--serif);font-weight:800;font-style:italic;font-size:clamp(42px,8vw,88px);line-height:.95;letter-spacing:-.02em;font-variation-settings:"opsz" 144}
+.transform-grid{display:grid;grid-template-columns:1fr 1fr}
+@media(max-width:800px){.transform-grid{grid-template-columns:1fr}}
+.transform-text{padding:clamp(56px,8vw,100px) clamp(32px,5vw,72px)}
+.transform-text h2{font-family:var(--serif);font-weight:700;font-size:clamp(28px,3.6vw,42px);line-height:1.1;color:#7bcf6a;margin-bottom:20px}
+.transform-text p{color:rgba(255,255,255,.82);font-size:16px;line-height:1.65;max-width:46ch}
+.transform-img{position:relative;min-height:380px;overflow:hidden}
+.transform-img .photo{position:absolute;inset:0}
+.donate-plans{background:linear-gradient(180deg,#2d4520,#1f3015);color:#fff;padding:clamp(72px,10vw,120px) 0}
+.benefits{display:flex;flex-wrap:wrap;justify-content:center;gap:14px 32px;margin:0 auto 48px;max-width:900px;list-style:none}
+.benefits li{display:flex;align-items:center;gap:10px;color:rgba(255,255,255,.82);font-size:14.5px}
+.benefits li .check{width:22px;height:22px;border-radius:50%;background:var(--sand);color:var(--olive-darker);display:grid;place-items:center}
+.benefits li .check .material-symbols-rounded{font-size:14px}
+.big-heart{width:84px;height:84px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);margin:0 auto 22px;display:grid;place-items:center;color:var(--accent);box-shadow:0 0 0 12px rgba(255,255,255,.05)}
+.big-heart .material-symbols-rounded{font-size:42px}
+.volunteer-link{display:inline-flex;align-items:center;gap:8px;margin-top:28px;color:var(--accent);font-weight:700;font-size:14px;padding:10px 18px;border-radius:999px;background:rgba(212,118,59,.12);border:1px solid rgba(212,118,59,.35);transition:background .2s,transform .2s;cursor:pointer}
+.volunteer-link:hover{background:rgba(212,118,59,.22);transform:translateY(-1px)}
+.conectate-section{border-top:1px solid var(--rule)}
+.conectate-grid{display:grid;grid-template-columns:1fr 1.35fr;gap:72px;align-items:start}
+@media(max-width:820px){.conectate-grid{grid-template-columns:1fr;gap:40px}}
+.conectate-left h2{font-family:var(--serif);font-weight:800;font-size:clamp(32px,4vw,50px);line-height:1.05;color:var(--earth-deep);margin:12px 0 18px;font-variation-settings:"opsz" 96}
+.conectate-left p{color:var(--ink-soft);font-size:15.5px;line-height:1.65;max-width:38ch;margin-bottom:28px}
+.conectate-social{display:flex;flex-direction:column;gap:12px}
+.social-row{display:flex;gap:10px;margin-top:4px}
+.soc-btn{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--rule);background:var(--cream-soft);color:var(--earth-warm);display:flex;align-items:center;justify-content:center;transition:background .18s,border-color .18s,color .18s}
+.soc-btn:hover{background:var(--olive-deep);border-color:var(--olive-deep);color:#fff}
+.conectate-form{display:flex;flex-direction:column;gap:16px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:560px){.form-row{grid-template-columns:1fr}}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-group label{font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-soft)}
+.form-group input,.form-group textarea{border:1.5px solid var(--rule);border-radius:10px;padding:11px 15px;font-size:14.5px;font-family:"Manrope",system-ui,sans-serif;color:var(--earth-deep);background:#fff;outline:none;transition:border-color .18s,box-shadow .18s;resize:none}
+.form-group input::placeholder,.form-group textarea::placeholder{color:#b8a990}
+.form-group input:focus,.form-group textarea:focus{border-color:var(--olive-deep);box-shadow:0 0 0 3px rgba(74,110,60,.12)}
+.cf-submit{margin-top:4px;display:flex;align-items:center;justify-content:center;gap:8px;padding:14px 28px;border-radius:999px;background:var(--olive-deep);color:#fff;border:none;cursor:pointer;font-family:"Manrope",system-ui,sans-serif;font-size:15px;font-weight:700;transition:background .18s,transform .18s,box-shadow .18s;box-shadow:0 4px 18px rgba(58,112,52,.28)}
+.cf-submit:hover{background:var(--olive-darker);transform:translateY(-1px);box-shadow:0 8px 28px rgba(58,112,52,.38)}
+.cf-submit .material-symbols-rounded{font-size:18px}
+.cf-ok{display:flex;align-items:center;gap:8px;color:var(--olive-deep);font-weight:600;font-size:14px;background:rgba(74,110,60,.1);border:1px solid rgba(74,110,60,.25);border-radius:10px;padding:12px 16px}
+
+/* ── VOLUNTARIADO ── */
+.vol-intro{display:grid;grid-template-columns:1.1fr 1fr;gap:64px;align-items:center}
+@media(max-width:880px){.vol-intro{grid-template-columns:1fr}}
+.ejes-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+@media(max-width:880px){.ejes-grid{grid-template-columns:1fr}}
+.eje-card{background:#fff;border-radius:20px;padding:32px 26px;border:1px solid var(--rule);box-shadow:var(--shadow-card)}
+.eje-card .eje-num{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--accent);margin-bottom:16px}
+.eje-card h3{font-family:var(--serif);font-weight:700;font-size:22px;color:var(--earth-deep);margin-bottom:16px;line-height:1.2;font-variation-settings:"opsz" 36}
+.eje-card ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.eje-card li{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--ink-soft);line-height:1.45}
+.eje-card li::before{content:"→";color:var(--olive-deep);font-weight:700;flex:0 0 16px;margin-top:1px}
+.photo-frame{aspect-ratio:4/5;border-radius:18px;overflow:hidden;box-shadow:var(--shadow-lift);position:relative}
+.cta-box{background:linear-gradient(160deg,#2d5a27,#1f3f1b);color:#fff;border-radius:24px;padding:48px;text-align:center}
+.cta-box h2{font-family:var(--serif);font-weight:700;font-size:clamp(26px,3.4vw,40px);line-height:1.1;margin-bottom:16px;text-wrap:balance}
+.cta-box p{color:rgba(255,255,255,.78);font-size:16px;max-width:50ch;margin:0 auto 28px}
+
+/* ── NEGOCIOS ── */
+.negocios-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+@media(max-width:720px){.negocios-grid{grid-template-columns:1fr}}
+.negocio-card{background:#fff;border-radius:20px;overflow:hidden;box-shadow:var(--shadow-card);border:1px solid var(--rule);transition:transform .3s,box-shadow .3s}
+.negocio-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lift)}
+.negocio-card .ph{aspect-ratio:16/10;position:relative}
+.negocio-card .body{padding:28px}
+.negocio-card h3{font-family:var(--serif);font-weight:700;font-size:24px;color:var(--earth-deep);margin-bottom:10px;font-variation-settings:"opsz" 36}
+.negocio-card p{color:var(--ink-soft);font-size:15px;line-height:1.6;margin-bottom:16px}
+.negocio-card .products{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.negocio-card .tag{padding:6px 12px;border-radius:999px;background:var(--cream);border:1px solid var(--rule);font-size:12.5px;color:var(--earth-mid)}
+.negocio-card .contact{display:flex;align-items:center;gap:10px;color:var(--olive-deep);font-weight:600;font-size:14px}
+.coming-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:40px}
+@media(max-width:720px){.coming-grid{grid-template-columns:1fr}}
+.coming-card{background:var(--cream);border-radius:16px;padding:24px;border:1px dashed var(--rule)}
+.coming-card h4{font-weight:700;font-size:15px;color:var(--earth-deep);margin-bottom:8px}
+.coming-card p{font-size:14px;color:var(--ink-soft);line-height:1.55}
+
+/* ── BLOG ── */
+.blog-featured{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;margin-bottom:56px}
+@media(max-width:880px){.blog-featured{grid-template-columns:1fr}}
+.blog-featured .ph{aspect-ratio:4/3;border-radius:20px;overflow:hidden;box-shadow:var(--shadow-lift);position:relative}
+.blog-tag{display:inline-block;padding:5px 12px;border-radius:999px;background:var(--olive-deep);color:#fff;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px}
+.blog-featured h2{font-family:var(--serif);font-weight:700;font-size:clamp(22px,3vw,34px);line-height:1.15;color:var(--earth-deep);margin-bottom:14px;font-variation-settings:"opsz" 96}
+.blog-featured p{color:var(--ink-soft);font-size:15.5px;line-height:1.65;margin-bottom:20px}
+.blog-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+@media(max-width:900px){.blog-grid-3{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.blog-grid-3{grid-template-columns:1fr}}
+
+/* ── FAQ ── */
+.faq-wrap{max-width:760px;margin:0 auto}
+
+/* ── CONTACTO ── */
+.contacto-layout{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
+@media(max-width:880px){.contacto-layout{grid-template-columns:1fr;gap:48px}}
+
+/* ── CARRITO ── */
+.cart-layout{display:grid;grid-template-columns:1fr 360px;gap:32px;align-items:start}
+@media(max-width:900px){.cart-layout{grid-template-columns:1fr}}
+.cart-items{display:flex;flex-direction:column;gap:16px}
+.cart-item{display:grid;grid-template-columns:64px 1fr auto auto;gap:16px;align-items:center;background:#fff;border-radius:16px;padding:20px;border:1px solid var(--rule);box-shadow:var(--shadow-card)}
+@media(max-width:560px){.cart-item{grid-template-columns:1fr auto;grid-template-rows:auto auto}}
+.cart-item-ico{width:64px;height:64px;border-radius:12px;overflow:hidden;position:relative;flex:0 0 64px}
+.cart-item-name{font-weight:600;font-size:15px;color:var(--earth-deep);margin-bottom:4px}
+.cart-item-unit{font-size:12.5px;color:var(--earth-warm)}
+.cart-item-price{font-family:var(--serif);font-weight:700;font-size:22px;color:var(--olive-deep);white-space:nowrap;font-variation-settings:"opsz" 36}
+.cart-summary{background:#fff;border-radius:18px;padding:28px;border:1px solid var(--rule);box-shadow:var(--shadow-card);position:sticky;top:90px}
+.cart-summary h3{font-family:var(--serif);font-weight:700;font-size:22px;color:var(--earth-deep);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--rule);font-variation-settings:"opsz" 36}
+.summary-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;font-size:14.5px;color:var(--ink-soft)}
+.summary-row.total{border-top:1px solid var(--rule);margin-top:8px;padding-top:16px;font-weight:700;font-size:18px;color:var(--earth-deep)}
+.summary-row.total .val{font-family:var(--serif);font-weight:800;color:var(--olive-deep);font-variation-settings:"opsz" 36}
+.remove-btn{background:none;border:none;cursor:pointer;color:var(--earth-warm);display:grid;place-items:center;width:32px;height:32px;border-radius:50%;transition:background .2s,color .2s}
+.remove-btn:hover{background:var(--cream);color:var(--accent)}
+
+/* ── Mobile nav menu ── */
+.nav-toggle{display:none;width:42px;height:42px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);color:#fff;place-items:center;cursor:pointer}
+@media(max-width:1180px){.nav-toggle{display:grid}}
+.nav-mobile{display:none;position:fixed;inset:0;z-index:49;background:rgba(20,12,5,.97);backdrop-filter:blur(12px);flex-direction:column;align-items:center;justify-content:center;gap:8px}
+.nav-mobile.open{display:flex}
+.nav-mobile a{font-family:var(--serif);font-size:28px;font-weight:700;color:#f0e6c8;padding:10px 32px;border-radius:999px;transition:background .2s,color .2s;cursor:pointer}
+.nav-mobile a:hover,.nav-mobile a.active{background:rgba(255,255,255,.08);color:#fff}
+.nav-mobile-close{position:absolute;top:24px;right:24px;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.1);border:none;color:#fff;display:grid;place-items:center;cursor:pointer}
+</style>
+</head>
+<body>
+
+<!-- ═══════════ NAV (shared) ═══════════ -->
+<nav class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" onclick="navigate('inicio')" style="cursor:pointer">
+      <span class="brand-mark"><span class="mark-inner"><span class="peak"></span><span class="bird">⌃</span></span></span>
+      <span class="brand-name">Lomas de Ancón<small>ACR · MINCETUR</small></span>
+    </a>
+    <div class="nav-actions">
+      <div class="nav-links">
+        <a onclick="navigate('inicio')" data-page="inicio" class="active" style="cursor:pointer">Inicio</a>
+        <a onclick="navigate('nosotros')" data-page="nosotros" style="cursor:pointer">Nosotros</a>
+        <a onclick="navigate('actividades')" data-page="actividades" style="cursor:pointer">Actividades</a>
+        <a onclick="navigate('voluntariado')" data-page="voluntariado" style="cursor:pointer">Voluntariado</a>
+        <a onclick="navigate('negocios-locales')" data-page="negocios-locales" style="cursor:pointer">Negocios Locales</a>
+        <a onclick="navigate('blog')" data-page="blog" style="cursor:pointer">Blog</a>
+        <a onclick="navigate('faq')" data-page="faq" style="cursor:pointer">FAQ</a>
+        <a onclick="navigate('contacto')" data-page="contacto" style="cursor:pointer">Contacto</a>
+      </div>
+      <a onclick="navigate('carrito')" class="icon-btn cart-btn" aria-label="Carrito" style="cursor:pointer">
+        <span class="material-symbols-rounded">shopping_bag</span>
+        <span class="badge" id="cartBadge">0</span>
+      </a>
+      <a onclick="navigate('donaciones')" class="btn-donate" style="cursor:pointer">
+        <span class="material-symbols-rounded icon-fill">volunteer_activism</span>
+        <span>Donar</span>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Menú">
+        <span class="material-symbols-rounded">menu</span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile nav overlay -->
+<div class="nav-mobile" id="navMobile">
+  <button class="nav-mobile-close" id="navMobileClose"><span class="material-symbols-rounded">close</span></button>
+  <a onclick="navigate('inicio');closeMobileNav()" data-page="inicio">Inicio</a>
+  <a onclick="navigate('nosotros');closeMobileNav()" data-page="nosotros">Nosotros</a>
+  <a onclick="navigate('actividades');closeMobileNav()" data-page="actividades">Actividades</a>
+  <a onclick="navigate('voluntariado');closeMobileNav()" data-page="voluntariado">Voluntariado</a>
+  <a onclick="navigate('negocios-locales');closeMobileNav()" data-page="negocios-locales">Negocios Locales</a>
+  <a onclick="navigate('blog');closeMobileNav()" data-page="blog">Blog</a>
+  <a onclick="navigate('faq');closeMobileNav()" data-page="faq">FAQ</a>
+  <a onclick="navigate('contacto');closeMobileNav()" data-page="contacto">Contacto</a>
+  <a onclick="navigate('donaciones');closeMobileNav()" style="color:var(--accent)">💚 Donar</a>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE: INICIO
+═══════════════════════════════════════════════════════ -->
+<div id="page-inicio" class="page-section page-active">
+  <header class="hero" id="top">
+    <div class="hero-bg">
+      <div class="photo photo--dune" aria-hidden="true">
+        <div class="dune-cap"></div>
+        <div class="dune-cap light" style="height:24%;clip-path:ellipse(50% 100% at 22% 100%)"></div>
+        <span class="silhouette" style="left:42%;bottom:36%"></span>
+        <span class="grain"></span>
+        <span class="photo-tag">Sandboard en duna al atardecer</span>
+      </div>
+    </div>
+    <div class="hero-inner wrap">
+      <div class="hero-grid">
+        <div>
+          <h1>Lomas <em>de</em><br>Ancón.</h1>
+          <p class="lede">Aventura y naturaleza con propósito, en la bahía norte de Lima.</p>
+          <div class="hero-callout">
+            <div class="ico"><span class="material-symbols-rounded icon-fill">favorite</span></div>
+            <p>Disfruta con propósito — cada compra financia al <b>100%</b> las actividades socioambientales con la comunidad local de Ancón.</p>
+          </div>
+          <div class="pill-row">
+            <span class="pill" onclick="navigate('actividades')"><span class="material-symbols-rounded">snowboarding</span> Sandboard en dunas</span>
+            <span class="pill" onclick="navigate('actividades')"><span class="material-symbols-rounded">kayaking</span> Kayak</span>
+            <span class="pill" onclick="navigate('actividades')"><span class="material-symbols-rounded">hiking</span> Senderos naturales</span>
+          </div>
+          <a onclick="navigate('actividades')" class="btn-cta lg" style="cursor:pointer"><span class="material-symbols-rounded">explore</span>Explorar actividades<span class="material-symbols-rounded" style="font-size:16px;margin-left:4px">arrow_forward</span></a>
+          <div class="hero-meta mono"><span>MINCETUR</span><span class="dot"></span><span>ACR Lomas de Ancón</span><span class="dot"></span><span>Ancón · Lima · Perú</span></div>
+        </div>
+        <aside class="hero-side">
+          <div class="badge-card"><div class="num">3</div><div class="lbl">Áreas naturales protegidas<small>Único distrito de Lima con tres ANP</small></div></div>
+          <div class="badge-card"><div class="num">20</div><div class="lbl">Años operando con la comunidad<small>Desde 2009, junto a familias locales</small></div></div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <section class="bay">
+    <div class="wrap">
+      <div class="bay-grid">
+        <div class="reveal">
+          <span class="eyebrow" style="color:var(--olive-deep)">— Aventura y propósito</span>
+          <h2>Aventura en la bahía, desierto, lomas y montañas a través de la recreación, el turismo y el voluntariado.</h2>
+          <p>Las actividades al aire libre y el voluntariado impulsan un turismo que regenera el territorio. Cuidamos las dunas, las lomas costeras y la bahía mientras las recorremos contigo.</p>
+          <div class="pull"><b>Ancón es el único distrito de Lima</b> que cuenta en su territorio con <b>3 áreas naturales protegidas</b>: ACR Lomas de Ancón, Humedales de Santa Rosa e Islas, Islotes y Puntas Guaneras.</div>
+          <a onclick="navigate('nosotros')" class="btn-outline" style="margin-top:28px;cursor:pointer">Conoce nuestra misión <span class="material-symbols-rounded" style="font-size:16px">arrow_forward</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="impact section" style="background:var(--cream-soft)">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Nuestro impacto</div>
+        <h2>Conoce el impacto que estamos causando en nuestra comunidad</h2>
+        <p>Años de trabajo continuo con familias de Ancón, niños y voluntarios.</p>
+      </div>
+      <div class="stat-row">
+        <div class="stat reveal"><div class="ico"><span class="material-symbols-rounded icon-fill">handshake</span></div><div class="num"><span class="counter" data-target="120">0</span><span class="plus">+</span></div><div class="lbl">Voluntarios</div><div class="sub">Desde el 2009</div></div>
+        <div class="stat reveal"><div class="ico"><span class="material-symbols-rounded icon-fill">hourglass_top</span></div><div class="num"><span class="counter" data-target="20">0</span></div><div class="lbl">Años en lomas</div><div class="sub">y bahía de Ancón</div></div>
+        <div class="stat reveal"><div class="ico"><span class="material-symbols-rounded icon-fill">groups</span></div><div class="num"><span class="counter" data-target="60">0</span></div><div class="lbl">Familias</div><div class="sub">De la comunidad</div></div>
+        <div class="stat reveal"><div class="ico"><span class="material-symbols-rounded icon-fill">family_restroom</span></div><div class="num"><span class="counter" data-target="10">0</span></div><div class="lbl">Familias directas</div><div class="sub">Involucradas</div></div>
+        <div class="stat reveal"><div class="ico"><span class="material-symbols-rounded icon-fill">trophy</span></div><div class="num"><span class="counter" data-target="8">0</span></div><div class="lbl">Niños en campeonatos</div><div class="sub">De sandboarding</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section acts" style="background:var(--cream)">
+    <div class="wrap">
+      <div class="acts-head">
+        <h2 class="reveal">Actividades en Lomas de Ancón, turismo y desarrollo comunitario</h2>
+        <p class="reveal">Experiencias diseñadas con guías locales que conocen cada duna, cada sendero y cada cumbre.</p>
+      </div>
+      <div class="acts-grid">
+        <a class="act-card reveal" onclick="navigate('actividades')" style="cursor:pointer"><div class="photo photo--dune" aria-hidden="true"><div class="dune-cap"></div><span class="grain"></span></div><span class="arrow"><span class="material-symbols-rounded">arrow_outward</span></span><div class="body"><div class="num">01 — Sandboard</div><h3>Sandboard en las Lomas de Ancón</h3><div class="act-footer"><div class="price">S/ 72<small>/ persona</small></div><span class="btn-reservar">Ver más</span></div></div></a>
+        <a class="act-card reveal" onclick="navigate('actividades')" style="cursor:pointer"><div class="photo photo--water" aria-hidden="true"><span class="grain"></span></div><span class="arrow"><span class="material-symbols-rounded">arrow_outward</span></span><div class="body"><div class="num">02 — Acuático</div><h3>Kayak y Paddle en la Bahía de Ancón</h3><div class="act-footer"><div class="price">S/ 90<small>/ embarcación</small></div><span class="btn-reservar">Ver más</span></div></div></a>
+        <a class="act-card reveal" onclick="navigate('actividades')" style="cursor:pointer"><div class="photo photo--lomas" aria-hidden="true"><div class="dune-cap light"></div><span class="grain"></span></div><span class="arrow"><span class="material-symbols-rounded">arrow_outward</span></span><div class="body"><div class="num">03 — Hiking</div><h3>Hiking en Lomas de Ancón</h3><div class="act-footer"><div class="price">S/ 55<small>/ persona</small></div><span class="btn-reservar">Ver más</span></div></div></a>
+        <a class="act-card reveal" onclick="navigate('actividades')" style="cursor:pointer"><div class="photo photo--night" aria-hidden="true"><span class="grain"></span></div><span class="arrow"><span class="material-symbols-rounded">arrow_outward</span></span><div class="body"><div class="num">04 — Trekking</div><h3>Trekking en Lomas de Ancón</h3><div class="act-footer"><div class="price">S/ 75<small>/ persona</small></div><span class="btn-reservar">Ver más</span></div></div></a>
+      </div>
+      <div style="text-align:center;margin-top:36px"><a onclick="navigate('actividades')" class="btn-cta lg" style="cursor:pointer"><span class="material-symbols-rounded">explore</span>Ver todas las actividades</a></div>
+    </div>
+  </section>
+
+  <section class="purpose">
+    <div class="wrap" style="text-align:center;max-width:760px">
+      <div class="purpose-icon reveal"><span class="material-symbols-rounded icon-fill">volunteer_activism</span></div>
+      <div class="eyebrow reveal">Turismo con propósito · Lomas de Ancón</div>
+      <h2 class="reveal">Cada compra que realizas financia al <b>100%</b> las iniciativas socioambientales en Lomas de Ancón.</h2>
+      <a onclick="navigate('actividades')" class="btn-cta light lg reveal" style="cursor:pointer"><span class="material-symbols-rounded">explore</span>Ver actividades</a>
+      <div class="caption mono reveal" style="margin-top:18px">Área de Conservación Regional · MINCETUR</div>
+    </div>
+  </section>
+
+  <section class="team section">
+    <div class="wrap">
+      <div class="team-head">
+        <div class="reveal"><span class="eyebrow" style="color:var(--olive-deep)">— El equipo</span><h2 style="margin-top:8px">Conoce a nuestro equipo</h2></div>
+        <div class="ctrls reveal"><button class="ctrl-btn" id="teamPrev"><span class="material-symbols-rounded">arrow_back</span></button><button class="ctrl-btn" id="teamNext"><span class="material-symbols-rounded">arrow_forward</span></button></div>
+      </div>
+      <div class="team-track-wrap"><div class="team-track" id="teamTrack">
+        <div class="member"><div class="ph"><div class="photo photo--portrait" style="filter:hue-rotate(0deg)" aria-hidden="true"><span class="grain"></span></div></div><div class="name">Cristina Pacheco Rivas</div><div class="role mono">Dirección</div><div class="socials"><a href="#"><span class="material-symbols-rounded">public</span></a><a href="#"><span class="material-symbols-rounded">photo_camera</span></a></div></div>
+        <div class="member"><div class="ph"><div class="photo photo--portrait" style="filter:hue-rotate(22deg)" aria-hidden="true"><span class="grain"></span></div></div><div class="name">Aldo Saavedra Romero</div><div class="role mono">Guía principal</div><div class="socials"><a href="#"><span class="material-symbols-rounded">public</span></a><a href="#"><span class="material-symbols-rounded">photo_camera</span></a></div></div>
+        <div class="member"><div class="ph"><div class="photo photo--portrait" style="filter:hue-rotate(44deg)" aria-hidden="true"><span class="grain"></span></div></div><div class="name">Annie Rojas Robles</div><div class="role mono">Comunidad</div><div class="socials"><a href="#"><span class="material-symbols-rounded">public</span></a><a href="#"><span class="material-symbols-rounded">photo_camera</span></a></div></div>
+        <div class="member"><div class="ph"><div class="photo photo--portrait" style="filter:hue-rotate(66deg)" aria-hidden="true"><span class="grain"></span></div></div><div class="name">Nelson Carbajal Garcia</div><div class="role mono">Sandboard</div><div class="socials"><a href="#"><span class="material-symbols-rounded">public</span></a><a href="#"><span class="material-symbols-rounded">photo_camera</span></a></div></div>
+        <div class="member"><div class="ph"><div class="photo photo--portrait" style="filter:hue-rotate(88deg)" aria-hidden="true"><span class="grain"></span></div></div><div class="name">Sheyla Toledo Castillo</div><div class="role mono">Educación ambiental</div><div class="socials"><a href="#"><span class="material-symbols-rounded">public</span></a><a href="#"><span class="material-symbols-rounded">photo_camera</span></a></div></div>
+        <div class="member"><div class="ph"><div class="photo photo--portrait" style="filter:hue-rotate(110deg)" aria-hidden="true"><span class="grain"></span></div></div><div class="name">Daniela Rumiche Paredes</div><div class="role mono">Voluntariado</div><div class="socials"><a href="#"><span class="material-symbols-rounded">public</span></a><a href="#"><span class="material-symbols-rounded">photo_camera</span></a></div></div>
+        <div class="member"><div class="ph"><div class="photo photo--portrait" style="filter:hue-rotate(132deg)" aria-hidden="true"><span class="grain"></span></div></div><div class="name">Jenny Sandoval Reto</div><div class="role mono">Kayak</div><div class="socials"><a href="#"><span class="material-symbols-rounded">public</span></a><a href="#"><span class="material-symbols-rounded">photo_camera</span></a></div></div>
+        <div class="member"><div class="ph"><div class="photo photo--portrait" style="filter:hue-rotate(154deg)" aria-hidden="true"><span class="grain"></span></div></div><div class="name">John Sihua Toribio</div><div class="role mono">Logística</div><div class="socials"><a href="#"><span class="material-symbols-rounded">public</span></a><a href="#"><span class="material-symbols-rounded">photo_camera</span></a></div></div>
+      </div></div>
+    </div>
+  </section>
+
+  <section class="section" style="background:var(--cream)">
+    <div class="wrap">
+      <div class="blog-grid">
+        <article class="blog-card reveal">
+          <div class="ph blog-thumb" style="position:relative">
+            <div class="blog-thumb-bg"></div>
+            <div class="blog-thumb-text"><div class="mono" style="color:#d4e5b8;margin-bottom:14px">Trail running · Nocturno</div><h4>Guía del<br>Corredor</h4><div class="sub">Primera edición · Gecko Run 10K</div></div>
+          </div>
+          <div class="body"><div class="date">13 mayo 2026 · Eventos</div><h3>Guía del Corredor — Gecko Run 10K · Trail Running Nocturno en Ancón</h3><a onclick="navigate('blog')" class="read" style="cursor:pointer">Leer artículo <span class="material-symbols-rounded" style="font-size:16px">arrow_forward</span></a></div>
+        </article>
+        <div class="blog-side reveal">
+          <div class="eyebrow">Bitácora</div>
+          <h2>Blog de Lomas de Ancón</h2>
+          <div class="sub">Conexión con la naturaleza y desarrollo comunitario.</div>
+          <p>Historias del territorio, guías de ruta, perfiles de la comunidad y consejos para quienes empiezan en el sandboard o el trail.</p>
+          <a onclick="navigate('blog')" class="btn-outline" style="cursor:pointer">Leer más del blog <span class="material-symbols-rounded" style="font-size:16px">arrow_forward</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background:var(--cream-soft)">
+    <div class="wrap">
+      <div class="reviews-head reveal">
+        <span class="eyebrow" style="color:var(--olive-deep)">Reseñas</span>
+        <div class="rating-badge"><span class="label">Excelente</span><span class="stars">★★★★<span style="opacity:.45">★</span></span><span class="count">A base de 10 reseñas</span><span class="google-logo"><span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span></span></div>
+      </div>
+      <div class="review-cards">
+        <article class="review reveal"><header><div class="avatar" style="background:#b85c2a">P</div><div><div class="name">Pamela Mayorga</div><div class="when">hace 1 año</div></div></header><div class="stars">★★★★★</div><p>Una experiencia única, los guías son apasionados y conocen cada rincón. El sandboard fue increíble y mi hija se enamoró del lugar.</p></article>
+        <article class="review reveal"><header><div class="avatar" style="background:#3d5a2b">J</div><div><div class="name">Jenny Sandoval</div><div class="when">hace 1 año</div></div></header><div class="stars">★★★★★</div><p>Me uní al voluntariado y fue de las mejores decisiones del año. Sembramos tara y aprendí mucho del ecosistema.</p></article>
+        <article class="review reveal"><header><div class="avatar" style="background:#7a5028">R</div><div><div class="name">Rubi R.H.</div><div class="when">hace 8 meses</div></div></header><div class="stars">★★★★★</div><p>Hermoso lugar, atención excelente. Los chicos disfrutaron muchísimo el trineo en las dunas.</p></article>
+        <article class="review reveal"><header><div class="avatar" style="background:#2d5a27">E</div><div><div class="name">Edelmira Cipriano</div><div class="when">hace 6 meses</div></div></header><div class="stars">★★★★★</div><p>La caminata por las lomas con el guía fue didáctica y muy entretenida.</p></article>
+        <article class="review reveal"><header><div class="avatar" style="background:#d4763b">L</div><div><div class="name">Luis Meza Alberca</div><div class="when">hace 3 meses</div></div></header><div class="stars">★★★★★</div><p>Saber que mi pago va directo a la comunidad lo hace muchísimo más especial.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:linear-gradient(180deg,#2d4520,#1f3015);color:#fff;padding:clamp(72px,10vw,130px) 0;text-align:center">
+    <div class="wrap" style="max-width:760px">
+      <div class="reveal" style="font-size:52px;margin-bottom:16px">💚</div>
+      <h2 class="reveal" style="font-family:var(--serif);font-weight:700;font-size:clamp(32px,4.4vw,52px);line-height:1.05;margin-bottom:20px;text-wrap:balance">Tu donación protege Lomas de Ancón para siempre.</h2>
+      <p class="reveal" style="color:rgba(255,255,255,.78);font-size:16px;max-width:52ch;margin:0 auto 32px">Con tu apoyo financiamos actividades educativas, conservación del ecosistema y oportunidades reales para las familias locales.</p>
+      <a onclick="navigate('donaciones')" class="btn-cta lg reveal" style="background:var(--accent);cursor:pointer"><span class="material-symbols-rounded icon-fill">favorite</span>Hacer una donación</a>
+    </div>
+  </section>
+
+  <section class="allies">
+    <div class="wrap">
+      <h3>Nuestros aliados</h3>
+      <p class="sub">Instituciones que respaldan el trabajo en el territorio.</p>
+      <div class="ally-row">
+        <div class="ally"><span class="dot">M</span> MINCETUR</div>
+        <div class="ally"><span class="dot" style="background:#8B6914">S</span> SERNANP</div>
+        <div class="ally"><span class="dot" style="background:#7a5028">A</span> Municipalidad de Ancón</div>
+        <div class="ally"><span class="dot" style="background:#4a6741">G</span> GORE Lima</div>
+        <div class="ally"><span class="dot" style="background:#5c3d1e">U</span> U. Cayetano</div>
+        <div class="ally"><span class="dot" style="background:#c49a3c;color:#2d1f0e">P</span> PromPerú</div>
+      </div>
+    </div>
+  </section>
+</div><!-- /page-inicio -->
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE: NOSOTROS
+═══════════════════════════════════════════════════════ -->
+<div id="page-nosotros" class="page-section">
+  <div class="page-hero"><div class="photo photo--lomas" style="position:absolute;inset:0"><div class="dune-cap"></div><span class="grain"></span></div><div class="page-hero-inner"><div class="breadcrumb"><a onclick="navigate('inicio')" style="cursor:pointer">Inicio</a><span class="sep">›</span><span>Nosotros</span></div><h1>Nosotros</h1><p class="sub">Desarrollo social en Lomas de Ancón</p></div></div>
+  <section class="section" style="background:var(--cream)"><div class="wrap">
+    <div class="two-col">
+      <div class="reveal">
+        <span class="eyebrow" style="color:var(--olive-deep)">— Nuestra misión</span>
+        <h2 class="big-h2" style="margin-top:14px">Aventura en la bahía, desierto, lomas y montañas a través de la recreación, turismo y voluntariado.</h2>
+        <p class="body-p">Las actividades al aire libre y el voluntariado impulsan al turismo en Lomas de Ancón, beneficiando a familias locales y cuidando el medio ambiente.</p>
+        <p class="body-p">En Lomas de Ancón puedes hacer sandboard en las dunas, kayak en la bahía, hiking nocturno a la luz de la luna, o sumar tus manos a nuestros voluntariados de reforestación de tara y atrapanieblas.</p>
+        <div class="pull"><b>Ancón es el único distrito de Lima</b>, capital del Perú, que cuenta en su territorio con <b>3 áreas naturales protegidas</b>: ACR Lomas de Ancón, Humedales de Santa Rosa e Islas, Islotes y Puntas Guaneras.</div>
+        <p class="body-p" style="margin-top:18px">El espacio desértico dunar de Ancón alberga una biodiversidad única: zorros costeros, lechuzas, halcones, cactáceas columnares y una comunidad de lomas costeras que florece entre junio y noviembre.</p>
+      </div>
+      <div class="reveal">
+        <div class="values-grid">
+          <div class="value-card"><div class="ico"><span class="material-symbols-rounded icon-fill">terrain</span></div><h4>Conservación</h4><p>Protegemos las ANP de Ancón a través del turismo responsable y la ciencia ciudadana.</p></div>
+          <div class="value-card"><div class="ico"><span class="material-symbols-rounded icon-fill">groups</span></div><h4>Comunidad</h4><p>Trabajamos con familias locales para que el turismo genere empleo y bienestar real.</p></div>
+          <div class="value-card"><div class="ico"><span class="material-symbols-rounded icon-fill">school</span></div><h4>Educación</h4><p>Formamos jóvenes en gestión ambiental, liderazgo y deportes de aventura.</p></div>
+          <div class="value-card"><div class="ico"><span class="material-symbols-rounded icon-fill">explore</span></div><h4>Aventura</h4><p>Ofrecemos experiencias únicas en dunas, lomas y bahía que no existen en otro lugar de Lima.</p></div>
+        </div>
+      </div>
+    </div>
+  </div></section>
+  <section class="section" style="background:var(--cream-soft);text-align:center"><div class="wrap">
+    <div class="section-head reveal"><div class="eyebrow">Nuestro impacto</div><h2>Los números que sostienen nuestro propósito</h2></div>
+    <div class="stat-row">
+      <div class="stat reveal"><div class="ico"><span class="material-symbols-rounded icon-fill">handshake</span></div><div class="num"><span class="counter" data-target="120">0</span><span class="plus">+</span></div><div class="lbl">Voluntarios</div><div class="sub">Desde el 2009</div></div>
+      <div class="stat reveal"><div class="ico"><span class="material-symbols-rounded icon-fill">hourglass_top</span></div><div class="num"><span class="counter" data-target="20">0</span></div><div class="lbl">Años en lomas</div><div class="sub">y bahía de Ancón</div></div>
+      <div class="stat reveal"><div class="ico"><span class="material-symbols-rounded icon-fill">groups</span></div><div class="num"><span class="counter" data-target="60">0</span></div><div class="lbl">Familias</div><div class="sub">De la comunidad</div></div>
+      <div class="stat reveal"><div class="ico"><span class="material-symbols-rounded icon-fill">family_restroom</span></div><div class="num"><span class="counter" data-target="10">0</span></div><div class="lbl">Familias directas</div><div class="sub">Involucradas</div></div>
+      <div class="stat reveal"><div class="ico"><span class="material-symbols-rounded icon-fill">trophy</span></div><div class="num"><span class="counter" data-target="8">0</span></div><div class="lbl">Niños en campeonatos</div><div class="sub">De sandboarding</div></div>
+    </div>
+  </div></section>
+</div><!-- /page-nosotros -->
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE: ACTIVIDADES
+═══════════════════════════════════════════════════════ -->
+<div id="page-actividades" class="page-section">
+  <div class="page-hero"><div class="photo photo--rock" style="position:absolute;inset:0"><span class="silhouette" style="left:58%;bottom:40%;width:5px;height:14px"></span><span class="grain"></span></div><div class="page-hero-inner"><div class="breadcrumb"><a onclick="navigate('inicio')" style="cursor:pointer">Inicio</a><span class="sep">›</span><span>Actividades</span></div><h1>Actividades en la Bahía,<br>Desierto y Lomas de Ancón</h1><p class="sub">7 experiencias con guías locales · Cada reserva financia a la comunidad</p></div></div>
+  <section class="section" style="background:var(--cream-soft)"><div class="wrap">
+    <p style="max-width:68ch;margin:0 auto 48px;text-align:center;color:var(--ink-soft);font-size:16px">Desde sandboard en las dunas hasta kayak en la bahía — cada actividad es guiada por especialistas locales y forma parte de un modelo de turismo con propósito social.</p>
+    <div class="acts-layout">
+      <div>
+        <div class="acts-grid-2">
+          <div class="act-card reveal"><div class="photo photo--rock" aria-hidden="true"><div class="dune-cap" style="height:30%"></div><span class="grain"></span><span class="photo-tag">Escalada</span></div><span class="arrow"><span class="material-symbols-rounded">arrow_outward</span></span><div class="body"><div class="num">01 — Escalada</div><h3>Clase de Escalada y Rápel</h3><div class="meta"><span class="material-symbols-rounded" style="font-size:14px">schedule</span>5:00–7:00 pm · mín. 3 personas</div><div class="act-footer"><div class="price">S/ 60<small>/ persona</small></div><button class="btn-reservar" onclick="addToCart('escalada-rapel','Clase de Escalada y Rápel',60,'persona')">+ Reservar</button></div></div></div>
+          <div class="act-card reveal"><div class="photo photo--dune" aria-hidden="true"><div class="dune-cap" style="height:30%"></div><span class="grain"></span><span class="photo-tag">Clases</span></div><span class="arrow"><span class="material-symbols-rounded">arrow_outward</span></span><div class="body"><div class="num">02 — Clases</div><h3>Clases de Sandboard y Escalada</h3><div class="meta"><span class="material-symbols-rounded" style="font-size:14px">schedule</span>Niños (4 sesiones) · Adultos (3 sesiones)</div><div class="act-footer"><div class="price">S/ 100<small>/ paquete</small></div><button class="btn-reservar" onclick="addToCart('sandboard-escalada','Clases de Sandboard y Escalada',100,'paquete')">+ Reservar</button></div></div></div>
+          <div class="act-card reveal"><div class="photo photo--lomas" aria-hidden="true"><div class="dune-cap" style="height:30%"></div><span class="grain"></span><span class="photo-tag">Hiking</span></div><span class="arrow"><span class="material-symbols-rounded">arrow_outward</span></span><div class="body"><div class="num">03 — Hiking</div><h3>Hiking en Lomas de Ancón</h3><div class="meta"><span class="material-symbols-rounded" style="font-size:14px">schedule</span>Diurno o luna llena · mín. 3 personas</div><div class="act-footer"><div class="price">S/ 55<small>/ persona</small></div><button class="btn-reservar" onclick="addToCart('hiking','Hiking en Lomas de Ancón',55,'persona')">+ Reservar</button></div></div></div>
+          <div class="act-card reveal"><div class="photo photo--water" aria-hidden="true"><div class="dune-cap" style="height:30%"></div><span class="grain"></span><span class="photo-tag">Acuático</span></div><span class="arrow"><span class="material-symbols-rounded">arrow_outward</span></span><div class="body"><div class="num">04 — Acuático</div><h3>Kayak y Paddle en la Bahía de Ancón</h3><div class="meta"><span class="material-symbols-rounded" style="font-size:14px">schedule</span>2 h · 9am, 11am, 2pm o 6pm</div><div class="act-footer"><div class="price">S/ 90<small>/ embarcación</small></div><button class="btn-reservar" onclick="addToCart('kayak','Kayak y Paddle en la Bahía de Ancón',90,'embarcación')">+ Reservar</button></div></div></div>
+          <div class="act-card reveal"><div class="photo photo--dusk" aria-hidden="true"><div class="dune-cap" style="height:30%"></div><span class="grain"></span><span class="photo-tag">Sandboard</span></div><span class="arrow"><span class="material-symbols-rounded">arrow_outward</span></span><div class="body"><div class="num">05 — Sandboard</div><h3>Sandboard en las Lomas de Ancón</h3><div class="meta"><span class="material-symbols-rounded" style="font-size:14px">schedule</span>3 h · 8:00 am o 3:00 pm · desde 8 años</div><div class="act-footer"><div class="price">S/ 72<small>/ persona</small></div><button class="btn-reservar" onclick="addToCart('sandboard','Sandboard en las Lomas de Ancón',72,'persona')">+ Reservar</button></div></div></div>
+          <div class="act-card reveal"><div class="photo photo--night" aria-hidden="true"><div class="dune-cap" style="height:30%"></div><span class="grain"></span><span class="photo-tag">Trekking</span></div><span class="arrow"><span class="material-symbols-rounded">arrow_outward</span></span><div class="body"><div class="num">06 — Trekking</div><h3>Trekking en Lomas de Ancón</h3><div class="meta"><span class="material-symbols-rounded" style="font-size:14px">schedule</span>4:00 pm → 11:00 am · noche completa</div><div class="act-footer"><div class="price">S/ 75<small>/ persona</small></div><button class="btn-reservar" onclick="addToCart('trekking','Trekking en Lomas de Ancón',75,'persona')">+ Reservar</button></div></div></div>
+          <div class="act-card reveal"><div class="photo photo--dune" aria-hidden="true"><div class="dune-cap" style="height:30%"></div><span class="grain"></span><span class="photo-tag">Trineo</span></div><span class="arrow"><span class="material-symbols-rounded">arrow_outward</span></span><div class="body"><div class="num">07 — Trineo</div><h3>Trineo en las Dunas de Lomas de Ancón</h3><div class="meta"><span class="material-symbols-rounded" style="font-size:14px">schedule</span>3 h · 8:00 am o 3:00 pm · desde 5 años</div><div class="act-footer"><div class="price">S/ 55<small>/ persona</small></div><button class="btn-reservar" onclick="addToCart('trineo','Trineo en las Dunas de Lomas de Ancón',55,'persona')">+ Reservar</button></div></div></div>
+        </div>
+      </div>
+      <aside>
+        <div class="sidebar-widget reveal">
+          <h4>Reseñas Google</h4>
+          <div class="google-rating">
+            <div class="google-logo" style="justify-content:center;font-size:16px;margin-bottom:4px"><span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span></div>
+            <div class="score">4.8</div>
+            <div class="stars">★★★★★</div>
+            <div class="count">A base de 10+ reseñas</div>
+          </div>
+        </div>
+        <div class="sidebar-widget reveal">
+          <h4>Aliados institucionales</h4>
+          <div class="ally-mini">
+            <div class="ally-mini-item"><span class="dot">M</span>MINCETUR</div>
+            <div class="ally-mini-item"><span class="dot">S</span>SERNANP</div>
+            <div class="ally-mini-item"><span class="dot">A</span>Mun. Ancón</div>
+            <div class="ally-mini-item"><span class="dot">G</span>GORE Lima</div>
+            <div class="ally-mini-item"><span class="dot">P</span>PromPerú</div>
+          </div>
+        </div>
+        <div class="sidebar-widget reveal" style="background:var(--olive-deep);color:#fff;border-color:transparent">
+          <h4 style="color:var(--sand-soft);border-bottom-color:rgba(255,255,255,.15)">¿Tienes dudas?</h4>
+          <p style="font-size:14px;color:rgba(255,255,255,.82);margin-bottom:16px">Escríbenos por WhatsApp para asesorarte sobre qué actividad es mejor para ti.</p>
+          <a href="https://wa.me/51984350983?text=Hola%2C%20quiero%20saber%20más%20sobre%20las%20actividades" class="btn-wa-big" target="_blank"><span class="material-symbols-rounded">chat</span>Consultar actividades</a>
+        </div>
+      </aside>
+    </div>
+  </div></section>
+</div><!-- /page-actividades -->
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE: DONACIONES
+═══════════════════════════════════════════════════════ -->
+<div id="page-donaciones" class="page-section">
+  <div class="donate-hero"><div class="photo photo--dune"><div class="dune-cap" style="height:40%"></div><span class="grain"></span></div><div class="donate-hero-inner"><div class="breadcrumb" style="margin-bottom:20px"><a onclick="navigate('inicio')" style="cursor:pointer">Inicio</a><span class="sep">›</span><span>Donaciones</span></div><h1>Donaciones <em>con Amor</em></h1></div></div>
+  <div style="background:var(--earth-deep)"><div class="transform-grid">
+    <div class="transform-text reveal"><h2>Dona y transforma vidas</h2><p>Con cada aporte financiamos el acceso de niños y jóvenes de Ancón a actividades deportivas, educación ambiental y experiencias transformadoras en las dunas, lomas y bahía. Tu donación genera desarrollo social real, conciencia ambiental y orgullo de territorio en la comunidad local.</p></div>
+    <div class="transform-img"><div class="photo photo--lomas" style="position:absolute;inset:0;filter:hue-rotate(5deg) brightness(.85)"><span class="grain"></span></div></div>
+  </div></div>
+  <section class="donate-plans"><div class="wrap" style="text-align:center">
+    <div class="big-heart reveal"><span class="material-symbols-rounded icon-fill">favorite</span></div>
+    <div class="eyebrow reveal" style="color:var(--accent-soft)">Haz la diferencia</div>
+    <h2 class="reveal" style="font-family:var(--serif);font-weight:700;font-size:clamp(34px,4.4vw,56px);line-height:1.05;max-width:18ch;margin:16px auto 22px;text-wrap:balance">Tu donación protege Lomas de Ancón para siempre.</h2>
+    <ul class="benefits reveal">
+      <li><span class="check"><span class="material-symbols-rounded">check</span></span>Educación ambiental para niños y jóvenes</li>
+      <li><span class="check"><span class="material-symbols-rounded">check</span></span>Conservación de las lomas costeras del Perú</li>
+      <li><span class="check"><span class="material-symbols-rounded">check</span></span>Empleo y turismo sostenible para la comunidad</li>
+    </ul>
+    <a onclick="navigate('voluntariado')" class="volunteer-link reveal" style="cursor:pointer"><span class="material-symbols-rounded">back_hand</span>Quiero ser voluntario<span class="material-symbols-rounded" style="font-size:16px">arrow_forward</span></a>
+    <div class="plans" style="margin-top:48px">
+      <article class="plan"><div class="ico">🌱</div><div class="amt">S/ 20<small>/mes</small></div><p class="desc">Financia materiales educativos para niños del programa Sandboard Escolar.</p><a class="btn-wa" href="https://wa.me/51984350983?text=Quiero%20donar%20S%2F%2020%20al%20mes" target="_blank"><span class="material-symbols-rounded">chat</span>Donar por WhatsApp</a></article>
+      <article class="plan popular"><span class="tag-pop">Popular</span><div class="ico">🌳</div><div class="amt">S/ 50<small>/mes</small></div><p class="desc">Apoya directamente a una familia local de guías y artesanos.</p><a class="btn-wa" href="https://wa.me/51984350983?text=Quiero%20donar%20S%2F%2050%20al%20mes" target="_blank"><span class="material-symbols-rounded">chat</span>Donar por WhatsApp</a></article>
+      <article class="plan"><div class="ico">🏔️</div><div class="amt">S/ 100<small>/mes</small></div><p class="desc">Patrocina un campamento completo de reforestación con tara y atrapanieblas.</p><a class="btn-wa" href="https://wa.me/51984350983?text=Quiero%20donar%20S%2F%20100%20al%20mes" target="_blank"><span class="material-symbols-rounded">chat</span>Donar por WhatsApp</a></article>
+      <article class="plan"><div class="ico">✨</div><div class="amt">Libre</div><p class="desc">Elige cuánto quieres aportar — todo monto suma al territorio.</p><a class="btn-wa" href="https://wa.me/51984350983?text=Quiero%20donar%20un%20monto%20libre" target="_blank"><span class="material-symbols-rounded">chat</span>Donar por WhatsApp</a></article>
+    </div>
+    <p style="margin-top:32px;color:rgba(255,255,255,.6);font-size:13.5px">Gestionado por WhatsApp · 100% va a la comunidad</p>
+  </div></section>
+  <section class="section" style="background:var(--cream-soft);text-align:center"><div class="wrap">
+    <div class="section-head reveal"><div class="eyebrow" style="color:var(--olive-deep)">Cuentas habilitadas para donaciones</div><h2>Transferencias directas</h2></div>
+    <div class="pay-cards">
+      <div class="pay-card reveal"><div class="bank-icon" style="background:#6c2eb9">Y/P</div><h4>Yape / Plin</h4><div class="bank-sub">Transferencia instantánea</div><div class="bank-row"><div class="bank-field"><strong>Nombre</strong>Annie Rojas</div><div class="bank-field"><strong>Número</strong>+51 993 277 942</div></div></div>
+      <div class="pay-card reveal"><div class="bank-icon" style="background:#004a97">BBVA</div><h4>BBVA</h4><div class="bank-sub">Naturaleza y Turismo Perú SAC</div><div class="bank-row"><div class="bank-field"><strong>Cuenta en soles</strong>0011-0819-0200459770</div><div class="bank-field"><strong>CCI</strong>011-819-000200459770-90</div></div></div>
+      <div class="pay-card reveal"><div class="bank-icon" style="background:#d52b1e">BCP</div><h4>BCP</h4><div class="bank-sub">Annie Rojas</div><div class="bank-row"><div class="bank-field"><strong>Cuenta en soles</strong>194-93648287-0-28</div><div class="bank-field"><strong>Cuenta interbancaria</strong>002-194-003648287028-89</div></div></div>
+    </div>
+  </div></section>
+  <section class="section conectate-section" style="background:var(--cream)"><div class="wrap">
+    <div class="conectate-grid reveal">
+      <div class="conectate-left">
+        <div class="eyebrow" style="color:var(--olive-deep)">¿Tienes dudas?</div>
+        <h2>Conéctate<br>con nosotros</h2>
+        <p>Síguenos en nuestras redes sociales o escríbenos a través del formulario de contacto. Tu mensaje puede ser el primer paso para una gran transformación.</p>
+        <div class="conectate-social">
+          <span style="font-size:13px;font-weight:600;color:var(--ink-soft);letter-spacing:.06em;text-transform:uppercase">Síguenos:</span>
+          <div class="social-row">
+            <a href="#" class="soc-btn" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+            <a href="#" class="soc-btn" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+            <a href="#" class="soc-btn" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.4a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#f5f0e8"/></svg></a>
+          </div>
+        </div>
+      </div>
+      <form class="conectate-form" onsubmit="handleContactForm(event)">
+        <div class="form-row">
+          <div class="form-group"><label for="cf-nombre">Nombre</label><input id="cf-nombre" type="text" placeholder="Tu nombre" required/></div>
+          <div class="form-group"><label for="cf-apellido">Apellido</label><input id="cf-apellido" type="text" placeholder="Tu apellido" required/></div>
+        </div>
+        <div class="form-group"><label for="cf-asunto">Asunto</label><input id="cf-asunto" type="text" placeholder="¿En qué te podemos ayudar?"/></div>
+        <div class="form-group"><label for="cf-email">Email</label><input id="cf-email" type="email" placeholder="tu@correo.com" required/></div>
+        <div class="form-group"><label for="cf-mensaje">Mensaje</label><textarea id="cf-mensaje" rows="5" placeholder="Escribe tu mensaje aquí..." required></textarea></div>
+        <button type="submit" class="cf-submit"><span class="material-symbols-rounded">send</span>Enviar mensaje</button>
+        <div id="cf-ok" class="cf-ok" hidden><span class="material-symbols-rounded">check_circle</span>¡Mensaje enviado! Te responderemos pronto.</div>
+      </form>
+    </div>
+  </div></section>
+</div><!-- /page-donaciones -->
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE: VOLUNTARIADO
+═══════════════════════════════════════════════════════ -->
+<div id="page-voluntariado" class="page-section">
+  <div class="page-hero"><div class="photo photo--green" style="position:absolute;inset:0"><div class="dune-cap" style="background:#102010"></div><span class="grain"></span></div><div class="page-hero-inner"><div class="breadcrumb"><a onclick="navigate('inicio')" style="cursor:pointer">Inicio</a><span class="sep">›</span><span>Voluntariado</span></div><h1>Voluntariado en<br>Lomas de Ancón</h1><p class="sub">Programa de Gestores Ambientales de las ANP de Ancón</p></div></div>
+  <section class="section" style="background:var(--cream)"><div class="wrap">
+    <div class="vol-intro">
+      <div class="reveal">
+        <span class="eyebrow" style="color:var(--olive-deep)">— Adventure Travel Consulting</span>
+        <h2 class="big-h2" style="margin-top:14px">Programa de Gestores Ambientales de las ANP de Ancón</h2>
+        <p class="body-p">El programa forma gestores y guardaparques intérpretes voluntarios que trabajan en turismo, deporte y educación ambiental, en articulación con la Zona Reservada de Ancón (SERNANP).</p>
+        <p class="body-p">El programa formativo está dirigido por Adventure Travel Consulting e incluye capacitaciones teórico-prácticas en liderazgo, gestión de proyectos y operación de actividades outdoor.</p>
+        <p class="body-p">Los voluntarios son el corazón de Lomas de Ancón — guían recorridos, organizan eventos deportivos, lideran limpiezas de residuos y conectan a los visitantes con el territorio.</p>
+        <a href="https://wa.me/51984350983?text=Hola%2C%20quiero%20ser%20voluntario%20en%20Lomas%20de%20Anc%C3%B3n" class="btn-cta lg" style="margin-top:8px" target="_blank"><span class="material-symbols-rounded">back_hand</span>Quiero ser voluntario</a>
+      </div>
+      <div class="photo-frame reveal"><div class="photo photo--trail" style="position:absolute;inset:0"><span class="grain"></span><span class="photo-tag">Voluntarios en el territorio</span></div></div>
+    </div>
+  </div></section>
+  <section class="section" style="background:var(--cream-soft)"><div class="wrap">
+    <div class="section-head reveal"><div class="eyebrow">Tres ejes estratégicos</div><h2>Cómo trabajamos en el territorio</h2><p>Cada voluntario puede integrarse a uno o más ejes según sus intereses y habilidades.</p></div>
+    <div class="ejes-grid">
+      <div class="eje-card reveal"><div class="eje-num">Eje 01</div><h3>Turismo</h3><ul><li>Recorridos de sandboard, escalada, kayak y SUP</li><li>Programa de Guardaparques Intérpretes Voluntarios</li><li>Proyectos de fotografía y talleres creativos</li><li>Fortalecimiento del "Paradero Lomas"</li><li>Acuerdo de conservación con Zona Reservada de Ancón</li></ul></div>
+      <div class="eje-card reveal"><div class="eje-num">Eje 02</div><h3>Deporte para el Desarrollo</h3><ul><li>Escuela de Aventura "Snowkidz"</li><li>World Snow Day</li><li>Festival de Ancón</li><li>Campeonato Nacional de Sandboard</li><li>Club de Aventura Lomas</li><li>Trail running y talleres de inglés</li></ul></div>
+      <div class="eje-card reveal"><div class="eje-num">Eje 03</div><h3>Ciencia Ciudadana y Educación Ambiental</h3><ul><li>Global Big Day</li><li>Reto Naturalista Urbano</li><li>Limpiezas de residuos comunitarias</li><li>Ferias ambientales y "Mi Tercer Parque"</li><li>Cine al aire libre, yoga y mindfulness</li></ul></div>
+    </div>
+  </div></section>
+  <section class="section" style="background:var(--cream)"><div class="wrap">
+    <div class="cta-box reveal">
+      <div style="font-size:52px;margin-bottom:16px">🌿</div>
+      <h2>¿Listo para ser parte del cambio?</h2>
+      <p>Contáctanos por WhatsApp para conocer los requisitos de ingreso, cronograma de capacitaciones y cómo integrarte al programa.</p>
+      <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+        <a href="https://wa.me/51984350983?text=Hola%2C%20quiero%20ser%20voluntario%20en%20Lomas%20de%20Anc%C3%B3n" class="btn-wa-big" style="max-width:280px" target="_blank"><span class="material-symbols-rounded">chat</span>Postular por WhatsApp</a>
+        <a onclick="navigate('donaciones')" class="btn-cta light lg" style="cursor:pointer"><span class="material-symbols-rounded icon-fill">favorite</span>O hacer una donación</a>
+      </div>
+    </div>
+  </div></section>
+</div><!-- /page-voluntariado -->
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE: NEGOCIOS LOCALES
+═══════════════════════════════════════════════════════ -->
+<div id="page-negocios-locales" class="page-section">
+  <div class="page-hero"><div class="photo photo--trail" style="position:absolute;inset:0"><div class="dune-cap"></div><span class="grain"></span></div><div class="page-hero-inner"><div class="breadcrumb"><a onclick="navigate('inicio')" style="cursor:pointer">Inicio</a><span class="sep">›</span><span>Negocios Locales</span></div><h1>Negocios Locales</h1><p class="sub">Emprendimientos de la comunidad de Ancón</p></div></div>
+  <section class="section" style="background:var(--cream)"><div class="wrap">
+    <div class="section-head reveal"><div class="eyebrow">Turismo comunitario sostenible</div><h2 class="big-h2" style="max-width:18ch">Negocios que nacen del territorio y benefician a quienes lo cuidan</h2><p style="max-width:56ch;margin:0 auto">Cada compra a un negocio local es una inversión directa en la comunidad de Ancón. Aquí encontrarás artesanías, fotografía, experiencias y sabores auténticos.</p></div>
+    <div class="negocios-grid">
+      <div class="negocio-card reveal">
+        <div class="ph"><div class="photo photo--portrait" style="position:absolute;inset:0;filter:hue-rotate(-10deg)"><span class="grain"></span><span class="photo-tag">Manos Artesanas de Lomas de Ancón</span></div></div>
+        <div class="body"><h3>Manos Artesanas de Lomas de Ancón</h3><p>Modelo de negocio social basado en productos reciclados, liderado principalmente por mujeres de la comunidad. Cada pieza cuenta una historia del territorio.</p><div class="products"><span class="tag">Portavasos</span><span class="tag">Individuales</span><span class="tag">Carteras</span><span class="tag">Amigurumis</span><span class="tag">Llaveros</span><span class="tag">Pulseras</span><span class="tag">Aretes</span><span class="tag">Collares</span></div><div class="contact"><span class="material-symbols-rounded icon-fill" style="color:var(--olive-deep)">person</span>Fabiola Meza</div><a href="https://wa.me/51982418286" class="btn-wa" style="margin-top:12px" target="_blank"><span class="material-symbols-rounded">chat</span>+51 982 418 286</a></div>
+      </div>
+      <div class="negocio-card reveal">
+        <div class="ph"><div class="photo photo--trail" style="position:absolute;inset:0"><span class="grain"></span><span class="photo-tag">Foto &amp; Merch Lomas de Ancón</span></div></div>
+        <div class="body"><h3>Foto &amp; Merch Lomas de Ancón</h3><p>Proyecto de difusión visual y venta de productos inspirados en las Lomas. Fotografía profesional de paisajes, productos, eventos y turismo. Capacitaciones fotográficas para la comunidad.</p><div class="products"><span class="tag">Fotografía de paisajes</span><span class="tag">Fotografía de eventos</span><span class="tag">Cuadros de flora y fauna</span><span class="tag">Souvenirs de Ancón</span><span class="tag">Capacitaciones fotográficas</span></div><div class="contact"><span class="material-symbols-rounded icon-fill" style="color:var(--olive-deep)">person</span>John Sihua Toribio</div><a href="https://wa.me/51955163023" class="btn-wa" style="margin-top:12px" target="_blank"><span class="material-symbols-rounded">chat</span>+51 955 163 023</a></div>
+      </div>
+    </div>
+  </div></section>
+  <section class="section" style="background:var(--cream-soft)"><div class="wrap">
+    <div class="section-head reveal"><div class="eyebrow">Próximamente</div><h2>Más emprendimientos en desarrollo</h2><p>Estos proyectos comunitarios están formalizándose dentro del programa. Pronto tendrán su ficha propia.</p></div>
+    <div class="coming-grid">
+      <div class="coming-card reveal"><h4>♻️ Compostaje comunitario</h4><p>Proyecto de gestión de residuos orgánicos con la comunidad local, vinculado a la educación ambiental del programa.</p></div>
+      <div class="coming-card reveal"><h4>🍽️ Alimentos con ingredientes locales</h4><p>Emprendimiento gastronómico que utiliza ingredientes del territorio de Ancón, promoviendo la soberanía alimentaria.</p></div>
+      <div class="coming-card reveal"><h4>🗺️ Guías de experiencias turísticas</h4><p>Guías locales certificados que ofrecen recorridos especializados en flora, fauna y cultura de las Lomas de Ancón.</p></div>
+    </div>
+    <div style="text-align:center;margin-top:40px" class="reveal"><a onclick="navigate('voluntariado')" class="btn-outline" style="cursor:pointer">¿Tienes un emprendimiento? Únete al programa <span class="material-symbols-rounded" style="font-size:16px">arrow_forward</span></a></div>
+  </div></section>
+</div><!-- /page-negocios-locales -->
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE: BLOG
+═══════════════════════════════════════════════════════ -->
+<div id="page-blog" class="page-section">
+  <div class="page-hero"><div class="photo photo--night" style="position:absolute;inset:0"><div class="dune-cap"></div><span class="grain"></span></div><div class="page-hero-inner"><div class="breadcrumb"><a onclick="navigate('inicio')" style="cursor:pointer">Inicio</a><span class="sep">›</span><span>Blog</span></div><h1>Blog de Lomas de Ancón</h1><p class="sub">Conexión con la naturaleza y desarrollo comunitario</p></div></div>
+  <section class="section" style="background:var(--cream)"><div class="wrap">
+    <div class="blog-featured reveal">
+      <div class="ph"><div class="photo photo--night" style="position:absolute;inset:0"><span class="grain"></span></div></div>
+      <div><span class="blog-tag">Eventos</span><div class="mono" style="color:var(--earth-warm);margin-bottom:10px">13 mayo 2026</div><h2>Guía del Corredor — Gecko Run 10K · Trail Running Nocturno en Ancón</h2><p>La primera edición del Gecko Run llega a las dunas de Ancón. Una carrera nocturna de 10 km entre paisajes únicos del desierto costero, organizada con la comunidad local.</p><a href="#" class="btn-cta"><span class="material-symbols-rounded">menu_book</span>Leer artículo completo</a></div>
+    </div>
+    <div style="border-top:1px solid var(--rule);padding-top:48px">
+      <div class="section-head reveal" style="margin-bottom:36px"><div class="eyebrow">Más artículos</div><h2 style="font-family:var(--serif);font-weight:700;font-size:clamp(22px,3vw,36px);color:var(--earth-deep)">Todas las publicaciones</h2></div>
+      <div class="blog-grid-3">
+        <a href="#" class="blog-card reveal"><div class="ph"><div class="photo photo--water" style="position:absolute;inset:0"><div class="dune-cap" style="height:35%"></div><span class="grain"></span></div></div><div class="body"><div class="date">10 abril 2026 · Conservación</div><h3>Conservación en Ancón: Protección de Bahía y Dunas Marinas</h3><span class="read">Leer <span class="material-symbols-rounded" style="font-size:14px">arrow_forward</span></span></div></a>
+        <a href="#" class="blog-card reveal"><div class="ph"><div class="photo photo--green" style="position:absolute;inset:0"><div class="dune-cap" style="height:35%"></div><span class="grain"></span></div></div><div class="body"><div class="date">22 marzo 2026 · Ecosistema</div><h3>Cactus en Lomas de Ancón: Clave para la Fauna y Ecosistema</h3><span class="read">Leer <span class="material-symbols-rounded" style="font-size:14px">arrow_forward</span></span></div></a>
+        <a href="#" class="blog-card reveal"><div class="ph"><div class="photo photo--lomas" style="position:absolute;inset:0"><div class="dune-cap" style="height:35%"></div><span class="grain"></span></div></div><div class="body"><div class="date">15 marzo 2026 · Voluntariado</div><h3>Pasantía Lomera: experiencia auténtica en Lomas de Paraíso</h3><span class="read">Leer <span class="material-symbols-rounded" style="font-size:14px">arrow_forward</span></span></div></a>
+        <a href="#" class="blog-card reveal"><div class="ph"><div class="photo photo--trail" style="position:absolute;inset:0"><div class="dune-cap" style="height:35%"></div><span class="grain"></span></div></div><div class="body"><div class="date">28 feb 2026 · Empresas</div><h3>Voluntariado Corporativo en Ancón | Experiencias 360 para Empresas</h3><span class="read">Leer <span class="material-symbols-rounded" style="font-size:14px">arrow_forward</span></span></div></a>
+        <a href="#" class="blog-card reveal"><div class="ph"><div class="photo photo--dune" style="position:absolute;inset:0"><div class="dune-cap" style="height:35%"></div><span class="grain"></span></div></div><div class="body"><div class="date">14 feb 2026 · Comunidad</div><h3>Cerveza artesanal LOMERA inspirada en lomas costeras</h3><span class="read">Leer <span class="material-symbols-rounded" style="font-size:14px">arrow_forward</span></span></div></a>
+        <a href="#" class="blog-card reveal"><div class="ph"><div class="photo photo--portrait" style="position:absolute;inset:0"><div class="dune-cap" style="height:35%"></div><span class="grain"></span></div></div><div class="body"><div class="date">5 ene 2026 · Resumen</div><h3>Cierre de verano Lomas de Ancón: avances en comunidad</h3><span class="read">Leer <span class="material-symbols-rounded" style="font-size:14px">arrow_forward</span></span></div></a>
+        <a href="#" class="blog-card reveal"><div class="ph"><div class="photo photo--rock" style="position:absolute;inset:0"><div class="dune-cap" style="height:35%"></div><span class="grain"></span></div></div><div class="body"><div class="date">18 dic 2025 · Territorio</div><h3>ACR Lomas de Ancón: naturaleza, aventura y conservación a 90 min de Lima</h3><span class="read">Leer <span class="material-symbols-rounded" style="font-size:14px">arrow_forward</span></span></div></a>
+        <a href="#" class="blog-card reveal"><div class="ph"><div class="photo photo--dusk" style="position:absolute;inset:0"><div class="dune-cap" style="height:35%"></div><span class="grain"></span></div></div><div class="body"><div class="date">3 dic 2025 · Internacional</div><h3>Intercambio deportivo internacional: Nex-Gen en Lomas de Ancón</h3><span class="read">Leer <span class="material-symbols-rounded" style="font-size:14px">arrow_forward</span></span></div></a>
+        <a href="#" class="blog-card reveal"><div class="ph"><div class="photo photo--lomas" style="position:absolute;inset:0"><div class="dune-cap" style="height:35%"></div><span class="grain"></span></div></div><div class="body"><div class="date">15 nov 2025 · Comunidad</div><h3>Reseñas Lomas de Ancón: Gana beneficios exclusivos</h3><span class="read">Leer <span class="material-symbols-rounded" style="font-size:14px">arrow_forward</span></span></div></a>
+      </div>
+    </div>
+  </div></section>
+</div><!-- /page-blog -->
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE: FAQ
+═══════════════════════════════════════════════════════ -->
+<div id="page-faq" class="page-section">
+  <div class="page-hero"><div class="photo photo--lomas" style="position:absolute;inset:0"><div class="dune-cap"></div><span class="grain"></span></div><div class="page-hero-inner"><div class="breadcrumb"><a onclick="navigate('inicio')" style="cursor:pointer">Inicio</a><span class="sep">›</span><span>FAQ</span></div><h1>Preguntas Frecuentes</h1><p class="sub">Todo lo que necesitas saber antes de visitar</p></div></div>
+  <section class="section" style="background:var(--cream)"><div class="wrap"><div class="faq-wrap">
+    <div>
+      <div class="faq-item reveal" id="faq-0"><div class="faq-q" onclick="toggleFaq(0)"><span>¿Dónde trabajamos?</span><span class="material-symbols-rounded">expand_more</span></div><div class="faq-a"><p>En el ACR-Lomas de Ancón (a 7 km del centro de Ancón) y en la Bahía de Ancón. El área forma parte del sistema de Áreas Naturales Protegidas del Perú, en articulación con SERNANP.</p></div></div>
+      <div class="faq-item reveal" id="faq-1"><div class="faq-q" onclick="toggleFaq(1)"><span>¿Cómo llego a Lomas de Ancón?</span><span class="material-symbols-rounded">expand_more</span></div><div class="faq-a"><p>Desde el Óvalo de Chacas en Ancón, toma un colectivo hasta el cruce del Jr. Trujillo con 2 de Mayo. Desde Lima, toma la Panamericana Norte hasta el desvío a Ancón (aprox. 45–60 min).</p></div></div>
+      <div class="faq-item reveal" id="faq-2"><div class="faq-q" onclick="toggleFaq(2)"><span>¿Hay lugar para estacionar y servicios?</span><span class="material-symbols-rounded">expand_more</span></div><div class="faq-a"><p>Sí. En el Paradero Dunas la familia Meza cuida vehículos por S/ 2. Servicios higiénicos disponibles por S/ 1. Te recomendamos llevar agua y snacks adicionales.</p></div></div>
+      <div class="faq-item reveal" id="faq-3"><div class="faq-q" onclick="toggleFaq(3)"><span>Tengo niños pequeños, ¿pueden participar?</span><span class="material-symbols-rounded">expand_more</span></div><div class="faq-a"><p>¡Claro! Los menores deben ir acompañados de un apoderado. Desde los 5 años: trineo en dunas y kayak. Desde los 8 años: sandboard, escalada y demás actividades.</p></div></div>
+      <div class="faq-item reveal" id="faq-4"><div class="faq-q" onclick="toggleFaq(4)"><span>¿Qué ropa y equipo debo llevar?</span><span class="material-symbols-rounded">expand_more</span></div><div class="faq-a"><p>Gorro, ropa deportiva cómoda, calzado cocido (no sandalias), calcetines extra para las dunas, protector solar, gafas de sol, snacks y agua. Sin joyas. Ropa de baño si vas al kayak.</p></div></div>
+      <div class="faq-item reveal" id="faq-5"><div class="faq-q" onclick="toggleFaq(5)"><span>¿Dónde puedo comer cerca?</span><span class="material-symbols-rounded">expand_more</span></div><div class="faq-a"><p>Ancón tiene varios restaurantes y huariques con rica gastronomía marina local. Pregúntale a tu guía al llegar para recomendaciones actualizadas.</p></div></div>
+      <div class="faq-item reveal" id="faq-6"><div class="faq-q" onclick="toggleFaq(6)"><span>¿Qué actividades adicionales puedo hacer en Ancón?</span><span class="material-symbols-rounded">expand_more</span></div><div class="faq-a"><p>Además de nuestras actividades, Ancón ofrece playa, malecón, iglesia colonial y gastronomía marina. Tenemos una guía de espacios libres que compartimos al reservar.</p></div></div>
+    </div>
+    <div style="text-align:center;margin-top:48px;padding:36px;background:#fff;border-radius:20px;border:1px solid var(--rule);box-shadow:var(--shadow-card)" class="reveal">
+      <h3 style="font-family:var(--serif);font-weight:700;font-size:24px;color:var(--earth-deep);margin-bottom:12px">¿No encontraste tu respuesta?</h3>
+      <p style="color:var(--ink-soft);margin-bottom:24px">Escríbenos directamente y te respondemos a la brevedad.</p>
+      <a href="https://wa.me/51984350983?text=Hola%2C%20tengo%20una%20pregunta%20sobre%20Lomas%20de%20Anc%C3%B3n" class="btn-wa-big" style="max-width:300px;margin:0 auto" target="_blank"><span class="material-symbols-rounded">chat</span>Preguntar por WhatsApp</a>
+    </div>
+  </div></div></section>
+</div><!-- /page-faq -->
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE: CONTACTO
+═══════════════════════════════════════════════════════ -->
+<div id="page-contacto" class="page-section">
+  <div class="page-hero"><div class="photo photo--portrait" style="position:absolute;inset:0;filter:hue-rotate(10deg)"><span class="grain"></span></div><div class="page-hero-inner"><div class="breadcrumb"><a onclick="navigate('inicio')" style="cursor:pointer">Inicio</a><span class="sep">›</span><span>Contacto</span></div><h1>Contacto</h1></div></div>
+  <section class="section" style="background:#fff"><div class="wrap">
+    <div class="contacto-layout">
+      <div class="reveal">
+        <div class="eyebrow" style="color:var(--olive-deep)">Comunidad</div>
+        <h2 style="font-family:var(--serif);font-weight:700;font-size:clamp(26px,3.4vw,40px);line-height:1.1;color:var(--olive-deep);margin:14px 0 14px">Contáctanos</h2>
+        <p style="color:var(--ink-soft);font-size:15px;max-width:42ch;margin-bottom:28px">Únete a nuestra causa — puedes donar, hacer voluntariado, o disfrutar de emocionantes deportes en la arena.</p>
+        <div class="contact-info-list">
+          <div class="contact-info-item"><span class="cii-icon"><span class="material-symbols-rounded icon-fill">location_on</span></span><div class="cii-text"><strong>Dirección</strong>Ancón — Lima — Perú</div></div>
+          <div class="contact-info-item"><span class="cii-icon"><span class="material-symbols-rounded icon-fill">mail</span></span><div class="cii-text"><strong>Email</strong><a href="mailto:hola@lomasdeancon.pe" style="color:var(--ink-soft)">hola@lomasdeancon.pe</a></div></div>
+          <div class="contact-info-item"><span class="cii-icon"><span class="material-symbols-rounded icon-fill">call</span></span><div class="cii-text"><strong>Teléfono</strong><a href="tel:+51984350983" style="color:var(--ink-soft)">+51 984 350 983</a></div></div>
+        </div>
+        <div class="siguenos-label" style="margin-top:8px">Síguenos</div>
+        <div class="brand-socials">
+          <a href="#" class="bsocial" style="background:#1877f2"><span style="font-size:18px;font-weight:700">f</span></a>
+          <a href="#" class="bsocial" style="background:#000"><span style="font-size:14px">X</span></a>
+          <a href="#" class="bsocial" style="background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)"><span class="material-symbols-rounded" style="font-size:20px">photo_camera</span></a>
+          <a href="#" class="bsocial" style="background:#ff0000"><span class="material-symbols-rounded" style="font-size:20px">play_circle</span></a>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="wa-widget">
+          <div class="wa-header"><div class="wa-avatar">S<span class="online"></span></div><div class="wa-header-text"><div class="name">Sandra</div><div class="sub">Informes sobre el Tour · Online</div></div></div>
+          <div class="wa-bubble-wrap"><div class="wa-bubble">¡Hola! Soy Sandra, del equipo de Lomas de Ancón. ¿En qué puedo ayudarte? Puedo orientarte sobre actividades, voluntariado o cómo donar.<div class="time">ahora</div></div></div>
+          <div class="wa-body">
+            <div class="wa-field"><label for="wa-n">Tu nombre</label><input type="text" id="wa-n" placeholder="¿Cómo te llamas?"/></div>
+            <div class="wa-field"><label>Tu celular</label>
+              <div class="wa-phone-row">
+                <select><option>PE +51</option><option>US +1</option><option>ES +34</option><option>CO +57</option><option>CL +56</option><option>AR +54</option></select>
+                <input type="tel" id="wa-p" placeholder="984 350 983"/>
+              </div>
+            </div>
+            <button class="btn-wa-big" onclick="openWA()"><span class="material-symbols-rounded">chat</span>Hablemos por WhatsApp</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div></section>
+</div><!-- /page-contacto -->
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE: CARRITO
+═══════════════════════════════════════════════════════ -->
+<div id="page-carrito" class="page-section">
+  <div class="page-hero" style="min-height:240px"><div class="photo photo--dune" style="position:absolute;inset:0"><div class="dune-cap"></div><span class="grain"></span></div><div class="page-hero-inner" style="padding:60px 24px 40px"><div class="breadcrumb"><a onclick="navigate('inicio')" style="cursor:pointer">Inicio</a><span class="sep">›</span><span>Carrito</span></div><h1 style="font-size:clamp(32px,5vw,56px)">Tu carrito</h1></div></div>
+  <section class="section" style="background:var(--cream-soft)"><div class="wrap"><div id="cartContent"></div></div></section>
+</div><!-- /page-carrito -->
+
+<!-- ═══════════════════════════════════════════════════════
+     FOOTER (shared)
+═══════════════════════════════════════════════════════ -->
+<footer class="footer">
+  <div class="bg"><div class="photo photo--lomas" style="position:absolute;inset:0"><div class="dune-cap" style="height:50%"></div><span class="grain"></span></div></div>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="col"><h4>Contacto</h4><ul class="foot-links">
+        <li><a onclick="navigate('contacto')" style="cursor:pointer"><span class="foot-icon"><span class="material-symbols-rounded">place</span></span>Ancón, Lima – Perú</a></li>
+        <li><a href="tel:+51984350983"><span class="foot-icon"><span class="material-symbols-rounded">call</span></span>+51 984 350 983</a></li>
+        <li><a href="mailto:hola@lomasdeancon.pe"><span class="foot-icon"><span class="material-symbols-rounded">mail</span></span>hola@lomasdeancon.pe</a></li>
+        <li><a href="https://wa.me/51984350983" target="_blank"><span class="foot-icon"><svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 2C6.486 2 2 6.486 2 12c0 1.817.498 3.515 1.357 4.977L2 22l5.103-1.337A9.946 9.946 0 0 0 12 22c5.514 0 10-4.486 10-10S17.514 2 12 2zm4.438 13.132c-.238-.119-1.404-.691-1.621-.77-.217-.08-.374-.119-.531.12-.157.238-.61.77-.748.927-.138.157-.275.178-.513.06-.238-.12-1.004-.369-1.913-1.177-.707-.629-1.183-1.406-1.321-1.644-.138-.238-.015-.366.104-.485.106-.105.238-.275.357-.413.12-.138.157-.238.238-.396.08-.157.04-.297-.02-.416-.06-.119-.531-1.277-.727-1.748-.192-.459-.387-.397-.531-.404-.138-.007-.296-.009-.455-.009-.157 0-.414.06-.631.297-.217.238-.828.809-.828 1.974 0 1.165.848 2.291.966 2.449.119.157 1.669 2.549 4.046 3.576.567.244 1.009.39 1.353.499.569.181 1.087.155 1.496.094.456-.068 1.404-.574 1.602-1.128.198-.554.198-1.029.138-1.128-.059-.1-.217-.158-.455-.277z"/></svg></span>WhatsApp</a></li>
+      </ul></div>
+      <div class="col"><h4>Síguenos</h4><ul class="foot-links">
+        <li><a href="#"><span class="foot-icon"><svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></span>Facebook</a></li>
+        <li><a href="#"><span class="foot-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></span>Instagram</a></li>
+        <li><a href="#"><span class="foot-icon"><svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.24 8.24 0 0 0 4.83 1.56V6.79a4.85 4.85 0 0 1-1.06-.1z"/></svg></span>TikTok</a></li>
+        <li><a href="#"><span class="foot-icon"><svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.96 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.96 1.95C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75,15.02 15.5,12 9.75,8.98" fill="white"/></svg></span>YouTube</a></li>
+      </ul></div>
+      <div class="col"><h4>Legal</h4><ul class="foot-links">
+        <li><a href="#"><span class="foot-icon"><span class="material-symbols-rounded">description</span></span>Términos y condiciones</a></li>
+        <li><a href="#"><span class="foot-icon"><span class="material-symbols-rounded">lock</span></span>Política de privacidad</a></li>
+      </ul><a href="#" class="reclamaciones"><span class="foot-icon"><span class="material-symbols-rounded">forum</span></span><strong>Libro de Reclamaciones</strong></a></div>
+    </div>
+    <div class="foot-bottom"><span>© 2026 Lomas de Ancón · Todos los derechos reservados.</span><span class="mono">Hecho con 💚 para la comunidad de Ancón</span></div>
+  </div>
+</footer>
+
+<script>
+// ════════════════════════════════════════════════
+// SPA ROUTER
+// ════════════════════════════════════════════════
+const PAGES = ['inicio','nosotros','actividades','donaciones','voluntariado','negocios-locales','blog','faq','contacto','carrito'];
+
+function navigate(page) {
+  if (!PAGES.includes(page)) page = 'inicio';
+  // Hide all pages
+  PAGES.forEach(p => {
+    const el = document.getElementById('page-' + p);
+    if (el) el.classList.remove('page-active');
+  });
+  // Show target
+  const target = document.getElementById('page-' + page);
+  if (target) target.classList.add('page-active');
+  // Scroll to top instantly
+  window.scrollTo({top: 0, behavior: 'instant'});
+  // Update nav active states
+  document.querySelectorAll('[data-page]').forEach(a => {
+    a.classList.toggle('active', a.dataset.page === page);
+  });
+  // Update URL hash
+  history.pushState({page}, '', '#' + page);
+  // Page-specific inits
+  if (page === 'carrito') renderCart();
+  // Re-run animations on newly visible page
+  if (target) {
+    initReveal(target);
+    initCounters(target);
+  }
+  updateCartBadge();
+}
+
+// Handle browser back/forward
+window.addEventListener('popstate', function(e) {
+  const page = (e.state && e.state.page) || location.hash.slice(1) || 'inicio';
+  navigate(page);
+});
+
+// ── Mobile nav ─────────────────────────────────
+const navToggle = document.getElementById('navToggle');
+const navMobile = document.getElementById('navMobile');
+const navMobileClose = document.getElementById('navMobileClose');
+function closeMobileNav() { navMobile.classList.remove('open'); }
+if (navToggle) navToggle.addEventListener('click', () => navMobile.classList.add('open'));
+if (navMobileClose) navMobileClose.addEventListener('click', closeMobileNav);
+
+// ── Reveal animations ──────────────────────────
+function initReveal(container) {
+  const els = (container || document).querySelectorAll('.reveal:not(.in)');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, {threshold: .14});
+  els.forEach(el => io.observe(el));
+}
+
+// ── Counter animations ─────────────────────────
+function initCounters(container) {
+  const easeOut = t => 1 - Math.pow(1 - t, 3);
+  const els = (container || document).querySelectorAll('.counter:not([data-done])');
+  const ioC = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting || e.target.dataset.done) return;
+      e.target.dataset.done = '1';
+      const target = +e.target.dataset.target, dur = 1400, t0 = performance.now();
+      (function step(now) {
+        const p = Math.min(1, (now - t0) / dur);
+        e.target.textContent = Math.round(target * easeOut(p));
+        if (p < 1) requestAnimationFrame(step);
+      })(t0);
+    });
+  }, {threshold: .4});
+  els.forEach(el => ioC.observe(el));
+}
+
+// ── Nav scroll effect ──────────────────────────
+const nav = document.getElementById('nav');
+if (nav) window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 30), {passive: true});
+
+// ── Team carousel ──────────────────────────────
+const track = document.getElementById('teamTrack');
+const prev = document.getElementById('teamPrev');
+const next = document.getElementById('teamNext');
+let teamOffset = 0;
+function clampTeam() {
+  if (!track) return;
+  const max = Math.max(0, track.scrollWidth - track.parentElement.clientWidth);
+  teamOffset = Math.max(0, Math.min(teamOffset, max));
+  track.style.transform = 'translateX(' + -teamOffset + 'px)';
+}
+if (prev) prev.addEventListener('click', () => { teamOffset -= 476; clampTeam(); });
+if (next) next.addEventListener('click', () => { teamOffset += 476; clampTeam(); });
+window.addEventListener('resize', clampTeam);
+
+// ── FAQ accordion ──────────────────────────────
+function toggleFaq(i) {
+  const el = document.getElementById('faq-' + i);
+  if (el) el.classList.toggle('open');
+}
+
+// ── Cart ───────────────────────────────────────
+function updateCartBadge() {
+  const cart = JSON.parse(localStorage.getItem('lda_cart') || '[]');
+  const b = document.getElementById('cartBadge');
+  if (b) b.textContent = cart.reduce((s, i) => s + i.qty, 0) || 0;
+}
+
+function addToCart(id, name, price, unit) {
+  let cart = JSON.parse(localStorage.getItem('lda_cart') || '[]');
+  const idx = cart.findIndex(i => i.id === id);
+  if (idx > -1) { cart[idx].qty++; } else { cart.push({id, name, price, unit, qty: 1}); }
+  localStorage.setItem('lda_cart', JSON.stringify(cart));
+  updateCartBadge();
+  const btn = event.target;
+  btn.textContent = '✓ Agregado';
+  btn.style.background = '#2d5a27';
+  setTimeout(() => { btn.textContent = '+ Reservar'; btn.style.background = ''; }, 1800);
+}
+
+const CART_PHOTOS = ['photo--dune','photo--water','photo--lomas','photo--night','photo--dusk','photo--trail','photo--rock'];
+
+function renderCart() {
+  const cart = JSON.parse(localStorage.getItem('lda_cart') || '[]');
+  const el = document.getElementById('cartContent');
+  if (!el) return;
+  updateCartBadge();
+  if (cart.length === 0) {
+    el.innerHTML = '<div class="cart-empty"><span class="material-symbols-rounded" style="font-size:64px;color:var(--rule);display:block;margin-bottom:20px">shopping_bag</span><h3 style="font-family:var(--serif);font-weight:700;font-size:26px;color:var(--earth-deep);margin-bottom:12px">Tu carrito está vacío</h3><p style="margin-bottom:28px">Explora nuestras actividades y reserva tu experiencia.</p><a onclick="navigate(\'actividades\')" class="btn-cta lg" style="cursor:pointer"><span class="material-symbols-rounded">explore</span>Ver actividades</a></div>';
+    return;
+  }
+  const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
+  const itemsHTML = cart.map((item, idx) => {
+    const ph = CART_PHOTOS[idx % CART_PHOTOS.length];
+    return '<div class="cart-item">' +
+      '<div class="cart-item-ico" style="position:relative"><div class="photo ' + ph + '" style="position:absolute;inset:0"><span class="grain"></span></div></div>' +
+      '<div><div class="cart-item-name">' + item.name + '</div><div class="cart-item-unit">S/ ' + item.price + ' x ' + item.unit + '</div></div>' +
+      '<div class="qty-ctrl"><button onclick="changeQty(' + idx + ',-1)">&#8722;</button><span>' + item.qty + '</span><button onclick="changeQty(' + idx + ',1)">+</button></div>' +
+      '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px"><div class="cart-item-price">S/ ' + (item.price * item.qty).toFixed(2) + '</div><button class="remove-btn" onclick="removeItem(' + idx + ')" aria-label="Eliminar"><span class="material-symbols-rounded">delete</span></button></div>' +
+      '</div>';
+  }).join('');
+  const summaryRows = cart.map(i => '<div class="summary-row"><span>' + i.name + '</span><span>S/ ' + (i.price * i.qty).toFixed(2) + '</span></div>').join('');
+  const summaryHTML = '<div class="cart-summary"><h3>Resumen del pedido</h3>' + summaryRows + '<div class="summary-row total"><span>Total</span><span class="val">S/ ' + subtotal.toFixed(2) + '</span></div><div style="margin-top:20px;display:flex;flex-direction:column;gap:12px"><button class="btn-wa-big" onclick="checkout()"><span class="material-symbols-rounded">chat</span>Confirmar por WhatsApp</button><a onclick="navigate(\'actividades\')" class="btn-outline" style="text-align:center;justify-content:center;cursor:pointer">Agregar más actividades</a></div><p style="margin-top:16px;font-size:12.5px;color:var(--earth-warm);text-align:center">Coordinamos fecha y pago por WhatsApp</p></div>';
+  el.innerHTML = '<div class="cart-layout"><div class="cart-items">' + itemsHTML + '</div>' + summaryHTML + '</div>';
+}
+
+function changeQty(idx, delta) {
+  let c = JSON.parse(localStorage.getItem('lda_cart') || '[]');
+  c[idx].qty = Math.max(1, c[idx].qty + delta);
+  localStorage.setItem('lda_cart', JSON.stringify(c));
+  renderCart();
+}
+
+function removeItem(idx) {
+  let c = JSON.parse(localStorage.getItem('lda_cart') || '[]');
+  c.splice(idx, 1);
+  localStorage.setItem('lda_cart', JSON.stringify(c));
+  renderCart();
+}
+
+function checkout() {
+  const c = JSON.parse(localStorage.getItem('lda_cart') || '[]');
+  const lines = c.map(i => '- ' + i.name + ' x ' + i.qty + ' = S/ ' + (i.price * i.qty).toFixed(2)).join('\n');
+  const total = c.reduce((s, i) => s + i.price * i.qty, 0);
+  const msg = 'Hola! Quiero reservar en Lomas de Ancón:\n\n' + lines + '\n\nTotal: S/ ' + total.toFixed(2) + '\n\n¿Cuándo podemos coordinar?';
+  window.open('https://wa.me/51984350983?text=' + encodeURIComponent(msg), '_blank');
+}
+
+// ── Contact form ───────────────────────────────
+function handleContactForm(e) {
+  e.preventDefault();
+  const btn = e.target.querySelector('.cf-submit');
+  btn.disabled = true;
+  btn.textContent = 'Enviando…';
+  setTimeout(() => {
+    e.target.reset();
+    btn.style.display = 'none';
+    document.getElementById('cf-ok').hidden = false;
+    setTimeout(() => {
+      document.getElementById('cf-ok').hidden = true;
+      btn.disabled = false;
+      btn.innerHTML = '<span class="material-symbols-rounded">send</span>Enviar mensaje';
+      btn.style.display = '';
+    }, 4000);
+  }, 900);
+}
+
+// ── WhatsApp contact ───────────────────────────
+function openWA() {
+  const n = document.getElementById('wa-n').value.trim();
+  const msg = n ? 'Hola Sandra, soy ' + n + '. Me interesa saber más sobre Lomas de Ancón.' : 'Hola Sandra, me interesa saber más sobre Lomas de Ancón.';
+  window.open('https://wa.me/51984350983?text=' + encodeURIComponent(msg), '_blank');
+}
+
+// ── Init on load ───────────────────────────────
+(function init() {
+  const hash = location.hash.slice(1);
+  if (hash && PAGES.includes(hash)) {
+    navigate(hash);
+  } else {
+    initReveal(document.getElementById('page-inicio'));
+    initCounters(document.getElementById('page-inicio'));
+    updateCartBadge();
+  }
+})();
+</script>
+<script src="chatbot.js"></script>
+</body>
+</html>

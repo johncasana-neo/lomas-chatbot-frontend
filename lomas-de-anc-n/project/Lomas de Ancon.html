@@ -1,0 +1,1531 @@
+<!doctype html>
+<html lang="es-PE">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Lomas de Ancón — Aventura y naturaleza con propósito</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,800;0,9..144,900;1,9..144,400;1,9..144,500&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300..700,0..1,-25..200&display=block" rel="stylesheet" />
+
+<style>
+/* ============================================================
+   TOKENS
+   ============================================================ */
+:root{
+  --earth-deepest:#140c05;
+  --earth-deep:#2d1f0e;
+  --earth-mid:#5c3d1e;
+  --earth-warm:#7a5028;
+  --sand-deep:#8B6914;
+  --sand:#c49a3c;
+  --sand-soft:#d9b878;
+  --sand-light:#e8d4a8;
+  --cream:#f6efe1;
+  --cream-soft:#fbf6ec;
+  --olive:#4a6741;
+  --olive-deep:#3d5a2b;
+  --olive-darker:#2d4520;
+  --olive-light:#7a936b;
+  --ink:#1d1610;
+  --ink-soft:#3a2f24;
+  --rule:rgba(45,31,14,.12);
+  --rule-light:rgba(255,255,255,.18);
+
+  --serif:"Fraunces", "Cormorant Garamond", Georgia, serif;
+  --sans:"Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, monospace;
+
+  --w-max:1240px;
+  --pad:clamp(20px, 4vw, 64px);
+
+  --shadow-card:0 1px 2px rgba(20,12,5,.06), 0 8px 24px -10px rgba(20,12,5,.18);
+  --shadow-lift:0 24px 60px -28px rgba(20,12,5,.55);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.55;
+  color:var(--ink);
+  background:var(--cream-soft);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+.material-symbols-rounded{font-variation-settings:'FILL' 0,'wght' 500,'GRAD' 0,'opsz' 24}
+.icon-fill{font-variation-settings:'FILL' 1,'wght' 500,'GRAD' 0,'opsz' 24}
+
+/* type helpers */
+.eyebrow{
+  font:500 12px/1 var(--sans);
+  letter-spacing:.22em;
+  text-transform:uppercase;
+}
+.serif{font-family:var(--serif)}
+.mono{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+
+/* Fraunces optical sizing — bigger opsz on display, smaller on cards */
+h1, .hero h1 { font-variation-settings:"opsz" 144; }
+h2 { font-variation-settings:"opsz" 96; }
+h3, .brand-name, .blog-card h3, .act-card h3 { font-variation-settings:"opsz" 36; }
+.serif, .pull, .tagline, .rating-box .label { font-variation-settings:"opsz" 48; }
+
+/* container */
+.wrap{max-width:var(--w-max);margin:0 auto;padding-left:var(--pad);padding-right:var(--pad)}
+
+/* ============================================================
+   PHOTO PLACEHOLDERS (no hand-drawn SVG scenes —
+   layered gradients + mono labels so real photos can drop in)
+   ============================================================ */
+.photo{
+  position:relative;
+  overflow:hidden;
+  background:#2d1f0e;
+  isolation:isolate;
+}
+.photo::before, .photo::after{
+  content:"";position:absolute;inset:0;z-index:1;
+}
+.photo .photo-tag{
+  position:absolute;left:14px;bottom:12px;z-index:3;
+  font-family:var(--mono);font-size:10px;letter-spacing:.18em;
+  color:rgba(255,255,255,.78);text-transform:uppercase;
+  background:rgba(20,12,5,.45);backdrop-filter:blur(6px);
+  padding:6px 10px;border-radius:999px;
+  border:1px solid rgba(255,255,255,.14);
+}
+.photo .photo-hint{
+  position:absolute;inset:auto 14px 12px auto;z-index:3;
+  font-family:var(--mono);font-size:9px;letter-spacing:.2em;
+  color:rgba(255,255,255,.55);text-transform:uppercase;
+}
+
+/* Variant: warm sunset dune */
+.photo--dune{
+  background:
+    radial-gradient(120% 70% at 80% 30%, #f6b35c 0%, #d9852f 22%, transparent 55%),
+    radial-gradient(140% 100% at 20% 90%, #2d1605 0%, #3d2410 35%, transparent 70%),
+    linear-gradient(180deg, #f0a64a 0%, #c97a35 30%, #6b3b1a 65%, #1f1108 100%);
+}
+.photo--dune::before{
+  background:
+    radial-gradient(60% 35% at 30% 78%, rgba(20,8,2,.85), transparent 65%),
+    radial-gradient(70% 40% at 75% 90%, rgba(20,8,2,.7), transparent 60%);
+}
+.photo--dune::after{
+  background:
+    linear-gradient(180deg, transparent 60%, rgba(20,8,2,.55) 100%);
+}
+
+/* Variant: cool dawn / lomas */
+.photo--lomas{
+  background:
+    radial-gradient(120% 80% at 70% 20%, #e8d8a0 0%, #b8a06a 25%, transparent 60%),
+    linear-gradient(180deg, #d6c08a 0%, #8e7a4a 40%, #4a3a22 75%, #2a1f12 100%);
+}
+.photo--lomas::before{
+  background:
+    radial-gradient(80% 45% at 50% 88%, rgba(30,40,20,.7), transparent 70%);
+}
+
+/* Variant: deep desert night/dusk */
+.photo--dusk{
+  background:
+    radial-gradient(110% 70% at 50% 25%, #d96e35 0%, #8a3a1a 35%, transparent 70%),
+    linear-gradient(180deg, #c2562a 0%, #5e2a14 45%, #1a0a04 100%);
+}
+.photo--dusk::before{
+  background:radial-gradient(70% 40% at 50% 95%, rgba(0,0,0,.7), transparent 70%);
+}
+
+/* Variant: kayak / water */
+.photo--water{
+  background:
+    radial-gradient(120% 80% at 30% 25%, #e9c980 0%, #b3863e 25%, transparent 55%),
+    linear-gradient(180deg, #c89b58 0%, #6b5538 35%, #2a4258 70%, #142a3a 100%);
+}
+.photo--water::before{
+  background:
+    radial-gradient(60% 50% at 70% 80%, rgba(50,80,110,.55), transparent 70%);
+}
+
+/* Variant: trail */
+.photo--trail{
+  background:
+    radial-gradient(110% 70% at 60% 30%, #f0c878 0%, #b48742 30%, transparent 60%),
+    linear-gradient(180deg, #d5a25a 0%, #735028 45%, #2d1f0e 100%);
+}
+
+/* Variant: portrait (team) */
+.photo--portrait{
+  background:
+    radial-gradient(80% 60% at 50% 30%, #d8b07a 0%, #9a7244 40%, transparent 75%),
+    linear-gradient(180deg, #b88556 0%, #5c3d1e 65%, #2d1f0e 100%);
+}
+.photo--portrait::before{
+  background:radial-gradient(40% 30% at 50% 38%, rgba(255,225,180,.25), transparent 70%);
+}
+
+/* Variant: night trail run */
+.photo--night{
+  background:
+    radial-gradient(60% 40% at 70% 30%, #f5c45a 0%, #c2802a 25%, transparent 60%),
+    linear-gradient(180deg, #4a2812 0%, #1a0c04 70%, #0a0502 100%);
+}
+.photo--night::before{
+  background:radial-gradient(50% 35% at 30% 75%, rgba(0,0,0,.55), transparent 70%);
+}
+
+/* subtle grain on all photos */
+.photo .grain{
+  position:absolute;inset:0;z-index:2;pointer-events:none;
+  background-image:
+    radial-gradient(rgba(255,255,255,.06) 1px, transparent 1px),
+    radial-gradient(rgba(0,0,0,.08) 1px, transparent 1px);
+  background-size:3px 3px, 5px 5px;
+  background-position:0 0, 1px 2px;
+  mix-blend-mode:overlay;
+  opacity:.5;
+}
+
+/* dune silhouette: ONE simple curve only (allowed: simple geometry) */
+.dune-cap{
+  position:absolute;left:-5%;right:-5%;bottom:0;height:38%;z-index:2;
+  background:#1a0e04;
+  clip-path:ellipse(70% 100% at 50% 100%);
+  opacity:.92;
+}
+.dune-cap.light{background:#2d1f0e;opacity:.7}
+
+/* tiny silhouette dot (a person) */
+.silhouette{
+  position:absolute;z-index:2;width:6px;height:14px;border-radius:3px 3px 1px 1px;
+  background:#0a0502;
+  box-shadow:0 0 0 1px rgba(0,0,0,.4);
+}
+
+/* ============================================================
+   NAVBAR
+   ============================================================ */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:50;
+  padding:18px 0;
+  transition:background .35s ease, padding .35s ease, border-color .35s ease, backdrop-filter .35s ease;
+  border-bottom:1px solid transparent;
+}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:24px}
+.nav.scrolled{
+  background:rgba(20,12,5,.78);
+  backdrop-filter:blur(14px) saturate(1.2);
+  -webkit-backdrop-filter:blur(14px) saturate(1.2);
+  padding:12px 0;
+  border-bottom-color:rgba(255,255,255,.08);
+}
+.brand{display:flex;align-items:center;gap:12px;color:#fff}
+.brand-mark{
+  width:44px;height:44px;
+  display:grid;place-items:center;
+  background:var(--olive-deep);
+  transform:rotate(45deg);
+  border-radius:6px;
+  box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.18);
+}
+.brand-mark > .mark-inner{
+  transform:rotate(-45deg);
+  display:flex;flex-direction:column;align-items:center;line-height:1;color:#f0e6c8;
+}
+.brand-mark .peak{
+  width:0;height:0;
+  border-left:8px solid transparent;
+  border-right:8px solid transparent;
+  border-bottom:11px solid #f0e6c8;
+  margin-bottom:2px;
+}
+.brand-mark .bird{
+  font-family:var(--serif);font-size:10px;color:#f0e6c8;letter-spacing:.05em;
+}
+.brand-name{font-family:var(--serif);font-weight:700;font-size:20px;letter-spacing:.01em;line-height:1}
+.brand-name small{display:block;font-family:var(--sans);font-weight:500;font-size:10px;letter-spacing:.24em;color:#d9b878;margin-top:4px;text-transform:uppercase}
+
+.nav-actions{display:flex;align-items:center;gap:10px}
+.icon-btn{
+  width:42px;height:42px;border-radius:999px;
+  display:grid;place-items:center;
+  color:#fff;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.14);
+  transition:background .2s, transform .2s;
+}
+.icon-btn:hover{background:rgba(255,255,255,.18)}
+.cart-btn{position:relative}
+.cart-btn .badge{
+  position:absolute;top:-4px;right:-4px;
+  background:var(--sand);color:var(--earth-deepest);
+  font-size:10px;font-weight:700;
+  width:18px;height:18px;border-radius:999px;
+  display:grid;place-items:center;
+  border:2px solid var(--earth-deep);
+}
+.btn-donate{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--olive-deep);color:#fff;
+  padding:11px 18px;border-radius:999px;
+  font-weight:600;font-size:13px;letter-spacing:.14em;text-transform:uppercase;
+  border:1px solid rgba(255,255,255,.1);
+  transition:background .2s, transform .2s;
+}
+.btn-donate:hover{background:#4f7039;transform:translateY(-1px)}
+.btn-donate .material-symbols-rounded{font-size:18px}
+
+/* hide certain mobile actions to declutter */
+@media (max-width:720px){
+  .nav-actions .btn-donate span:not(.material-symbols-rounded){display:none}
+  .nav-actions .btn-donate{padding:11px 12px}
+  .brand-name{font-size:17px}
+  .brand-name small{font-size:9px}
+}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{
+  position:relative;min-height:100vh;
+  color:#fff;
+  display:flex;align-items:flex-end;
+  padding:120px 0 56px;
+  overflow:hidden;
+}
+.hero-bg{position:absolute;inset:0;z-index:0}
+.hero-bg .photo{position:absolute;inset:0}
+.hero-bg::after{
+  content:"";position:absolute;inset:0;z-index:4;
+  background:
+    linear-gradient(180deg, rgba(20,12,5,.45) 0%, rgba(20,12,5,.15) 35%, rgba(20,12,5,.55) 75%, rgba(20,12,5,.9) 100%),
+    linear-gradient(90deg, rgba(20,12,5,.6) 0%, rgba(20,12,5,.1) 55%, transparent 100%);
+}
+.hero-inner{position:relative;z-index:5;width:100%}
+.hero-grid{display:grid;grid-template-columns:1.3fr .9fr;gap:64px;align-items:end}
+@media (max-width:980px){.hero-grid{grid-template-columns:1fr;gap:36px}}
+
+.hero h1{
+  font-family:var(--serif);
+  font-weight:800;
+  font-size:clamp(54px, 8.4vw, 124px);
+  line-height:.92;
+  letter-spacing:-.02em;
+  margin-bottom:14px;
+  text-wrap:balance;
+}
+.hero h1 em{font-style:italic;font-weight:500;color:var(--sand-light)}
+.hero .lede{
+  font-family:var(--serif);font-style:italic;font-weight:400;
+  font-size:clamp(20px, 2.2vw, 26px);
+  color:#f0e6c8;
+  max-width:560px;margin-bottom:36px;
+}
+
+.hero-callout{
+  display:flex;gap:18px;align-items:flex-start;
+  background:rgba(20,12,5,.42);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:14px;
+  padding:20px 22px;
+  max-width:520px;
+  margin-bottom:32px;
+}
+.hero-callout .ico{
+  width:46px;height:46px;flex:0 0 46px;border-radius:12px;
+  background:linear-gradient(160deg, #4a6741, #2d4520);
+  display:grid;place-items:center;color:#fff;
+}
+.hero-callout p{font-size:14.5px;line-height:1.55;color:#f6efe1}
+.hero-callout p b{color:var(--sand);font-weight:700}
+
+.pill-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px}
+.pill{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:11px 18px;border-radius:999px;
+  border:1px solid rgba(255,255,255,.32);
+  color:#fff;font-weight:500;font-size:12px;letter-spacing:.16em;text-transform:uppercase;
+  background:rgba(255,255,255,.04);
+  transition:background .2s, border-color .2s;
+}
+.pill:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.55)}
+.pill .material-symbols-rounded{font-size:18px}
+
+.btn-cta{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--olive-deep);color:#fff;
+  padding:16px 28px;border-radius:999px;
+  font-weight:600;font-size:13px;letter-spacing:.18em;text-transform:uppercase;
+  box-shadow:0 18px 40px -14px rgba(61,90,43,.6);
+  border:1px solid rgba(255,255,255,.1);
+  transition:transform .2s, background .2s;
+}
+.btn-cta:hover{background:#4f7039;transform:translateY(-2px)}
+.btn-cta.lg{padding:18px 32px;font-size:14px}
+
+.hero-meta{
+  margin-top:24px;display:flex;gap:18px;align-items:center;
+  color:rgba(246,239,225,.62);
+}
+.hero-meta .dot{width:3px;height:3px;border-radius:50%;background:rgba(246,239,225,.5)}
+
+/* Right column of hero — vertical badge stack */
+.hero-side{display:flex;flex-direction:column;gap:14px;align-items:flex-start}
+.hero-side .badge-card{
+  background:rgba(20,12,5,.42);
+  backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:14px;padding:16px 18px;
+  display:flex;gap:14px;align-items:center;
+  width:100%;max-width:340px;
+}
+.hero-side .badge-card .num{
+  font-family:var(--serif);font-weight:800;font-size:36px;line-height:1;color:var(--sand);
+}
+.hero-side .badge-card .lbl{font-size:12px;color:#f6efe1;letter-spacing:.02em}
+.hero-side .badge-card .lbl small{display:block;color:rgba(246,239,225,.6);font-size:11px;margin-top:2px}
+
+/* Scroll hint */
+.scroll-hint{
+  position:absolute;bottom:24px;left:50%;transform:translateX(-50%);
+  z-index:6;color:rgba(246,239,225,.6);
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  font-family:var(--mono);font-size:9px;letter-spacing:.3em;
+}
+.scroll-hint .line{width:1px;height:32px;background:linear-gradient(180deg, transparent, rgba(246,239,225,.6));}
+
+/* ============================================================
+   SECTION: AVENTURA EN LA BAHÍA
+   ============================================================ */
+.bay{
+  background:var(--cream);
+  padding:clamp(72px, 10vw, 140px) 0;
+  position:relative;
+}
+.bay-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:80px;align-items:center}
+@media (max-width:980px){.bay-grid{grid-template-columns:1fr;gap:48px}}
+
+.bay h2{
+  font-family:var(--serif);font-weight:700;
+  font-size:clamp(34px, 4.4vw, 56px);
+  line-height:1.05;letter-spacing:-.01em;
+  color:var(--earth-deep);
+  margin:18px 0 28px;
+  text-wrap:balance;
+}
+.bay p{color:var(--ink-soft);font-size:16px;margin-bottom:18px;max-width:56ch}
+.bay .pull{
+  margin-top:28px;
+  padding:24px 26px;
+  border-left:3px solid var(--olive);
+  background:#fff;
+  border-radius:0 14px 14px 0;
+  font-family:var(--serif);font-style:italic;
+  font-size:19px;line-height:1.4;color:var(--earth-deep);
+  box-shadow:var(--shadow-card);
+  max-width:56ch;
+}
+.bay .pull b{font-style:normal;font-weight:700;color:var(--olive-deep)}
+
+.bay-photo{
+  position:relative;aspect-ratio:4/5;border-radius:18px;overflow:hidden;
+  box-shadow:var(--shadow-lift);
+}
+.bay-photo .corner-tag{
+  position:absolute;top:18px;left:18px;z-index:5;
+  display:flex;align-items:center;gap:8px;
+  padding:8px 14px;border-radius:999px;
+  background:rgba(20,12,5,.55);backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.16);
+  color:#fff;font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+}
+.bay-photo .corner-tag .material-symbols-rounded{font-size:14px;color:var(--sand)}
+
+/* ============================================================
+   IMPACTO
+   ============================================================ */
+.impact{
+  background:var(--cream-soft);
+  padding:clamp(72px, 10vw, 140px) 0;
+  text-align:center;
+  position:relative;
+}
+.impact .eyebrow{color:var(--olive-deep);margin-bottom:14px;display:inline-flex;align-items:center;gap:10px}
+.impact .eyebrow::before, .impact .eyebrow::after{content:"";width:24px;height:1px;background:var(--olive)}
+.impact h2{
+  font-family:var(--serif);font-weight:700;
+  font-size:clamp(32px, 4.2vw, 52px);
+  line-height:1.08;letter-spacing:-.01em;
+  color:var(--earth-deep);
+  max-width:18ch;margin:0 auto 18px;
+  text-wrap:balance;
+}
+.impact .lede{
+  max-width:62ch;margin:0 auto 56px;color:var(--ink-soft);font-size:16.5px;
+}
+.stat-row{
+  display:grid;grid-template-columns:repeat(5, 1fr);gap:18px;
+  max-width:1100px;margin:0 auto;
+}
+@media (max-width:980px){.stat-row{grid-template-columns:repeat(2, 1fr)}}
+@media (max-width:560px){.stat-row{grid-template-columns:1fr 1fr}}
+.stat{
+  background:#fff;border-radius:18px;padding:28px 22px;
+  text-align:left;border:1px solid var(--rule);
+  box-shadow:var(--shadow-card);
+  position:relative;overflow:hidden;
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+.stat:hover{transform:translateY(-3px);box-shadow:var(--shadow-lift)}
+.stat .ico{
+  width:42px;height:42px;border-radius:12px;
+  background:linear-gradient(160deg, #f4e7c8, #d9b878);
+  color:var(--olive-deep);
+  display:grid;place-items:center;margin-bottom:18px;
+}
+.stat .num{
+  font-family:var(--serif);font-weight:800;
+  font-size:48px;line-height:1;color:var(--earth-deep);
+  letter-spacing:-.02em;
+}
+.stat .num .plus{color:var(--olive-deep);font-size:.7em;vertical-align:.2em;margin-left:2px}
+.stat .lbl{
+  margin-top:10px;font-weight:600;font-size:13.5px;
+  letter-spacing:.04em;color:var(--earth-deep);text-transform:uppercase;
+}
+.stat .sub{margin-top:4px;font-size:12.5px;color:var(--earth-warm);line-height:1.4}
+.stat::after{
+  content:"";position:absolute;right:-30px;bottom:-30px;
+  width:120px;height:120px;border-radius:50%;
+  background:radial-gradient(circle, rgba(196,154,60,.08), transparent 70%);
+}
+
+/* ============================================================
+   ACTIVIDADES (gallery)
+   ============================================================ */
+.acts{
+  background:var(--cream);
+  padding:clamp(72px, 10vw, 140px) 0;
+}
+.acts-head{display:grid;grid-template-columns:1.2fr 1fr;gap:48px;align-items:end;margin-bottom:48px}
+@media (max-width:880px){.acts-head{grid-template-columns:1fr}}
+.acts h2{
+  font-family:var(--serif);font-weight:700;
+  font-size:clamp(32px, 4.2vw, 52px);
+  line-height:1.08;letter-spacing:-.01em;
+  color:var(--earth-deep);
+  text-wrap:balance;
+}
+.acts-head p{color:var(--ink-soft);font-size:16px;max-width:48ch}
+
+.acts-grid{display:grid;grid-template-columns:repeat(4, 1fr);gap:18px}
+@media (max-width:980px){.acts-grid{grid-template-columns:repeat(2, 1fr)}}
+@media (max-width:520px){.acts-grid{grid-template-columns:1fr}}
+.act-card{
+  position:relative;aspect-ratio:3/4;border-radius:18px;overflow:hidden;
+  box-shadow:var(--shadow-card);
+  cursor:pointer;
+  transition:transform .3s ease, box-shadow .3s ease;
+}
+.act-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lift)}
+.act-card .photo{position:absolute;inset:0}
+.act-card::after{
+  content:"";position:absolute;inset:0;z-index:3;
+  background:linear-gradient(180deg, transparent 40%, rgba(20,12,5,.85) 100%);
+}
+.act-card .body{
+  position:absolute;left:0;right:0;bottom:0;z-index:4;padding:22px;color:#fff;
+}
+.act-card .num{
+  font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--sand);margin-bottom:8px;
+}
+.act-card h3{
+  font-family:var(--serif);font-weight:700;font-size:22px;line-height:1.15;margin-bottom:10px;
+}
+.act-card .meta{
+  display:flex;align-items:center;gap:8px;
+  font-size:12px;color:rgba(255,255,255,.75);letter-spacing:.06em;
+}
+.act-card .arrow{
+  position:absolute;top:18px;right:18px;z-index:4;
+  width:38px;height:38px;border-radius:50%;
+  background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.3);
+  display:grid;place-items:center;color:#fff;
+  backdrop-filter:blur(6px);
+  transition:background .25s ease, transform .25s ease;
+}
+.act-card:hover .arrow{background:var(--olive-deep);transform:rotate(-45deg)}
+
+/* ============================================================
+   BANNER: TURISMO CON PROPÓSITO
+   ============================================================ */
+.purpose{
+  background:var(--earth-deep);
+  color:#fff;
+  padding:clamp(64px, 8vw, 110px) 0;
+  position:relative;overflow:hidden;
+}
+.purpose::before{
+  content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(60% 50% at 90% 10%, rgba(196,154,60,.16), transparent 60%),
+    radial-gradient(60% 60% at 5% 100%, rgba(74,103,65,.22), transparent 60%);
+  pointer-events:none;
+}
+.purpose .wrap{position:relative}
+.purpose-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:64px;align-items:center}
+@media (max-width:880px){.purpose-grid{grid-template-columns:1fr;gap:36px}}
+.purpose .eyebrow{color:var(--sand);margin-bottom:18px}
+.purpose h2{
+  font-family:var(--serif);font-weight:700;
+  font-size:clamp(28px, 3.4vw, 40px);
+  line-height:1.18;letter-spacing:-.005em;
+  max-width:22ch;
+}
+.purpose h2 b{color:var(--sand);font-weight:700}
+.purpose-right{display:flex;flex-direction:column;align-items:flex-start;gap:16px}
+.purpose-right .caption{color:rgba(255,255,255,.55);font-size:12.5px;letter-spacing:.06em}
+
+/* ============================================================
+   EQUIPO (carousel)
+   ============================================================ */
+.team{
+  background:var(--cream-soft);
+  padding:clamp(72px, 10vw, 130px) 0;
+  position:relative;overflow:hidden;
+}
+.team-head{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:40px}
+.team h2{
+  font-family:var(--serif);font-weight:700;
+  font-size:clamp(32px, 4.2vw, 52px);
+  line-height:1.08;letter-spacing:-.01em;
+  color:var(--earth-deep);
+}
+.team-head .ctrls{display:flex;gap:8px}
+.ctrl-btn{
+  width:44px;height:44px;border-radius:999px;
+  background:#fff;border:1px solid var(--rule);
+  display:grid;place-items:center;color:var(--earth-deep);
+  box-shadow:var(--shadow-card);
+  transition:transform .2s, background .2s;
+}
+.ctrl-btn:hover{background:var(--olive-deep);color:#fff;border-color:var(--olive-deep)}
+.team-track-wrap{
+  overflow:hidden;
+  mask-image:linear-gradient(90deg, transparent 0, #000 4%, #000 96%, transparent 100%);
+  -webkit-mask-image:linear-gradient(90deg, transparent 0, #000 4%, #000 96%, transparent 100%);
+}
+.team-track{
+  display:flex;gap:18px;
+  transition:transform .5s cubic-bezier(.22,.61,.36,1);
+}
+.member{
+  flex:0 0 220px;
+  display:flex;flex-direction:column;gap:14px;
+}
+.member .ph{
+  aspect-ratio:1;border-radius:18px;overflow:hidden;
+  box-shadow:var(--shadow-card);
+  position:relative;
+}
+.member .name{
+  font-family:var(--serif);font-weight:600;font-size:17px;color:var(--earth-deep);text-align:center;
+}
+.member .role{
+  text-align:center;font-size:12px;color:var(--earth-warm);letter-spacing:.04em;margin-top:-8px;
+}
+
+/* ============================================================
+   BLOG
+   ============================================================ */
+.blog{
+  background:var(--cream);
+  padding:clamp(64px, 9vw, 120px) 0;
+}
+.blog-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:64px;align-items:center}
+@media (max-width:880px){.blog-grid{grid-template-columns:1fr;gap:40px}}
+.blog-card{
+  background:#fff;border-radius:18px;overflow:hidden;
+  box-shadow:var(--shadow-card);border:1px solid var(--rule);
+  transition:transform .3s ease, box-shadow .3s ease;
+}
+.blog-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lift)}
+.blog-card .ph{aspect-ratio:16/10;position:relative}
+.blog-card .body{padding:24px 26px 26px}
+.blog-card .date{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--earth-warm);margin-bottom:10px}
+.blog-card h3{font-family:var(--serif);font-weight:700;font-size:22px;line-height:1.25;color:var(--earth-deep)}
+.blog-card .read{margin-top:14px;display:inline-flex;align-items:center;gap:6px;color:var(--olive-deep);font-weight:600;font-size:13px;letter-spacing:.04em}
+.blog-side .eyebrow{color:var(--olive-deep);margin-bottom:12px}
+.blog-side h2{
+  font-family:var(--serif);font-weight:700;
+  font-size:clamp(28px, 3.6vw, 44px);
+  line-height:1.1;letter-spacing:-.01em;color:var(--earth-deep);margin-bottom:14px;
+}
+.blog-side .sub{font-family:var(--serif);font-style:italic;color:var(--earth-warm);margin-bottom:18px;font-size:18px}
+.blog-side p{color:var(--ink-soft);margin-bottom:24px;max-width:48ch}
+.btn-outline{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:13px 22px;border-radius:999px;
+  border:1.5px solid var(--earth-deep);color:var(--earth-deep);
+  font-weight:600;font-size:13px;letter-spacing:.12em;text-transform:uppercase;
+  transition:background .2s, color .2s;
+}
+.btn-outline:hover{background:var(--earth-deep);color:#fff}
+
+/* ============================================================
+   RESEÑAS GOOGLE
+   ============================================================ */
+.reviews{
+  background:var(--cream-soft);
+  padding:clamp(64px, 9vw, 120px) 0;
+}
+.reviews-grid{display:grid;grid-template-columns:.7fr 1.3fr;gap:64px;align-items:center}
+@media (max-width:880px){.reviews-grid{grid-template-columns:1fr;gap:40px}}
+.rating-box{
+  text-align:left;padding:32px;border-radius:18px;background:#fff;
+  border:1px solid var(--rule);box-shadow:var(--shadow-card);
+}
+.rating-box .label{
+  font-family:var(--serif);font-style:italic;font-weight:600;
+  font-size:34px;color:var(--earth-deep);margin-bottom:8px;
+}
+.stars{color:#f4b400;font-size:22px;letter-spacing:2px}
+.rating-box .count{font-size:13px;color:var(--earth-warm);margin-top:6px}
+.rating-box .google{
+  margin-top:20px;display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:14px;
+}
+.google-logo{
+  display:inline-flex;align-items:center;gap:1px;font-family:var(--sans);font-weight:600;font-size:18px;letter-spacing:-.02em
+}
+.google-logo span:nth-child(1){color:#4285F4}
+.google-logo span:nth-child(2){color:#EA4335}
+.google-logo span:nth-child(3){color:#FBBC05}
+.google-logo span:nth-child(4){color:#4285F4}
+.google-logo span:nth-child(5){color:#34A853}
+.google-logo span:nth-child(6){color:#EA4335}
+
+.review-cards{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:680px){.review-cards{grid-template-columns:1fr}}
+.review{
+  background:#fff;border-radius:14px;padding:22px;border:1px solid var(--rule);
+  box-shadow:var(--shadow-card);
+}
+.review header{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.avatar{
+  width:42px;height:42px;border-radius:50%;
+  display:grid;place-items:center;color:#fff;font-weight:700;font-size:15px;
+  font-family:var(--serif);
+}
+.review .name{font-weight:600;font-size:14px;color:var(--earth-deep)}
+.review .when{font-size:12px;color:var(--earth-warm)}
+.review .stars{font-size:14px;letter-spacing:1px;margin-bottom:8px}
+.review p{font-size:14px;color:var(--ink-soft);line-height:1.55}
+
+/* ============================================================
+   DONACIONES
+   ============================================================ */
+.donate{
+  background:linear-gradient(180deg, #2d4520 0%, #1f3015 100%);
+  color:#fff;padding:clamp(72px, 10vw, 130px) 0;
+  position:relative;overflow:hidden;
+}
+.donate::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(50% 40% at 90% 10%, rgba(196,154,60,.16), transparent 60%),
+    radial-gradient(60% 50% at 0% 100%, rgba(74,103,65,.3), transparent 60%);
+}
+.donate .wrap{position:relative}
+.donate-head{text-align:center;margin-bottom:48px}
+.donate .eyebrow{color:var(--sand);margin-bottom:16px;display:inline-flex;align-items:center;gap:8px}
+.donate h2{
+  font-family:var(--serif);font-weight:700;
+  font-size:clamp(34px, 4.4vw, 56px);
+  line-height:1.05;letter-spacing:-.01em;
+  max-width:18ch;margin:0 auto 22px;text-wrap:balance;
+}
+.benefits{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:14px 32px;
+  margin:0 auto 48px;max-width:900px;
+}
+.benefits li{
+  list-style:none;display:flex;align-items:center;gap:10px;
+  color:rgba(255,255,255,.82);font-size:14.5px;
+}
+.benefits li .check{
+  width:22px;height:22px;border-radius:50%;
+  background:var(--sand);color:var(--olive-darker);
+  display:grid;place-items:center;
+}
+.benefits li .check .material-symbols-rounded{font-size:14px}
+
+.plans{display:grid;grid-template-columns:repeat(4, 1fr);gap:18px;max-width:1100px;margin:0 auto}
+@media (max-width:880px){.plans{grid-template-columns:repeat(2, 1fr)}}
+@media (max-width:520px){.plans{grid-template-columns:1fr}}
+.plan{
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:20px;padding:26px 22px 24px;
+  position:relative;overflow:hidden;
+  transition:transform .25s, border-color .25s, background .25s;
+}
+.plan:hover{transform:translateY(-4px);background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.28)}
+.plan.popular{border-color:var(--sand);background:rgba(196,154,60,.08)}
+.plan .tag-pop{
+  position:absolute;top:14px;right:14px;
+  background:var(--sand);color:var(--olive-darker);
+  font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  padding:5px 10px;border-radius:999px;
+}
+.plan .ico{font-size:36px;margin-bottom:14px}
+.plan .amt{
+  font-family:var(--serif);font-weight:800;font-size:36px;line-height:1;
+  letter-spacing:-.01em;color:#fff;
+}
+.plan .amt small{font-family:var(--sans);font-weight:500;font-size:14px;color:rgba(255,255,255,.6);margin-left:4px;letter-spacing:0}
+.plan .desc{margin:14px 0 22px;color:rgba(255,255,255,.78);font-size:14px;min-height:42px}
+.btn-wa{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;
+  padding:13px;border-radius:999px;
+  background:#25D366;color:#0a2a18;font-weight:700;font-size:13px;letter-spacing:.06em;
+  transition:filter .2s, transform .2s;
+}
+.btn-wa:hover{filter:brightness(1.06);transform:translateY(-1px)}
+.donate-footer{text-align:center;margin-top:36px;color:rgba(255,255,255,.65);font-size:13.5px}
+
+/* ============================================================
+   ALIADOS
+   ============================================================ */
+.allies{
+  background:var(--cream);
+  padding:clamp(56px, 7vw, 96px) 0;
+  text-align:center;
+}
+.allies h3{
+  font-family:var(--serif);font-weight:700;
+  font-size:clamp(24px, 2.8vw, 34px);
+  color:var(--earth-deep);margin-bottom:14px;
+}
+.allies .sub{color:var(--earth-warm);margin-bottom:36px;font-size:14.5px}
+.ally-row{
+  display:flex;flex-wrap:wrap;justify-content:center;
+  gap:24px 40px;align-items:center;
+  max-width:1000px;margin:0 auto;
+  opacity:.85;
+}
+.ally{
+  display:flex;align-items:center;gap:10px;
+  font-family:var(--serif);font-weight:600;font-size:18px;color:var(--earth-mid);
+  padding:14px 22px;border-radius:14px;background:#fff;border:1px solid var(--rule);
+  min-height:64px;min-width:160px;justify-content:center;
+}
+.ally .dot{
+  width:28px;height:28px;border-radius:6px;background:var(--olive-deep);color:#fff;
+  display:grid;place-items:center;font-size:13px;font-weight:700;font-family:var(--sans);
+  flex:0 0 28px;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer{
+  position:relative;
+  color:#f0e6c8;
+  padding:clamp(72px, 10vw, 130px) 0 36px;
+  overflow:hidden;
+  isolation:isolate;
+}
+.footer .bg{position:absolute;inset:0;z-index:-1}
+.footer .bg::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg, rgba(20,12,5,.55) 0%, rgba(20,12,5,.85) 60%, #140c05 100%);
+}
+.footer .tagline{
+  font-family:var(--serif);font-style:italic;
+  font-size:clamp(22px, 2.8vw, 32px);
+  line-height:1.25;text-align:center;color:#fff;
+  max-width:30ch;margin:0 auto 64px;text-wrap:balance;
+}
+.foot-grid{display:grid;grid-template-columns:repeat(3, 1fr) 1.1fr;gap:48px;align-items:start}
+.foot-grid > .col:first-child{grid-column:1/-1;display:flex;align-items:center;gap:16px;padding-bottom:28px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:24px}
+@media (max-width:880px){.foot-grid{grid-template-columns:1fr 1fr;gap:36px}.foot-grid > .col:first-child{grid-column:1/-1}}
+@media (max-width:520px){.foot-grid{grid-template-columns:1fr}}
+.foot-grid h4{
+  font-size:12px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--sand);margin-bottom:18px;font-weight:600;
+}
+.foot-grid ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.foot-grid a{color:#f0e6c8;font-size:14px;display:inline-flex;align-items:center;gap:10px;transition:color .2s}
+.foot-grid a:hover{color:#fff}
+.foot-grid a .material-symbols-rounded{font-size:18px;color:var(--sand)}
+.foot-bottom{
+  margin-top:48px;padding-top:24px;
+  border-top:1px solid rgba(255,255,255,.08);
+  display:flex;justify-content:space-between;align-items:center;gap:24px;
+  font-size:12px;color:rgba(240,230,200,.55);letter-spacing:.04em;flex-wrap:wrap;
+}
+
+.brand-mark.lg{width:64px;height:64px}
+.brand-mark.lg .peak{border-left-width:12px;border-right-width:12px;border-bottom-width:16px}
+
+/* ============================================================
+   FLOATING DONATE RAIL (sticky left)
+   ============================================================ */
+.donate-rail{
+  position:fixed;left:18px;bottom:28px;
+  z-index:40;
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--olive-deep);color:#fff;
+  padding:14px 20px;border-radius:999px;
+  box-shadow:0 18px 40px -14px rgba(0,0,0,.45);
+  cursor:pointer;
+  font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+  transition:transform .25s ease, background .2s;
+  border:1px solid rgba(255,255,255,.12);
+}
+.donate-rail:hover{transform:translateY(-2px);background:#4f7039}
+.donate-rail .material-symbols-rounded{font-size:18px;color:#f0e6c8}
+@media (max-width:720px){.donate-rail{display:none}}
+
+/* ============================================================
+   UTILITIES / ENTRY
+   ============================================================ */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .8s ease, transform .8s ease}
+.reveal.in{opacity:1;transform:none}
+
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     NAVBAR
+     ============================================================ -->
+<nav class="nav" id="nav" data-screen-label="Navigation">
+  <div class="wrap">
+    <a href="#top" class="brand" aria-label="Lomas de Ancón">
+      <span class="brand-mark" aria-hidden="true">
+        <span class="mark-inner">
+          <span class="peak"></span>
+          <span class="bird">⌃</span>
+        </span>
+      </span>
+      <span class="brand-name">Lomas de Ancón<small>ACR · MINCETUR</small></span>
+    </a>
+    <div class="nav-actions">
+      <button class="icon-btn cart-btn" aria-label="Carrito">
+        <span class="material-symbols-rounded">shopping_bag</span>
+        <span class="badge">2</span>
+      </button>
+      <a href="#donar" class="btn-donate">
+        <span class="material-symbols-rounded icon-fill">volunteer_activism</span>
+        <span>Donar</span>
+      </a>
+
+    </div>
+  </div>
+</nav>
+
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<header class="hero" id="top" data-screen-label="Hero">
+  <div class="hero-bg">
+    <div class="photo photo--dune" aria-hidden="true">
+      <div class="dune-cap"></div>
+      <div class="dune-cap light" style="height:24%;clip-path:ellipse(50% 100% at 22% 100%)"></div>
+      <span class="silhouette" style="left:42%;bottom:36%"></span>
+      <span class="silhouette" style="left:43%;bottom:34%;width:4px;height:5px;border-radius:50%;background:#a73c1a"></span>
+      <span class="grain"></span>
+      <span class="photo-tag">Fotografía: Sandboard en duna, atardecer</span>
+      <span class="photo-hint">PLACEHOLDER · 1920×1080</span>
+    </div>
+  </div>
+
+  <div class="hero-inner wrap">
+    <div class="hero-grid">
+      <div>
+        <h1>Lomas <em>de</em><br>Ancón.</h1>
+        <p class="lede">Aventura y naturaleza con propósito, en la bahía norte de Lima.</p>
+
+        <div class="hero-callout">
+          <div class="ico" aria-hidden="true">
+            <span class="material-symbols-rounded icon-fill">favorite</span>
+          </div>
+          <p>Disfruta con propósito — cada compra que realizas financia al <b>100%</b> las actividades socioambientales con la comunidad local de Ancón.</p>
+        </div>
+
+        <div class="pill-row">
+          <a class="pill" href="#actividades"><span class="material-symbols-rounded">snowboarding</span> Sandboard en dunas</a>
+          <a class="pill" href="#actividades"><span class="material-symbols-rounded">kayaking</span> Kayak</a>
+          <a class="pill" href="#actividades"><span class="material-symbols-rounded">hiking</span> Senderos naturales</a>
+        </div>
+
+        <a href="#actividades" class="btn-cta lg">
+          <span class="material-symbols-rounded">explore</span>
+          Explorar actividades
+          <span class="material-symbols-rounded" style="font-size:16px;margin-left:4px">arrow_forward</span>
+        </a>
+
+        <div class="hero-meta mono">
+          <span>MINCETUR</span>
+          <span class="dot"></span>
+          <span>ACR Lomas de Ancón</span>
+          <span class="dot"></span>
+          <span>Ancón · Lima · Perú</span>
+        </div>
+      </div>
+
+      <aside class="hero-side">
+        <div class="badge-card">
+          <div class="num">3</div>
+          <div class="lbl">Áreas naturales protegidas<small>Único distrito de Lima con tres ANP</small></div>
+        </div>
+        <div class="badge-card">
+          <div class="num">6<span style="font-size:.5em;color:var(--sand-light)">años</span></div>
+          <div class="lbl">Operando con la comunidad<small>Desde 2019, junto a familias locales</small></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    Desliza
+    <span class="line"></span>
+  </div>
+</header>
+
+<!-- ============================================================
+     AVENTURA EN LA BAHÍA
+     ============================================================ -->
+<section class="bay" data-screen-label="Aventura en la bahía">
+  <div class="wrap">
+    <div class="bay-grid">
+      <div class="reveal">
+        <span class="eyebrow" style="color:var(--olive-deep)">— Aventura y propósito</span>
+        <h2>Aventura en la bahía, desierto, lomas y montañas a través de la recreación, el turismo y el voluntariado.</h2>
+        <p>Las actividades al aire libre y el voluntariado impulsan un turismo que regenera el territorio. Cuidamos las dunas, las lomas costeras y la bahía mientras las recorremos contigo.</p>
+        <p>En Lomas de Ancón puedes hacer sandboard en las dunas, kayak en la bahía, hiking nocturno a la luz de la luna, o sumar tus manos a nuestros voluntariados de reforestación de tara y atrapanieblas.</p>
+        <div class="pull">
+          <b>Ancón es el único distrito de Lima</b>, capital del Perú, que cuenta en su territorio con <b>3 áreas naturales protegidas</b>: ACR Lomas de Ancón, Humedales de Santa Rosa e Islas, Islotes y Puntas Guaneras.
+        </div>
+      </div>
+
+      <div class="bay-photo reveal">
+        <div class="photo photo--dusk" aria-hidden="true">
+          <div class="dune-cap" style="height:34%"></div>
+          <span class="silhouette" style="left:62%;bottom:32%;width:7px;height:18px;background:#0a0502"></span>
+          <span class="grain"></span>
+          <span class="photo-tag">Duna al atardecer · silueta</span>
+        </div>
+        <div class="corner-tag">
+          <span class="material-symbols-rounded">place</span>
+          ACR Lomas de Ancón
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     IMPACTO
+     ============================================================ -->
+<section class="impact" data-screen-label="Impacto">
+  <div class="wrap">
+    <div class="eyebrow reveal">Nuestro impacto</div>
+    <h2 class="reveal">Conoce el impacto que estamos causando en nuestra comunidad</h2>
+    <p class="lede reveal">Seis años de trabajo continuo con familias de Ancón, niños y voluntarios. Estos son los números que sostienen nuestro propósito.</p>
+
+    <div class="stat-row">
+      <div class="stat reveal">
+        <div class="ico"><span class="material-symbols-rounded icon-fill">handshake</span></div>
+        <div class="num"><span class="counter" data-target="41">0</span><span class="plus">+</span></div>
+        <div class="lbl">Voluntarios</div>
+        <div class="sub">Desde el 2019</div>
+      </div>
+      <div class="stat reveal">
+        <div class="ico"><span class="material-symbols-rounded icon-fill">hourglass_top</span></div>
+        <div class="num"><span class="counter" data-target="6">0</span></div>
+        <div class="lbl">Años en lomas</div>
+        <div class="sub">y bahía de Ancón</div>
+      </div>
+      <div class="stat reveal">
+        <div class="ico"><span class="material-symbols-rounded icon-fill">groups</span></div>
+        <div class="num"><span class="counter" data-target="20">0</span></div>
+        <div class="lbl">Familias</div>
+        <div class="sub">De la comunidad</div>
+      </div>
+      <div class="stat reveal">
+        <div class="ico"><span class="material-symbols-rounded icon-fill">family_restroom</span></div>
+        <div class="num"><span class="counter" data-target="3">0</span></div>
+        <div class="lbl">Familias directas</div>
+        <div class="sub">Involucradas</div>
+      </div>
+      <div class="stat reveal">
+        <div class="ico"><span class="material-symbols-rounded icon-fill">trophy</span></div>
+        <div class="num"><span class="counter" data-target="2">0</span></div>
+        <div class="lbl">Niños en campeonatos</div>
+        <div class="sub">De sandboarding</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     ACTIVIDADES (gallery)
+     ============================================================ -->
+<section class="acts" id="actividades" data-screen-label="Actividades">
+  <div class="wrap">
+    <div class="acts-head">
+      <h2 class="reveal">Actividades en Lomas de Ancón, turismo y desarrollo comunitario</h2>
+      <p class="reveal">Experiencias diseñadas con guías locales que conocen cada duna, cada sendero y cada cumbre. Cada actividad financia directamente a las familias de la comunidad.</p>
+    </div>
+
+    <div class="acts-grid">
+      <a class="act-card reveal" href="#">
+        <div class="photo photo--lomas" aria-hidden="true">
+          <div class="dune-cap light"></div>
+          <span class="silhouette" style="left:24%;bottom:30%"></span>
+          <span class="silhouette" style="left:30%;bottom:30%"></span>
+          <span class="grain"></span>
+        </div>
+        <span class="arrow"><span class="material-symbols-rounded">arrow_outward</span></span>
+        <div class="body">
+          <div class="num">01 — Trekking</div>
+          <h3>Trekking en Lomas de Ancón</h3>
+          <div class="meta"><span class="material-symbols-rounded" style="font-size:14px">schedule</span> 4 h · todos los niveles</div>
+        </div>
+      </a>
+
+      <a class="act-card reveal" href="#">
+        <div class="photo photo--trail" aria-hidden="true">
+          <div class="dune-cap"></div>
+          <span class="silhouette" style="left:50%;bottom:35%"></span>
+          <span class="grain"></span>
+        </div>
+        <span class="arrow"><span class="material-symbols-rounded">arrow_outward</span></span>
+        <div class="body">
+          <div class="num">02 — Hiking</div>
+          <h3>Hiking a cumbres costeras</h3>
+          <div class="meta"><span class="material-symbols-rounded" style="font-size:14px">schedule</span> 6 h · intermedio</div>
+        </div>
+      </a>
+
+      <a class="act-card reveal" href="#">
+        <div class="photo photo--dune" aria-hidden="true">
+          <div class="dune-cap"></div>
+          <span class="silhouette" style="left:36%;bottom:42%;width:5px;height:11px"></span>
+          <span class="grain"></span>
+        </div>
+        <span class="arrow"><span class="material-symbols-rounded">arrow_outward</span></span>
+        <div class="body">
+          <div class="num">03 — Clases</div>
+          <h3>Clases de Sandboard y Escalada</h3>
+          <div class="meta"><span class="material-symbols-rounded" style="font-size:14px">schedule</span> 2 h · principiantes</div>
+        </div>
+      </a>
+
+      <a class="act-card reveal" href="#">
+        <div class="photo photo--dusk" aria-hidden="true">
+          <div class="dune-cap" style="height:30%"></div>
+          <span class="silhouette" style="left:48%;bottom:36%;width:4px;height:9px"></span>
+          <span class="grain"></span>
+        </div>
+        <span class="arrow"><span class="material-symbols-rounded">arrow_outward</span></span>
+        <div class="body">
+          <div class="num">04 — Familias</div>
+          <h3>Trineo en las dunas</h3>
+          <div class="meta"><span class="material-symbols-rounded" style="font-size:14px">schedule</span> 1.5 h · niños +6</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PURPOSE BANNER
+     ============================================================ -->
+<section class="purpose" data-screen-label="Turismo con propósito">
+  <div class="wrap">
+    <div class="purpose-grid">
+      <div class="reveal">
+        <div class="eyebrow">Turismo con propósito · Lomas de Ancón</div>
+        <h2>El <b>100%</b> de lo que pagas en cada experiencia se reinvierte en proyectos socioambientales con la comunidad local — sin intermediarios, sin comisiones.</h2>
+      </div>
+      <div class="purpose-right reveal">
+        <a href="#actividades" class="btn-cta lg">
+          <span class="material-symbols-rounded">explore</span>
+          Ver actividades
+        </a>
+        <div class="caption mono">Área de Conservación Regional · MINCETUR</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     EQUIPO
+     ============================================================ -->
+<section class="team" data-screen-label="Equipo">
+  <div class="wrap">
+    <div class="team-head">
+      <div class="reveal">
+        <span class="eyebrow" style="color:var(--olive-deep)">— El equipo</span>
+        <h2 style="margin-top:8px">Conoce a nuestro equipo</h2>
+      </div>
+      <div class="ctrls reveal">
+        <button class="ctrl-btn" id="teamPrev" aria-label="Anterior"><span class="material-symbols-rounded">arrow_back</span></button>
+        <button class="ctrl-btn" id="teamNext" aria-label="Siguiente"><span class="material-symbols-rounded">arrow_forward</span></button>
+      </div>
+    </div>
+
+    <div class="team-track-wrap">
+      <div class="team-track" id="teamTrack">
+        <!-- members generated below; can be hand-edited -->
+        <div class="member">
+          <div class="ph"><div class="photo photo--portrait" aria-hidden="true"><span class="grain"></span></div></div>
+          <div class="name">Diego Salazar</div>
+          <div class="role mono">Fundador · guía</div>
+        </div>
+        <div class="member">
+          <div class="ph"><div class="photo photo--portrait" aria-hidden="true" style="filter:hue-rotate(-12deg)"><span class="grain"></span></div></div>
+          <div class="name">María Quispe</div>
+          <div class="role mono">Comunidad</div>
+        </div>
+        <div class="member">
+          <div class="ph"><div class="photo photo--portrait" aria-hidden="true" style="filter:hue-rotate(12deg)"><span class="grain"></span></div></div>
+          <div class="name">Renzo Aguilar</div>
+          <div class="role mono">Sandboard</div>
+        </div>
+        <div class="member">
+          <div class="ph"><div class="photo photo--portrait" aria-hidden="true" style="filter:hue-rotate(-24deg)"><span class="grain"></span></div></div>
+          <div class="name">Lucía Mendoza</div>
+          <div class="role mono">Educación ambiental</div>
+        </div>
+        <div class="member">
+          <div class="ph"><div class="photo photo--portrait" aria-hidden="true" style="filter:hue-rotate(20deg) saturate(.9)"><span class="grain"></span></div></div>
+          <div class="name">Carlos Huamán</div>
+          <div class="role mono">Logística</div>
+        </div>
+        <div class="member">
+          <div class="ph"><div class="photo photo--portrait" aria-hidden="true" style="filter:hue-rotate(-6deg) brightness(1.05)"><span class="grain"></span></div></div>
+          <div class="name">Andrea Ríos</div>
+          <div class="role mono">Voluntariado</div>
+        </div>
+        <div class="member">
+          <div class="ph"><div class="photo photo--portrait" aria-hidden="true" style="filter:hue-rotate(8deg) brightness(.95)"><span class="grain"></span></div></div>
+          <div class="name">Javier Cárdenas</div>
+          <div class="role mono">Kayak</div>
+        </div>
+        <div class="member">
+          <div class="ph"><div class="photo photo--portrait" aria-hidden="true" style="filter:hue-rotate(-18deg) saturate(1.1)"><span class="grain"></span></div></div>
+          <div class="name">Paula Vega</div>
+          <div class="role mono">Diseño · contenido</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     BLOG
+     ============================================================ -->
+<section class="blog" data-screen-label="Blog">
+  <div class="wrap">
+    <div class="blog-grid">
+      <article class="blog-card reveal">
+        <div class="ph"><div class="photo photo--night" aria-hidden="true">
+          <span class="silhouette" style="left:50%;bottom:38%;width:4px;height:9px;background:#fff;opacity:.85"></span>
+          <span class="silhouette" style="left:53%;bottom:38%;width:4px;height:9px;background:#fff;opacity:.7"></span>
+          <span class="silhouette" style="left:56%;bottom:38%;width:4px;height:9px;background:#fff;opacity:.5"></span>
+          <span class="grain"></span>
+          <span class="photo-tag">Trail running nocturno</span>
+        </div></div>
+        <div class="body">
+          <div class="date">18 abr 2026 · Eventos</div>
+          <h3>Guía del Corredor — Gecko Run 10K · Trail Running Nocturno en Ancón</h3>
+          <a href="#" class="read">Leer artículo <span class="material-symbols-rounded" style="font-size:16px">arrow_forward</span></a>
+        </div>
+      </article>
+
+      <div class="blog-side reveal">
+        <div class="eyebrow">Bitácora</div>
+        <h2>Blog de Lomas de Ancón</h2>
+        <div class="sub">Conexión con la naturaleza y desarrollo comunitario.</div>
+        <p>Historias del territorio, guías de ruta, perfiles de la comunidad y consejos para quienes empiezan en el sandboard o el trail. Escrito por nuestro equipo y voluntarios.</p>
+        <a href="#" class="btn-outline">Leer más del blog <span class="material-symbols-rounded" style="font-size:16px">arrow_forward</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     RESEÑAS
+     ============================================================ -->
+<section class="reviews" data-screen-label="Reseñas">
+  <div class="wrap">
+    <div class="reviews-grid">
+      <div class="rating-box reveal">
+        <div class="label">Excelente</div>
+        <div class="stars">★★★★<span style="opacity:.5">★</span></div>
+        <div class="count">A base de 10 reseñas</div>
+        <div class="google">
+          <span class="google-logo" aria-label="Google">
+            <span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span>
+          </span>
+          <span class="material-symbols-rounded" style="color:#4285F4;font-size:18px">verified</span>
+        </div>
+      </div>
+
+      <div class="review-cards">
+        <article class="review reveal">
+          <header>
+            <div class="avatar" style="background:#b85c2a">P</div>
+            <div>
+              <div class="name">Pamela Mayorga</div>
+              <div class="when">hace 2 semanas</div>
+            </div>
+          </header>
+          <div class="stars">★★★★★</div>
+          <p>Una experiencia única, los guías son apasionados y conocen cada rincón de las dunas. El sandboard fue increíble y mi hija se enamoró del lugar. Volveremos.</p>
+        </article>
+
+        <article class="review reveal">
+          <header>
+            <div class="avatar" style="background:#3d5a2b">J</div>
+            <div>
+              <div class="name">Jenny Sandoval</div>
+              <div class="when">hace 1 mes</div>
+            </div>
+          </header>
+          <div class="stars">★★★★★</div>
+          <p>Me uní al voluntariado y fue de las mejores decisiones del año. Sembramos tara, conocimos a la comunidad y aprendí muchísimo del ecosistema. 100% recomendado.</p>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     DONACIONES
+     ============================================================ -->
+<section class="donate" id="donar" data-screen-label="Donaciones">
+  <div class="wrap">
+    <div class="donate-head">
+      <div class="eyebrow"><span class="material-symbols-rounded icon-fill" style="font-size:14px">favorite</span> Haz la diferencia</div>
+      <h2>Tu donación protege Lomas de Ancón para siempre.</h2>
+      <ul class="benefits">
+        <li><span class="check"><span class="material-symbols-rounded">check</span></span> 100% va a la comunidad</li>
+        <li><span class="check"><span class="material-symbols-rounded">check</span></span> Sin intermediarios ni comisiones</li>
+        <li><span class="check"><span class="material-symbols-rounded">check</span></span> Reporte trimestral de impacto</li>
+      </ul>
+    </div>
+
+    <div class="plans">
+      <article class="plan popular">
+        <span class="tag-pop">Popular</span>
+        <div class="ico">🌱</div>
+        <div class="amt">S/ 20<small>/mes</small></div>
+        <p class="desc">Financia materiales educativos para niños del programa Sandboard Escolar.</p>
+        <a class="btn-wa" href="https://wa.me/51984350983?text=Quiero%20donar%20S%2F%2020%20al%20mes">
+          <span class="material-symbols-rounded">chat</span> Donar por WhatsApp
+        </a>
+      </article>
+      <article class="plan">
+        <div class="ico">🌳</div>
+        <div class="amt">S/ 50<small>/mes</small></div>
+        <p class="desc">Apoya directamente a una familia local de guías y artesanos.</p>
+        <a class="btn-wa" href="https://wa.me/51984350983?text=Quiero%20donar%20S%2F%2050%20al%20mes">
+          <span class="material-symbols-rounded">chat</span> Donar por WhatsApp
+        </a>
+      </article>
+      <article class="plan">
+        <div class="ico">🏔️</div>
+        <div class="amt">S/ 100<small>/mes</small></div>
+        <p class="desc">Patrocina un campamento completo de reforestación con tara y atrapanieblas.</p>
+        <a class="btn-wa" href="https://wa.me/51984350983?text=Quiero%20donar%20S%2F%20100%20al%20mes">
+          <span class="material-symbols-rounded">chat</span> Donar por WhatsApp
+        </a>
+      </article>
+      <article class="plan">
+        <div class="ico">✨</div>
+        <div class="amt">Libre</div>
+        <p class="desc">Elige cuánto quieres aportar — todo monto suma al territorio.</p>
+        <a class="btn-wa" href="https://wa.me/51984350983?text=Quiero%20donar%20un%20monto%20libre">
+          <span class="material-symbols-rounded">chat</span> Donar por WhatsApp
+        </a>
+      </article>
+    </div>
+
+    <p class="donate-footer">💬 Gestionado por WhatsApp · 100% va a la comunidad</p>
+  </div>
+</section>
+
+<!-- ============================================================
+     ALIADOS
+     ============================================================ -->
+<section class="allies" data-screen-label="Aliados">
+  <div class="wrap">
+    <h3>Nuestros aliados</h3>
+    <p class="sub">Instituciones que respaldan y acompañan el trabajo en el territorio.</p>
+    <div class="ally-row">
+      <div class="ally"><span class="dot">M</span> MINCETUR</div>
+      <div class="ally"><span class="dot" style="background:#8B6914">S</span> SERNANP</div>
+      <div class="ally"><span class="dot" style="background:#7a5028">A</span> Municipalidad de Ancón</div>
+      <div class="ally"><span class="dot" style="background:#4a6741">G</span> GORE Lima</div>
+      <div class="ally"><span class="dot" style="background:#5c3d1e">U</span> Universidad Cayetano</div>
+      <div class="ally"><span class="dot" style="background:#c49a3c;color:#2d1f0e">P</span> PromPerú</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="footer" data-screen-label="Footer">
+  <div class="bg">
+    <div class="photo photo--lomas" style="position:absolute;inset:0" aria-hidden="true">
+      <div class="dune-cap" style="height:50%"></div>
+      <div class="dune-cap light" style="height:34%;clip-path:ellipse(60% 100% at 18% 100%)"></div>
+      <span class="grain"></span>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <p class="tagline">Turismo sostenible, voluntariado y aventura en las lomas, dunas y bahía de Ancón — Lima, Perú.</p>
+
+    <div class="foot-grid">
+      <div class="col">
+        <span class="brand-mark lg" aria-hidden="true">
+          <span class="mark-inner">
+            <span class="peak"></span>
+            <span class="bird">⌃</span>
+          </span>
+        </span>
+        <div>
+          <div style="font-family:var(--serif);font-weight:700;font-size:28px;color:#fff;line-height:1">Lomas de Ancón</div>
+          <div class="mono" style="color:var(--sand);margin-top:6px">ACR · MINCETUR · 2019—2026</div>
+        </div>
+      </div>
+
+      <div class="col">
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="#"><span class="material-symbols-rounded">place</span> Ancón, Lima — Perú</a></li>
+          <li><a href="tel:+51984350983"><span class="material-symbols-rounded">call</span> +51 984 350 983</a></li>
+          <li><a href="mailto:hola@lomasdeancon.pe"><span class="material-symbols-rounded">mail</span> hola@lomasdeancon.pe</a></li>
+        </ul>
+      </div>
+
+      <div class="col">
+        <h4>Síguenos</h4>
+        <ul>
+          <li><a href="#"><span class="material-symbols-rounded">public</span> Facebook</a></li>
+          <li><a href="#"><span class="material-symbols-rounded">photo_camera</span> Instagram</a></li>
+          <li><a href="#"><span class="material-symbols-rounded">play_circle</span> TikTok</a></li>
+        </ul>
+      </div>
+
+      <div class="col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#">Términos y condiciones</a></li>
+          <li><a href="#">Política de privacidad</a></li>
+          <li><a href="#">Libro de reclamaciones</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="foot-bottom">
+      <span>© 2026 Lomas de Ancón. Todos los derechos reservados.</span>
+      <span class="mono">Hecho con cariño en Ancón, Lima</span>
+    </div>
+  </div>
+</footer>
+
+<!-- floating donation rail -->
+<a href="#donar" class="donate-rail" aria-label="Donar">
+  <span class="material-symbols-rounded icon-fill">favorite</span>
+  Donar ahora
+</a>
+
+<script>
+/* ============================================================
+   NAVBAR scroll state
+   ============================================================ */
+const nav = document.getElementById('nav');
+const onScroll = () => {
+  if (window.scrollY > 30) nav.classList.add('scrolled');
+  else nav.classList.remove('scrolled');
+};
+onScroll();
+window.addEventListener('scroll', onScroll, {passive:true});
+
+/* ============================================================
+   COUNTER animation on scroll
+   ============================================================ */
+const easeOut = t => 1 - Math.pow(1 - t, 3);
+function animateCount(el){
+  if (el.dataset.done) return;
+  el.dataset.done = '1';
+  const target = parseFloat(el.dataset.target);
+  const dur = 1400;
+  const t0 = performance.now();
+  function step(now){
+    const p = Math.min(1, (now - t0) / dur);
+    const v = Math.round(target * easeOut(p));
+    el.textContent = v;
+    if (p < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+const ioCount = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) animateCount(e.target); });
+}, {threshold: .4});
+document.querySelectorAll('.counter').forEach(el => ioCount.observe(el));
+
+/* ============================================================
+   Reveal on scroll
+   ============================================================ */
+const ioReveal = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('in');
+      ioReveal.unobserve(e.target);
+    }
+  });
+}, {threshold: .14});
+document.querySelectorAll('.reveal').forEach(el => ioReveal.observe(el));
+
+/* ============================================================
+   Team carousel
+   ============================================================ */
+const track = document.getElementById('teamTrack');
+const prev = document.getElementById('teamPrev');
+const next = document.getElementById('teamNext');
+let offset = 0;
+const step = 238; // 220 + 18 gap
+function clamp(){
+  const max = Math.max(0, track.scrollWidth - track.parentElement.clientWidth);
+  if (offset < 0) offset = 0;
+  if (offset > max) offset = max;
+  track.style.transform = `translateX(${-offset}px)`;
+}
+prev.addEventListener('click', () => { offset -= step * 2; clamp(); });
+next.addEventListener('click', () => { offset += step * 2; clamp(); });
+window.addEventListener('resize', clamp);
+</script>
+
+</body>
+</html>
