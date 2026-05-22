@@ -105,6 +105,12 @@
 .cb-mbub{padding:10px 13px;border-radius:16px;font-size:13.5px;line-height:1.55;word-break:break-word}
 .cb-m.bot .cb-mbub{background:#fff;color:#2c1a0e;border-bottom-left-radius:4px;box-shadow:0 1px 4px rgba(20,12,5,.08)}
 .cb-m.usr .cb-mbub{background:#2d5a27;color:#fff;border-bottom-right-radius:4px;box-shadow:0 2px 8px rgba(45,90,39,.28)}
+.cb-mbub a{color:#2d5a27;font-weight:600;text-decoration:underline}
+.cb-mbub a:hover{color:#1f4a1a}
+.cb-m.usr .cb-mbub a{color:#fff}
+.cb-mbub ul{margin:6px 0 6px 18px;padding:0;list-style-type:disc}
+.cb-mbub li{margin-bottom:4px}
+.cb-mbub li:last-child{margin-bottom:0}
 .cb-dots{display:flex;gap:4px;align-items:center;padding:1px 0}
 .cb-dot{width:7px;height:7px;border-radius:50%;background:#c49a3c;animation:cbDot 1.2s ease-in-out infinite}
 .cb-dot:nth-child(2){animation-delay:.2s}
@@ -323,7 +329,7 @@
             const payload = JSON.parse(line.slice(5).trim());
             if (payload.text) {
               reply += payload.text;
-              bub.innerHTML = esc(reply);
+              bub.innerHTML = parseMarkdown(reply);
               $msgs.scrollTop = $msgs.scrollHeight;
             }
           } catch (_) {}
@@ -331,7 +337,7 @@
       }
 
       if (!reply) {
-        bub.innerHTML = esc('Lo siento, no pude procesar tu mensaje.');
+        bub.innerHTML = parseMarkdown('Lo siento, no pude procesar tu mensaje.');
       } else {
         // Persist both turns only after a successful response
         chatHistory.push({ role: 'user',      content: text  });
@@ -356,7 +362,7 @@
     d.className = 'cb-m ' + role;
     const ava = role === 'bot'
       ? `<div class="cb-mava"><span class="material-symbols-rounded">landscape</span></div>` : '';
-    d.innerHTML = ava + `<div class="cb-mbub">${esc(text)}</div>`;
+    d.innerHTML = ava + `<div class="cb-mbub">${parseMarkdown(text)}</div>`;
     $msgs.appendChild(d);
     $msgs.scrollTop = $msgs.scrollHeight;
     return d;
@@ -371,8 +377,58 @@
     return d;
   }
 
-  function esc(s) {
-    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>');
+  function parseMarkdown(text) {
+    if (!text) return '';
+    
+    // 1. Escapar caracteres HTML para prevenir XSS
+    let html = text
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+
+    // 2. Procesar líneas para identificar listas con viñetas
+    const lines = html.split('\n');
+    let inList = false;
+    const processedLines = [];
+
+    for (let line of lines) {
+      // Coincide con viñetas tipo "* elemento" o "- elemento"
+      const listMatch = line.match(/^(\s*)([\*\-])\s+(.*)$/);
+      if (listMatch) {
+        if (!inList) {
+          inList = true;
+          processedLines.push('<ul>');
+        }
+        processedLines.push(`<li>${listMatch[3]}</li>`);
+      } else {
+        if (inList) {
+          inList = false;
+          processedLines.push('</ul>');
+        }
+        processedLines.push(line);
+      }
+    }
+    if (inList) {
+      processedLines.push('</ul>');
+    }
+
+    html = processedLines.join('\n');
+
+    // 3. Formatear texto en negrita: **texto** -> <strong>texto</strong>
+    html = html.replace(/\*\*([\s\S]*?)\*\*/g, '<strong>$1</strong>');
+
+    // 4. Formatear enlaces: [texto](url) -> <a href="url" target="_blank" rel="noopener noreferrer">texto</a>
+    html = html.replace(/\[([^\]]+)\]\((https?:\/\/[^\s\)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+
+    // 5. Convertir saltos de línea restantes a <br>
+    html = html.replace(/\n/g, '<br>');
+
+    // Limpiar saltos de línea adicionales alrededor de listas
+    html = html.replace(/<br>\s*<ul>/g, '<ul>')
+               .replace(/<\/ul>\s*<br>/g, '</ul>')
+               .replace(/<\/li>\s*<br>/g, '</li>');
+
+    return html;
   }
 
   /* ── Input events ────────────────────────────────────────── */
