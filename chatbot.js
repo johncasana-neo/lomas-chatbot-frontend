@@ -294,7 +294,7 @@
   }
 
   function renderMarkdown(s) {
-    // 1. Escape HTML entities first (except we'll re-allow safe tags we build)
+    // 1. Escape HTML entities first
     let h = s
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
@@ -302,28 +302,28 @@
 
     // 2. Links: [text](url)
     h = h.replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g,
-      '<a href="$2" target="_blank" rel="noopener noreferrer" style="color:#2d5a27;text-decoration:underline;word-break:break-all">$1</a>');
+      '<a href="$2" target="_blank" rel="noopener noreferrer" style="color:#2d5a27;font-weight:600;text-decoration:underline">$1</a>');
 
-    // 3. Auto-link bare URLs (not already inside an <a>)
+    // 3. Auto-link bare URLs
     h = h.replace(/(?<!href=")(https?:\/\/[^\s<"]+)/g,
-      '<a href="$1" target="_blank" rel="noopener noreferrer" style="color:#2d5a27;text-decoration:underline;word-break:break-all">$1</a>');
+      '<a href="$1" target="_blank" rel="noopener noreferrer" style="color:#2d5a27;font-weight:600;text-decoration:underline">$1</a>');
 
-    // 4. Bold: **text** or __text__
-    h = h.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
-    h = h.replace(/__([^_]+)__/g, '<strong>$1</strong>');
+    // 4. Bold: **text**
+    h = h.replace(/\*\*([^*\n]+)\*\*/g, '<strong>$1</strong>');
+    h = h.replace(/__([^_\n]+)__/g, '<strong>$1</strong>');
 
-    // 5. Italic: *text* or _text_
-    h = h.replace(/\*([^*]+)\*/g, '<em>$1</em>');
-    h = h.replace(/_([^_]+)_/g, '<em>$1</em>');
+    // 5. Bullet list items BEFORE italic (lines starting with * item or - item)
+    //    Must come before italic so "* text" isn't eaten as *text*
+    h = h.replace(/^[*\-] (.+)$/gm, '<li>$1</li>');
+    h = h.replace(/(<li>[\s\S]*?<\/li>)(\n<li>[\s\S]*?<\/li>)*/g, match =>
+      '<ul style="margin:.3em 0 .3em 1.1em;padding:0;list-style:disc">' + match + '</ul>');
 
-    // 6. Bullet list items: lines starting with * or -
-    h = h.replace(/^[*-] (.+)$/gm, '<li>$1</li>');
-    // Wrap consecutive <li> in <ul>
-    h = h.replace(/(<li>.*<\/li>\n?)+/gs, match =>
-      '<ul style="margin:.4em 0 .4em 1.2em;padding:0;list-style:disc">' + match + '</ul>');
+    // 6. Italic: *text* (only single asterisk now, after bullets are handled)
+    h = h.replace(/(?<!\*)\*(?!\*)([^*\n]+)(?<!\*)\*(?!\*)/g, '<em>$1</em>');
+    h = h.replace(/(?<!_)_(?!_)([^_\n]+)(?<!_)_(?!_)/g, '<em>$1</em>');
 
-    // 7. Line breaks
-    h = h.replace(/\n/g, '<br>');
+    // 7. Line breaks (but not inside lists)
+    h = h.replace(/(?!<\/li>|<li>)\n/g, '<br>');
 
     return h;
   }
