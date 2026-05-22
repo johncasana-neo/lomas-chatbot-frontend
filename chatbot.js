@@ -302,15 +302,41 @@
       });
 
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const data = await res.json();
-      const reply = data.response || data.reply || data.message || 'Lo siento, no pude procesar tu mensaje.';
 
+      // Remove typing indicator and prepare bot bubble for streaming content
       typing.remove();
-      appendMsg('bot', reply);
+      const botMsg = appendMsg('bot', '');
+      const bub = botMsg.querySelector('.cb-mbub');
 
-      // Persist both turns only after a successful response
-      chatHistory.push({ role: 'user',      content: text  });
-      chatHistory.push({ role: 'assistant', content: reply });
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let reply = '';
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        const chunk = decoder.decode(value);
+        const lines = chunk.split("\n");
+        for (const line of lines) {
+          if (!line.startsWith("data:")) continue;
+          try {
+            const payload = JSON.parse(line.slice(5).trim());
+            if (payload.text) {
+              reply += payload.text;
+              bub.innerHTML = esc(reply);
+              $msgs.scrollTop = $msgs.scrollHeight;
+            }
+          } catch (_) {}
+        }
+      }
+
+      if (!reply) {
+        bub.innerHTML = esc('Lo siento, no pude procesar tu mensaje.');
+      } else {
+        // Persist both turns only after a successful response
+        chatHistory.push({ role: 'user',      content: text  });
+        chatHistory.push({ role: 'assistant', content: reply });
+      }
 
     } catch (err) {
       console.error('[Chatbot] Error:', err);
