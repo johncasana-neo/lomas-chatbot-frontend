@@ -236,7 +236,7 @@
               const chunk = JSON.parse(raw);
               const token = chunk.text ?? chunk.content ?? chunk.token ?? chunk.delta ?? '';
               fullReply += token;
-              bubEl.textContent = fullReply;
+              bubEl.innerHTML = renderMarkdown(fullReply);
               $msgs.scrollTop = $msgs.scrollHeight;
             } catch { /* partial chunk, skip */ }
           }
@@ -274,7 +274,7 @@
     d.className = 'cb-m ' + role;
     const ava = role === 'bot'
       ? `<div class="cb-mava"><span class="material-symbols-rounded">landscape</span></div>` : '';
-    d.innerHTML = ava + `<div class="cb-mbub">${esc(text)}</div>`;
+    d.innerHTML = ava + `<div class="cb-mbub">${role === 'bot' ? renderMarkdown(text) : esc(text)}</div>`;
     $msgs.appendChild(d);
     $msgs.scrollTop = $msgs.scrollHeight;
     return d;
@@ -290,7 +290,42 @@
   }
 
   function esc(s) {
-    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>');
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  function renderMarkdown(s) {
+    // 1. Escape HTML entities first (except we'll re-allow safe tags we build)
+    let h = s
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+
+    // 2. Links: [text](url)
+    h = h.replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g,
+      '<a href="$2" target="_blank" rel="noopener noreferrer" style="color:#2d5a27;text-decoration:underline;word-break:break-all">$1</a>');
+
+    // 3. Auto-link bare URLs (not already inside an <a>)
+    h = h.replace(/(?<!href=")(https?:\/\/[^\s<"]+)/g,
+      '<a href="$1" target="_blank" rel="noopener noreferrer" style="color:#2d5a27;text-decoration:underline;word-break:break-all">$1</a>');
+
+    // 4. Bold: **text** or __text__
+    h = h.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+    h = h.replace(/__([^_]+)__/g, '<strong>$1</strong>');
+
+    // 5. Italic: *text* or _text_
+    h = h.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+    h = h.replace(/_([^_]+)_/g, '<em>$1</em>');
+
+    // 6. Bullet list items: lines starting with * or -
+    h = h.replace(/^[*-] (.+)$/gm, '<li>$1</li>');
+    // Wrap consecutive <li> in <ul>
+    h = h.replace(/(<li>.*<\/li>\n?)+/gs, match =>
+      '<ul style="margin:.4em 0 .4em 1.2em;padding:0;list-style:disc">' + match + '</ul>');
+
+    // 7. Line breaks
+    h = h.replace(/\n/g, '<br>');
+
+    return h;
   }
 
   $inp.addEventListener('keydown', e => {
