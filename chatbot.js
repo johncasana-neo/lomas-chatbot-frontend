@@ -25,7 +25,7 @@
   let sessionId  = generateSessionId();
 
   function generateSessionId() {
-    return 'cb-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8);
+    return 'sess-' + Math.random().toString(36).slice(2, 12) + Date.now().toString(36).slice(-4);
   }
 
   /* ── Styles ──────────────────────────────────────────────── */
