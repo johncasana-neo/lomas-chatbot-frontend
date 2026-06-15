@@ -157,5 +157,6 @@ function addToCart(id,name,price,unit){
 }
 </script>
 <script>(function(){const nav=document.getElementById('nav');if(nav)window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>30),{passive:true});const io=new IntersectionObserver(e=>e.forEach(el=>{if(el.isIntersecting){el.target.classList.add('in');io.unobserve(el.target)}}),{threshold:.14});document.querySelectorAll('.reveal').forEach(el=>io.observe(el));const easeOut=t=>1-Math.pow(1-t,3);const ioC=new IntersectionObserver(e=>e.forEach(el=>{if(!el.isIntersecting||el.target.dataset.done)return;el.target.dataset.done='1';const target=+el.target.dataset.target,dur=1400,t0=performance.now();(function step(now){const p=Math.min(1,(now-t0)/dur);el.target.textContent=Math.round(target*easeOut(p));if(p<1)requestAnimationFrame(step);})(t0);}),{threshold:.4});document.querySelectorAll('.counter').forEach(el=>ioC.observe(el));const cart=JSON.parse(localStorage.getItem('lda_cart')||'[]');const b=document.getElementById('cartBadge');if(b)b.textContent=cart.reduce((s,i)=>s+i.qty,0)||0;})();</script>
-<script src="chatbot.js"></script>
+<script>window.LOMAS_CHAT_API='http://localhost:8000';</script>
+<script src="http://localhost:8000/widget.js" defer></script>
 </body></html>

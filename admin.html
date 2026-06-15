@@ -1,0 +1,681 @@
+<!doctype html>
+<html lang="es-PE">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Admin — Lomas de Ancón</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;0,9..144,800;1,9..144,400&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Rounded" rel="stylesheet"/>
+<link rel="stylesheet" href="styles.css">
+<style>
+/* ── Admin-specific ── */
+.admin-body{background:var(--cream-soft);min-height:100vh}
+
+/* Top bar */
+.admin-topbar{position:sticky;top:0;z-index:50;background:rgba(20,12,5,.82);backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);border-bottom:1px solid rgba(255,255,255,.08);padding:14px 0}
+.admin-topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.admin-topbar .brand{display:flex;align-items:center;gap:12px;color:#fff}
+.admin-topbar .brand-mark{width:40px;height:40px;flex:0 0 40px;display:grid;place-items:center;background:var(--olive-deep);transform:rotate(45deg);border-radius:6px;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.18)}
+.admin-topbar .brand-mark>.mark-inner{transform:rotate(-45deg);display:flex;flex-direction:column;align-items:center;line-height:1}
+.admin-topbar .brand-mark .peak{width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent;border-bottom:10px solid #f0e6c8;margin-bottom:2px}
+.admin-topbar .brand-mark .bird{font-family:var(--serif);font-size:9px;color:#f0e6c8}
+.admin-topbar .brand-name{font-family:var(--serif);font-weight:700;font-size:18px;line-height:1;color:#fff}
+.admin-topbar .brand-name small{display:block;font-family:var(--sans);font-weight:500;font-size:9px;letter-spacing:.24em;color:#d9b878;margin-top:3px;text-transform:uppercase}
+.admin-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(74,103,65,.35);border:1px solid rgba(74,103,65,.55);color:#a8c99a;padding:5px 12px;border-radius:999px;font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
+.admin-badge .material-symbols-rounded{font-size:14px}
+
+/* Page header */
+.admin-header{background:linear-gradient(160deg,var(--olive-darker),var(--olive-deep) 60%,#1a3a14);padding:56px 0 48px;position:relative;overflow:hidden}
+.admin-header::before{content:"";position:absolute;inset:0;background:radial-gradient(60% 60% at 85% 20%,rgba(196,154,60,.14),transparent 60%),radial-gradient(50% 50% at 10% 90%,rgba(20,12,5,.35),transparent 60%);pointer-events:none}
+.admin-header-inner{position:relative;z-index:1}
+.admin-header .eyebrow{color:#a8c99a;display:inline-flex;align-items:center;gap:8px;margin-bottom:14px}
+.admin-header .eyebrow .material-symbols-rounded{font-size:16px}
+.admin-header h1{font-family:var(--serif);font-weight:800;font-size:clamp(32px,5vw,52px);line-height:.95;letter-spacing:-.02em;color:#fff;margin-bottom:10px}
+.admin-header h1 em{font-style:italic;font-weight:500;color:var(--sand-soft)}
+.admin-header .sub{color:rgba(246,239,225,.7);font-size:15px;max-width:48ch}
+
+/* Auth gate */
+.auth-gate{max-width:480px;margin:48px auto;background:#fff;border:1px solid rgba(45,31,14,.12);border-radius:18px;padding:36px;box-shadow:var(--shadow-card)}
+.auth-gate h2{font-family:var(--serif);font-weight:700;font-size:24px;color:var(--earth-deep);margin-bottom:6px}
+.auth-gate p{color:var(--ink-soft);font-size:14px;margin-bottom:24px}
+.field-row{display:flex;flex-direction:column;gap:7px;margin-bottom:18px}
+.field-row label{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft)}
+.field-input{display:flex;align-items:center;gap:0}
+.field-input input{flex:1;padding:12px 16px;border:1.5px solid rgba(45,31,14,.18);border-radius:12px 0 0 12px;font-size:14px;color:var(--ink);background:#fff;outline:none;transition:border-color .2s,box-shadow .2s;font-family:var(--mono)}
+.field-input input:focus{border-color:var(--olive-deep);box-shadow:0 0 0 3px rgba(45,90,39,.12)}
+.field-input .toggle-vis{padding:12px 14px;border:1.5px solid rgba(45,31,14,.18);border-left:none;border-radius:0 12px 12px 0;cursor:pointer;color:var(--ink-soft);transition:background .2s,color .2s;background:#fff}
+.field-input .toggle-vis:hover{background:var(--cream);color:var(--olive-deep)}
+.field-input .toggle-vis .material-symbols-rounded{font-size:18px;display:block}
+
+/* Main layout */
+.admin-grid{display:grid;grid-template-columns:1fr 380px;gap:28px;padding:36px 0 72px;align-items:start}
+@media(max-width:900px){.admin-grid{grid-template-columns:1fr}}
+
+/* Cards */
+.card{background:#fff;border:1px solid rgba(45,31,14,.1);border-radius:18px;padding:28px;box-shadow:var(--shadow-card)}
+.card-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:22px}
+.card-title{display:flex;align-items:center;gap:10px}
+.card-title .ico{width:38px;height:38px;flex:0 0 38px;border-radius:10px;background:linear-gradient(160deg,var(--olive-deep),var(--olive-darker));display:grid;place-items:center;color:#fff}
+.card-title .ico .material-symbols-rounded{font-size:20px}
+.card-title h2{font-family:var(--serif);font-weight:700;font-size:20px;color:var(--earth-deep);line-height:1.1}
+.card-title small{display:block;font-family:var(--sans);font-size:12px;color:var(--ink-soft);font-weight:400;margin-top:2px}
+
+/* Drop zone */
+.drop-zone{border:2px dashed rgba(45,90,39,.3);border-radius:14px;padding:40px 24px;text-align:center;cursor:pointer;transition:border-color .2s,background .2s;position:relative;margin-bottom:22px}
+.drop-zone:hover,.drop-zone.drag-over{border-color:var(--olive-deep);background:rgba(45,90,39,.04)}
+.drop-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.drop-zone .dz-icon{width:56px;height:56px;border-radius:14px;background:linear-gradient(160deg,#e8f0e4,#d4e4cd);display:grid;place-items:center;margin:0 auto 14px;color:var(--olive-deep)}
+.drop-zone .dz-icon .material-symbols-rounded{font-size:28px}
+.drop-zone h3{font-family:var(--serif);font-weight:700;font-size:17px;color:var(--earth-deep);margin-bottom:6px}
+.drop-zone p{color:var(--ink-soft);font-size:13px}
+.drop-zone .dz-hint{font-size:11px;color:var(--ink-soft);opacity:.7;margin-top:8px;font-family:var(--mono);letter-spacing:.08em}
+
+/* File queue */
+.file-queue{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
+.file-item{display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--cream-soft);border:1px solid rgba(45,31,14,.08);border-radius:10px;font-size:13px}
+.file-item .fi-icon{width:32px;height:32px;flex:0 0 32px;border-radius:8px;background:linear-gradient(160deg,#e0ede4,#c8dfc6);display:grid;place-items:center;color:var(--olive-deep)}
+.file-item .fi-icon .material-symbols-rounded{font-size:16px}
+.file-item .fi-name{flex:1;min-width:0;font-weight:600;color:var(--earth-deep);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.file-item .fi-size{font-size:11px;color:var(--ink-soft);font-family:var(--mono);white-space:nowrap}
+.file-item .fi-remove{width:28px;height:28px;border-radius:999px;display:grid;place-items:center;color:var(--ink-soft);transition:background .2s,color .2s;cursor:pointer;flex:0 0 28px}
+.file-item .fi-remove:hover{background:#fee;color:#c0392b}
+.file-item .fi-remove .material-symbols-rounded{font-size:16px}
+.file-item.uploading .fi-remove{display:none}
+.file-item .fi-status{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:600;letter-spacing:.08em;white-space:nowrap}
+.fi-status.pending{color:var(--ink-soft)}
+.fi-status.uploading{color:var(--olive-deep)}
+.fi-status.done{color:#27a160}
+.fi-status.error{color:#c0392b}
+.fi-status .material-symbols-rounded{font-size:14px}
+
+/* Progress bar */
+.upload-progress{height:4px;background:rgba(45,31,14,.08);border-radius:999px;overflow:hidden;margin-bottom:22px;display:none}
+.upload-progress.active{display:block}
+.upload-progress-bar{height:100%;background:linear-gradient(90deg,var(--olive-deep),var(--olive-light));border-radius:999px;transition:width .3s ease;width:0}
+
+/* Upload result */
+.upload-result{padding:14px 16px;border-radius:12px;font-size:13px;font-weight:600;display:none;align-items:flex-start;gap:10px;margin-bottom:16px}
+.upload-result.show{display:flex}
+.upload-result.success{background:#e8f7ee;border:1px solid #b8dfc8;color:#0f7a3c}
+.upload-result.error{background:#fdf0ee;border:1px solid #f5c5bc;color:#c0392b}
+.upload-result .material-symbols-rounded{font-size:18px;flex:0 0 18px;margin-top:1px}
+.upload-result .res-body{flex:1}
+.upload-result .res-body strong{display:block;margin-bottom:4px}
+.upload-result .res-body ul{list-style:none;font-weight:400;font-size:12px;opacity:.85}
+.upload-result .res-body ul li::before{content:"· "}
+
+/* Stats sidebar */
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:6px}
+.stat-box{padding:16px;background:var(--cream-soft);border:1px solid rgba(45,31,14,.08);border-radius:12px;text-align:center}
+.stat-box .stat-num{font-family:var(--serif);font-weight:800;font-size:28px;line-height:1;color:var(--olive-deep);margin-bottom:4px}
+.stat-box .stat-lbl{font-size:11px;color:var(--ink-soft);font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase}
+
+/* Source list */
+.source-list{display:flex;flex-direction:column;gap:8px;margin-top:18px}
+.source-item{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--cream-soft);border:1px solid rgba(45,31,14,.08);border-radius:10px;transition:background .2s}
+.source-item:hover{background:#fff}
+.source-item .si-icon{width:30px;height:30px;flex:0 0 30px;border-radius:8px;background:linear-gradient(160deg,var(--olive-deep),var(--olive-darker));display:grid;place-items:center;color:#fff}
+.source-item .si-icon .material-symbols-rounded{font-size:14px}
+.source-item .si-info{flex:1;min-width:0}
+.source-item .si-name{font-size:12px;font-weight:700;color:var(--earth-deep);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.source-item .si-meta{font-size:10px;color:var(--ink-soft);font-family:var(--mono);letter-spacing:.06em;margin-top:1px}
+.source-item .si-del{width:28px;height:28px;border-radius:999px;display:grid;place-items:center;color:var(--ink-soft);transition:background .2s,color .2s;cursor:pointer;flex:0 0 28px}
+.source-item .si-del:hover{background:#fee;color:#c0392b}
+.source-item .si-del .material-symbols-rounded{font-size:14px}
+.source-item.deleting{opacity:.5;pointer-events:none}
+
+.sources-empty{text-align:center;padding:32px 16px;color:var(--ink-soft);font-size:13px}
+.sources-empty .material-symbols-rounded{font-size:36px;display:block;margin:0 auto 10px;opacity:.35}
+
+/* Loading skeleton */
+.skeleton{background:linear-gradient(90deg,rgba(45,31,14,.07) 25%,rgba(45,31,14,.12) 50%,rgba(45,31,14,.07) 75%);background-size:200% 100%;animation:shimmer 1.4s infinite;border-radius:6px}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+/* Refresh btn */
+.btn-refresh{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:999px;border:1.5px solid rgba(45,31,14,.16);color:var(--ink-soft);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;transition:background .2s,color .2s,border-color .2s;cursor:pointer;background:#fff}
+.btn-refresh:hover{background:var(--cream);color:var(--olive-deep);border-color:var(--olive-deep)}
+.btn-refresh .material-symbols-rounded{font-size:15px}
+.btn-refresh.spinning .material-symbols-rounded{animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Confirm modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(20,12,5,.55);z-index:200;display:none;align-items:center;justify-content:center;padding:24px}
+.modal-overlay.show{display:flex}
+.modal{background:#fff;border-radius:18px;padding:32px;max-width:400px;width:100%;box-shadow:var(--shadow-lift)}
+.modal h3{font-family:var(--serif);font-weight:700;font-size:20px;color:var(--earth-deep);margin-bottom:8px}
+.modal p{color:var(--ink-soft);font-size:14px;margin-bottom:24px}
+.modal p strong{color:var(--earth-deep);font-weight:700}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end}
+.btn-danger{display:inline-flex;align-items:center;gap:6px;padding:11px 22px;border-radius:999px;background:#c0392b;color:#fff;font-weight:700;font-size:13px;letter-spacing:.1em;text-transform:uppercase;transition:background .2s;cursor:pointer}
+.btn-danger:hover{background:#a93226}
+.btn-cancel{display:inline-flex;align-items:center;gap:6px;padding:11px 22px;border-radius:999px;border:1.5px solid rgba(45,31,14,.18);color:var(--ink-soft);font-weight:600;font-size:13px;letter-spacing:.1em;text-transform:uppercase;transition:background .2s;cursor:pointer}
+.btn-cancel:hover{background:var(--cream)}
+
+/* Responsive */
+@media(max-width:560px){
+  .admin-header{padding:40px 0 36px}
+  .card{padding:20px}
+  .stat-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body class="admin-body">
+
+<!-- Top bar -->
+<header class="admin-topbar">
+  <div class="wrap">
+    <a href="/" class="brand">
+      <div class="brand-mark">
+        <div class="mark-inner">
+          <div class="peak"></div>
+          <span class="bird">L</span>
+        </div>
+      </div>
+      <div class="brand-name">Lomas de Ancón<small>ACR · MINCETUR</small></div>
+    </a>
+    <div class="admin-badge">
+      <span class="material-symbols-rounded">admin_panel_settings</span>
+      Panel Admin
+    </div>
+  </div>
+</header>
+
+<!-- Page header -->
+<div class="admin-header" id="adminHeader" style="display:none">
+  <div class="wrap admin-header-inner">
+    <div class="eyebrow">
+      <span class="material-symbols-rounded">database</span>
+      Base de conocimiento · Qdrant
+    </div>
+    <h1>Gestión de <em>documentos</em></h1>
+    <p class="sub">Sube PDFs para indexarlos como vectores. El chatbot usará este conocimiento en sus respuestas.</p>
+  </div>
+</div>
+
+<!-- Auth gate -->
+<div class="wrap" id="authGate">
+  <div class="auth-gate reveal">
+    <h2>Acceso de administrador</h2>
+    <p>Ingresa el token secreto de ingestión para continuar.</p>
+    <div class="field-row">
+      <label>Token de acceso</label>
+      <div class="field-input">
+        <input type="password" id="secretInput" placeholder="ingest_secret_…" autocomplete="off" spellcheck="false">
+        <button class="toggle-vis" onclick="toggleSecretVis()" title="Mostrar/ocultar">
+          <span class="material-symbols-rounded" id="visIcon">visibility</span>
+        </button>
+      </div>
+    </div>
+    <button class="btn-cta" onclick="doAuth()" style="width:100%;justify-content:center">
+      <span class="material-symbols-rounded">lock_open</span>
+      Ingresar
+    </button>
+    <p id="authError" style="display:none;color:#c0392b;font-size:13px;margin-top:12px;text-align:center"></p>
+  </div>
+</div>
+
+<!-- Main content (shown after auth) -->
+<div class="wrap" id="adminContent" style="display:none">
+  <div class="admin-grid">
+
+    <!-- Left: Upload -->
+    <div>
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title">
+            <div class="ico"><span class="material-symbols-rounded">upload_file</span></div>
+            <div>
+              <h2>Subir PDFs</h2>
+              <small>Se incrustan automáticamente en Qdrant</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Drop zone -->
+        <div class="drop-zone" id="dropZone">
+          <input type="file" id="fileInput" accept=".pdf" multiple>
+          <div class="dz-icon"><span class="material-symbols-rounded">picture_as_pdf</span></div>
+          <h3>Arrastra tus PDFs aquí</h3>
+          <p>o haz clic para seleccionar archivos</p>
+          <p class="dz-hint">Solo archivos PDF · Múltiples permitidos</p>
+        </div>
+
+        <!-- File queue -->
+        <div class="file-queue" id="fileQueue"></div>
+
+        <!-- Progress bar -->
+        <div class="upload-progress" id="uploadProgress">
+          <div class="upload-progress-bar" id="uploadProgressBar"></div>
+        </div>
+
+        <!-- Result -->
+        <div class="upload-result" id="uploadResult">
+          <span class="material-symbols-rounded" id="uploadResultIcon">check_circle</span>
+          <div class="res-body">
+            <strong id="uploadResultTitle"></strong>
+            <ul id="uploadResultList"></ul>
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <button class="btn-cta" id="uploadBtn" onclick="uploadFiles()" style="width:100%;justify-content:center;display:none">
+          <span class="material-symbols-rounded">cloud_upload</span>
+          <span id="uploadBtnLabel">Subir e indexar</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Right: Stats + Sources -->
+    <div style="display:flex;flex-direction:column;gap:20px">
+
+      <!-- Stats -->
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title">
+            <div class="ico" style="background:linear-gradient(160deg,#c49a3c,#a07830)">
+              <span class="material-symbols-rounded">bar_chart</span>
+            </div>
+            <div>
+              <h2>Estadísticas</h2>
+              <small>Colección Qdrant</small>
+            </div>
+          </div>
+          <button class="btn-refresh" id="refreshBtn" onclick="loadSources()">
+            <span class="material-symbols-rounded">refresh</span>
+            Actualizar
+          </button>
+        </div>
+        <div class="stat-grid" id="statsGrid">
+          <div class="stat-box">
+            <div class="stat-num skeleton" id="statVectors" style="height:28px;width:60px;margin:0 auto 4px">&nbsp;</div>
+            <div class="stat-lbl">Vectores</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num skeleton" id="statSources" style="height:28px;width:40px;margin:0 auto 4px">&nbsp;</div>
+            <div class="stat-lbl">Fuentes</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sources -->
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title">
+            <div class="ico"><span class="material-symbols-rounded">folder_open</span></div>
+            <div>
+              <h2>Fuentes indexadas</h2>
+              <small id="sourcesCount">Cargando…</small>
+            </div>
+          </div>
+        </div>
+        <div class="source-list" id="sourceList">
+          <div class="sources-empty"><span class="material-symbols-rounded skeleton" style="width:36px;height:36px;border-radius:50%">&nbsp;</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Delete confirm modal -->
+<div class="modal-overlay" id="deleteModal">
+  <div class="modal">
+    <h3>Eliminar fuente</h3>
+    <p>¿Eliminar todos los chunks de <strong id="deleteSourceName"></strong>? Esta acción no se puede deshacer.</p>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeDeleteModal()">Cancelar</button>
+      <button class="btn-danger" onclick="confirmDelete()">
+        <span class="material-symbols-rounded">delete</span>
+        Eliminar
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+const API_URL = 'https://las-lomas-chatbot-backend-354131473964.us-central1.run.app';
+
+let secret = '';
+let pendingFiles = [];
+let deleteTarget = null;
+
+/* ── Auth ── */
+function toggleSecretVis() {
+  const inp = document.getElementById('secretInput');
+  const ico = document.getElementById('visIcon');
+  const isPass = inp.type === 'password';
+  inp.type = isPass ? 'text' : 'password';
+  ico.textContent = isPass ? 'visibility_off' : 'visibility';
+}
+
+async function doAuth() {
+  const val = document.getElementById('secretInput').value.trim();
+  if (!val) return showAuthError('Ingresa el token de acceso.');
+
+  const btn = document.querySelector('#authGate .btn-cta');
+  btn.disabled = true;
+  btn.querySelector('span:first-child').textContent = 'hourglass_empty';
+
+  try {
+    const res = await fetch(`${API_URL}/admin/sources`, {
+      headers: { 'X-Ingest-Secret': val }
+    });
+    if (res.status === 401 || res.status === 403) {
+      showAuthError('Token incorrecto. Verifica e intenta de nuevo.');
+      return;
+    }
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    secret = val;
+    showAdminPanel();
+  } catch (e) {
+    showAuthError(`Error al conectar: ${e.message}`);
+  } finally {
+    btn.disabled = false;
+    btn.querySelector('span:first-child').textContent = 'lock_open';
+  }
+}
+
+function showAuthError(msg) {
+  const el = document.getElementById('authError');
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+
+function showAdminPanel() {
+  document.getElementById('authGate').style.display = 'none';
+  document.getElementById('adminHeader').style.display = 'block';
+  document.getElementById('adminContent').style.display = 'block';
+  loadSources();
+}
+
+document.getElementById('secretInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') doAuth();
+});
+
+/* ── File input ── */
+const dropZone = document.getElementById('dropZone');
+const fileInput = document.getElementById('fileInput');
+
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+dropZone.addEventListener('drop', e => {
+  e.preventDefault();
+  dropZone.classList.remove('drag-over');
+  addFiles([...e.dataTransfer.files].filter(f => f.type === 'application/pdf'));
+});
+fileInput.addEventListener('change', () => {
+  addFiles([...fileInput.files]);
+  fileInput.value = '';
+});
+
+function addFiles(files) {
+  files.forEach(f => {
+    if (!pendingFiles.find(p => p.file.name === f.name)) {
+      pendingFiles.push({ file: f, status: 'pending' });
+    }
+  });
+  renderQueue();
+}
+
+function removeFile(name) {
+  pendingFiles = pendingFiles.filter(p => p.file.name !== name);
+  renderQueue();
+}
+
+function renderQueue() {
+  const queue = document.getElementById('fileQueue');
+  const btn = document.getElementById('uploadBtn');
+  const result = document.getElementById('uploadResult');
+
+  if (pendingFiles.length === 0) {
+    queue.innerHTML = '';
+    btn.style.display = 'none';
+    return;
+  }
+
+  result.classList.remove('show');
+  btn.style.display = 'flex';
+
+  queue.innerHTML = pendingFiles.map(({ file, status }) => {
+    const size = formatSize(file.size);
+    const statusHtml = statusBadge(status);
+    const removing = (status === 'pending') ? `<button class="fi-remove" onclick="removeFile('${escHtml(file.name)}')" title="Quitar"><span class="material-symbols-rounded">close</span></button>` : '';
+    return `
+      <div class="file-item ${status !== 'pending' ? status : ''}">
+        <div class="fi-icon"><span class="material-symbols-rounded">picture_as_pdf</span></div>
+        <div class="fi-name" title="${escHtml(file.name)}">${escHtml(file.name)}</div>
+        <div class="fi-size">${size}</div>
+        ${statusHtml}
+        ${removing}
+      </div>`;
+  }).join('');
+
+  const allDone = pendingFiles.every(p => p.status === 'done' || p.status === 'error');
+  if (allDone && pendingFiles.length > 0) {
+    btn.style.display = 'none';
+    const clearBtn = document.getElementById('clearQueueBtn');
+    if (!clearBtn) {
+      const b = document.createElement('button');
+      b.id = 'clearQueueBtn';
+      b.className = 'btn-outline';
+      b.style.cssText = 'width:100%;justify-content:center;margin-top:8px';
+      b.innerHTML = '<span class="material-symbols-rounded">clear_all</span> Limpiar lista';
+      b.onclick = () => { pendingFiles = []; renderQueue(); loadSources(); };
+      queue.after(b);
+    }
+  } else {
+    document.getElementById('clearQueueBtn')?.remove();
+  }
+}
+
+function statusBadge(status) {
+  const map = {
+    pending: ['schedule', 'Pendiente', 'pending'],
+    uploading: ['sync', 'Subiendo…', 'uploading'],
+    done: ['check_circle', 'Listo', 'done'],
+    error: ['error', 'Error', 'error']
+  };
+  const [ico, lbl, cls] = map[status] || map.pending;
+  return `<div class="fi-status ${cls}"><span class="material-symbols-rounded">${ico}</span>${lbl}</div>`;
+}
+
+/* ── Upload ── */
+async function uploadFiles() {
+  const toUpload = pendingFiles.filter(p => p.status === 'pending');
+  if (toUpload.length === 0) return;
+
+  const btn = document.getElementById('uploadBtn');
+  btn.disabled = true;
+  document.getElementById('uploadBtnLabel').textContent = 'Subiendo…';
+
+  const progress = document.getElementById('uploadProgress');
+  const bar = document.getElementById('uploadProgressBar');
+  progress.classList.add('active');
+
+  const results = [];
+
+  for (let i = 0; i < toUpload.length; i++) {
+    const item = toUpload[i];
+    item.status = 'uploading';
+    renderQueue();
+    bar.style.width = `${Math.round(((i) / toUpload.length) * 100)}%`;
+
+    const fd = new FormData();
+    fd.append('files', item.file);
+
+    try {
+      const res = await fetch(`${API_URL}/admin/ingest/pdfs`, {
+        method: 'POST',
+        headers: { 'X-Ingest-Secret': secret },
+        body: fd
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      item.status = 'done';
+      results.push({ name: item.file.name, ok: true, detail: data });
+    } catch (e) {
+      item.status = 'error';
+      results.push({ name: item.file.name, ok: false, detail: e.message });
+    }
+    renderQueue();
+  }
+
+  bar.style.width = '100%';
+  setTimeout(() => { progress.classList.remove('active'); bar.style.width = '0'; }, 600);
+
+  showUploadResult(results);
+  btn.disabled = false;
+  document.getElementById('uploadBtnLabel').textContent = 'Subir e indexar';
+  loadSources();
+}
+
+function showUploadResult(results) {
+  const el = document.getElementById('uploadResult');
+  const ico = document.getElementById('uploadResultIcon');
+  const title = document.getElementById('uploadResultTitle');
+  const list = document.getElementById('uploadResultList');
+
+  const ok = results.filter(r => r.ok).length;
+  const fail = results.filter(r => !r.ok).length;
+  const success = fail === 0;
+
+  el.className = `upload-result show ${success ? 'success' : 'error'}`;
+  ico.textContent = success ? 'check_circle' : 'warning';
+  title.textContent = success
+    ? `${ok} archivo${ok !== 1 ? 's' : ''} indexado${ok !== 1 ? 's' : ''} correctamente`
+    : `${ok} exitoso${ok !== 1 ? 's' : ''}, ${fail} con error`;
+
+  list.innerHTML = results.map(r => {
+    // IngestResponse.results[0].chunks (one file per request)
+    const resultItem = r.ok && r.detail?.results?.[0];
+    const chunks = resultItem?.chunks ? ` · ${resultItem.chunks} chunks` : '';
+    const pages = resultItem?.pages ? `, ${resultItem.pages} págs` : '';
+    const err = !r.ok ? ` — ${r.detail}` : '';
+    return `<li>${escHtml(r.name)}${chunks}${pages}${err}</li>`;
+  }).join('');
+}
+
+/* ── Sources & stats ── */
+async function loadSources() {
+  const btn = document.getElementById('refreshBtn');
+  btn.classList.add('spinning');
+
+  try {
+    const res = await fetch(`${API_URL}/admin/documents`, {
+      headers: { 'X-Ingest-Secret': secret }
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    renderStats(data);
+    renderSources(data.documents || []);
+  } catch (e) {
+    document.getElementById('sourceList').innerHTML = `<div class="sources-empty"><span class="material-symbols-rounded">error_outline</span>Error al cargar fuentes</div>`;
+  } finally {
+    btn.classList.remove('spinning');
+  }
+}
+
+function renderStats(data) {
+  const vEl = document.getElementById('statVectors');
+  const sEl = document.getElementById('statSources');
+
+  vEl.className = 'stat-num';
+  sEl.className = 'stat-num';
+  vEl.style.cssText = '';
+  sEl.style.cssText = '';
+
+  const vectors = data.stats?.total_vectors ?? data.stats?.indexed_vectors ?? data.total_vectors ?? '—';
+  vEl.textContent = typeof vectors === 'number' ? vectors.toLocaleString() : vectors;
+  sEl.textContent = (data.documents?.length ?? 0).toLocaleString();
+}
+
+function renderSources(docs) {
+  const list = document.getElementById('sourceList');
+  const count = document.getElementById('sourcesCount');
+
+  count.textContent = `${docs.length} fuente${docs.length !== 1 ? 's' : ''}`;
+
+  if (docs.length === 0) {
+    list.innerHTML = '<div class="sources-empty"><span class="material-symbols-rounded">inbox</span>Sin documentos indexados aún</div>';
+    return;
+  }
+
+  list.innerHTML = docs.map(doc => {
+    const name = doc.source || doc.name || 'Sin nombre';
+    const chunks = doc.chunks != null ? `${doc.chunks} chunks` : '';
+    const icon = name.endsWith('.pdf') ? 'picture_as_pdf' : name.startsWith('http') ? 'link' : 'article';
+    return `
+      <div class="source-item" id="src-${btoa(name).replace(/[^a-zA-Z0-9]/g,'')}">
+        <div class="si-icon"><span class="material-symbols-rounded">${icon}</span></div>
+        <div class="si-info">
+          <div class="si-name" title="${escHtml(name)}">${escHtml(name)}</div>
+          ${chunks ? `<div class="si-meta">${chunks}</div>` : ''}
+        </div>
+        <button class="si-del" onclick="askDelete('${escAttr(name)}')" title="Eliminar fuente">
+          <span class="material-symbols-rounded">delete_outline</span>
+        </button>
+      </div>`;
+  }).join('');
+}
+
+/* ── Delete ── */
+function askDelete(source) {
+  deleteTarget = source;
+  document.getElementById('deleteSourceName').textContent = source;
+  document.getElementById('deleteModal').classList.add('show');
+}
+
+function closeDeleteModal() {
+  deleteTarget = null;
+  document.getElementById('deleteModal').classList.remove('show');
+}
+
+async function confirmDelete() {
+  if (!deleteTarget) return;
+  closeDeleteModal();
+
+  const id = btoa(deleteTarget).replace(/[^a-zA-Z0-9]/g, '');
+  const el = document.getElementById(`src-${id}`);
+  if (el) el.classList.add('deleting');
+
+  try {
+    const fd = new FormData();
+    fd.append('source', deleteTarget);
+    const res = await fetch(`${API_URL}/admin/source`, {
+      method: 'DELETE',
+      headers: { 'X-Ingest-Secret': secret },
+      body: fd
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    loadSources();
+  } catch (e) {
+    if (el) el.classList.remove('deleting');
+    alert(`Error al eliminar: ${e.message}`);
+  }
+}
+
+/* ── Reveal animation ── */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+/* ── Helpers ── */
+function formatSize(bytes) {
+  if (bytes < 1024) return `${bytes} B`;
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(0)} KB`;
+  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function escAttr(s) {
+  return String(s).replace(/'/g,'&apos;').replace(/"/g,'&quot;');
+}
+</script>
+</body>
+</html>

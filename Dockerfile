@@ -6,7 +6,6 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Copiar todo el sitio estático
 COPY index.html /usr/share/nginx/html/
-COPY chatbot.js /usr/share/nginx/html/
 COPY styles.css /usr/share/nginx/html/
 COPY uploads/ /usr/share/nginx/html/uploads/
 
